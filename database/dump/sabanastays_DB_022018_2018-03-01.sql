@@ -264,7 +264,7 @@ CREATE TABLE `booking` (
   `booking_date_start` date DEFAULT NULL,
   `booking_date_end` date DEFAULT NULL,
   `total_payment` varchar(45) DEFAULT NULL,
-  `special_requests` varchar(45) DEFAULT NULL,
+  `special_requests` varchar(255) DEFAULT NULL,
   `id_apartment` int(11) unsigned NOT NULL,
   `status` enum('RESERVED','PAID','CANCELLED','UNAVAILABLE') DEFAULT NULL,
   PRIMARY KEY (`id_booking`),
@@ -416,36 +416,13 @@ DROP TABLE IF EXISTS `rate`;
 CREATE TABLE `rate` (
   `id_rate` int(11) unsigned NOT NULL,
   `variant` double DEFAULT NULL,
-  `default` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id_rate`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `rate_lang`;
-
-CREATE TABLE `rate_lang` (
-  `id_rate` int(11) unsigned NOT NULL,
-  `id_lang` int(11) unsigned NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_rate`, `id_lang`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `rate_apartment`;
-
-CREATE TABLE `rate_apartment` (
-  `id_rate_apartment` int(11) unsigned NOT NULL,
-  `id_rate` int(11) unsigned NOT NULL,
   `id_apartment` int(11) unsigned NOT NULL,
-  `value` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id_rate_apartment`),
+  `name` varchar(45) DEFAULT NULL,
+  `default` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id_rate`),
   KEY `fk_rates_apartments1_idx` (`id_apartment`),
-  KEY `fk_rates_apartments2_idx` (`id_rate`),
-  CONSTRAINT `fk_rates_apartments1_idx` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rates_apartments2_idx` FOREIGN KEY (`id_rate`) REFERENCES `rate` (`id_rate`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_rates_apartments1` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
