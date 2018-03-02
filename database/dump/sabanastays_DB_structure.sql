@@ -235,19 +235,21 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id_user` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(100) DEFAULT NULL,
-  `password` varchar(32) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
   `gender` enum('MALE','FEMALE') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
-  `since` varchar(10) DEFAULT NULL,
-  `forgotten_password_code` varchar(32) DEFAULT NULL,
-  `forgotten_password_time` timestamp NULL DEFAULT NULL,
+  `since` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `remember_token_time` timestamp NULL DEFAULT NULL,
   `social_id` varchar(100) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `active` enum('YES','NO') DEFAULT NULL,
   `role` enum('USER','ADMIN') DEFAULT NULL,
+  `created_at` timestamp not null default current_timestamp,
+  `updated_at` timestamp not null,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
