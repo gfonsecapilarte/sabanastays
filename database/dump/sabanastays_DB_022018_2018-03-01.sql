@@ -55,12 +55,19 @@ DROP TABLE IF EXISTS `about_module`;
 
 CREATE TABLE `about_module` (
   `id_about_module` int(11) NOT NULL,
-  `company_title` varchar(50) DEFAULT NULL,
-  `description` varchar(50) DEFAULT NULL,
-  `image_url` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_about_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `about_module_lang`;
+
+CREATE TABLE `about_module_lang` (
+  `id_about_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `company_title` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image_url` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id_about_module`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 # Volcado de tabla amenities
@@ -90,9 +97,46 @@ DROP TABLE IF EXISTS `apartment_type`;
 
 CREATE TABLE `apartment_type` (
   `id_aparment_type` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_aparment_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `apartment_type_lang`;
+
+CREATE TABLE `apartment_type_lang` (
+  `id_aparment_type` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_aparment_type`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Volcado de tabla countries
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `country`;
+
+CREATE TABLE `country` (
+  `id_country` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_country`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+# Volcado de tabla states
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `state`;
+
+CREATE TABLE `state` (
+  `id_state` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `id_country` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_state`),
+  KEY `fk_state_country1_idx` (`id_country`),
+  CONSTRAINT `country` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 # Volcado de tabla cities
@@ -103,7 +147,10 @@ DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id_city` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_city`)
+  `id_state` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_city`),
+  KEY `fk_city_state1_idx` (`id_state`),
+  CONSTRAINT `fk_city_state1_idx` FOREIGN KEY (`id_state`) REFERENCES `state` (`id_state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -162,20 +209,20 @@ CREATE TABLE `apartment_lang` (
 
 
 
-# Volcado de tabla apartmetAmenities
+# Volcado de tabla apartmentAmenities
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `apartmet_amenity`;
+DROP TABLE IF EXISTS `apartment_amenity`;
 
-CREATE TABLE `apartmet_amenity` (
-  `id_apartmet_amenity` int(10) unsigned NOT NULL,
+CREATE TABLE `apartment_amenity` (
+  `id_apartment_amenity` int(10) unsigned NOT NULL,
   `id_apartment` int(11) unsigned NOT NULL,
   `id_amenity` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id_apartmet_amenity`),
-  KEY `fk_apartmetAmenities_apartments1_idx` (`id_apartment`),
-  KEY `fk_apartmetAmenities_amenities1_idx` (`id_amenity`),
-  CONSTRAINT `fk_apartmetAmenities_amenities1` FOREIGN KEY (`id_amenity`) REFERENCES `amenity` (`id_amenity`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_apartmetAmenities_apartments1` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id_apartment_amenity`),
+  KEY `fk_apartmentAmenities_apartments1_idx` (`id_apartment`),
+  KEY `fk_apartmentAmenities_amenities1_idx` (`id_amenity`),
+  CONSTRAINT `fk_apartmentAmenities_amenities1` FOREIGN KEY (`id_amenity`) REFERENCES `amenity` (`id_amenity`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_apartmentAmenities_apartments1` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -213,7 +260,7 @@ DROP TABLE IF EXISTS `booking`;
 CREATE TABLE `booking` (
   `id_booking` int(11) unsigned NOT NULL,
   `id_user` int(11) unsigned NOT NULL,
-  `booking_date` datetime DEFAULT NULL,
+  `booking_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `booking_date_start` date DEFAULT NULL,
   `booking_date_end` date DEFAULT NULL,
   `total_payment` varchar(45) DEFAULT NULL,
@@ -243,19 +290,6 @@ CREATE TABLE `contact_module` (
   `email` varchar(50) DEFAULT NULL,
   `location` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_contact_module`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Volcado de tabla countries
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `country`;
-
-CREATE TABLE `country` (
-  `id_country` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_country`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -317,7 +351,7 @@ CREATE TABLE `media` (
   `id_apartment` int(11) unsigned DEFAULT NULL,
   `id_building` int(11) unsigned DEFAULT NULL,
   `id_home_module` int(11) DEFAULT NULL,
-  PRIMARY KEY (`mediaId`),
+  PRIMARY KEY (`id_media`),
   KEY `fk_media_apartments_idx` (`id_apartment`),
   KEY `fk_media_buildings1_idx` (`id_building`),
   KEY `fk_media_homeModule1_idx` (`id_home_module`),
@@ -364,7 +398,7 @@ CREATE TABLE `payment` (
   `id_currency` int(11) DEFAULT NULL,
   `descritpion` varchar(255) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `payment_date` datetime DEFAULT NULL,
+  `payment_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `payment_type` enum('ONETIME','RECURRENT') DEFAULT NULL,
   `payment_method` enum('CREDIT CARD','CHECK','WIRE TRANSFER','CASH') DEFAULT NULL,
   PRIMARY KEY (`id_payment`),
@@ -382,11 +416,8 @@ DROP TABLE IF EXISTS `rate`;
 CREATE TABLE `rate` (
   `id_rate` int(11) unsigned NOT NULL,
   `variant` double DEFAULT NULL,
-  `id_apartment` int(11) unsigned NOT NULL,
-  `default` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id_rate`),
-  KEY `fk_rates_apartments1_idx` (`id_apartment`),
-  CONSTRAINT `fk_rates_apartments1` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `default` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_rate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `rate_lang`;
@@ -398,20 +429,21 @@ CREATE TABLE `rate_lang` (
   PRIMARY KEY (`id_rate`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `rate_apartment`;
 
-# Volcado de tabla states
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `state`;
-
-CREATE TABLE `state` (
-  `id_state` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  `id_country` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id_state`),
-  KEY `country` (`id_country`),
-  CONSTRAINT `country` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`)
+CREATE TABLE `rate_apartment` (
+  `id_rate_apartment` int(11) unsigned NOT NULL,
+  `id_rate` int(11) unsigned NOT NULL,
+  `id_apartment` int(11) unsigned NOT NULL,
+  `value` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_rate_apartment`),
+  KEY `fk_rates_apartments1_idx` (`id_apartment`),
+  KEY `fk_rates_apartments2_idx` (`id_rate`),
+  CONSTRAINT `fk_rates_apartments1_idx` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rates_apartments2_idx` FOREIGN KEY (`id_rate`) REFERENCES `rate` (`id_rate`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 
 
