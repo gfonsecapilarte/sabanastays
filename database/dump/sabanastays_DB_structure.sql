@@ -76,7 +76,7 @@ CREATE TABLE `about_module_lang` (
 DROP TABLE IF EXISTS `amenity`;
 
 CREATE TABLE `amenity` (
-  `id_amenity` int(11) unsigned NOT NULL,
+  `id_amenity` int(11) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_amenity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -96,17 +96,17 @@ CREATE TABLE `amenity_lang` (
 DROP TABLE IF EXISTS `apartment_type`;
 
 CREATE TABLE `apartment_type` (
-  `id_aparment_type` int(11) NOT NULL,
-  PRIMARY KEY (`id_aparment_type`)
+  `id_apartment_type` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_apartment_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `apartment_type_lang`;
 
 CREATE TABLE `apartment_type_lang` (
-  `id_aparment_type` int(11) unsigned NOT NULL,
+  `id_apartment_type` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_aparment_type`, `id_lang`)
+  PRIMARY KEY (`id_apartment_type`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -188,11 +188,13 @@ DROP TABLE IF EXISTS `apartment`;
 CREATE TABLE `apartment` (
   `id_apartment` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_building` int(11) unsigned NOT NULL,
-  `id_aparment_type` int(11) NOT NULL,
+  `id_apartment_type` int(11) NOT NULL,
+  `floor` int(11) NOT NULL,
+  `number` varchar(45) NOT NULL,
   PRIMARY KEY (`id_apartment`),
   KEY `fk_apartments_buildings1_idx` (`id_building`),
-  KEY `fk_apartments_apartmentType1_idx` (`id_aparment_type`),
-  CONSTRAINT `fk_apartments_apartmentType1` FOREIGN KEY (`id_aparment_type`) REFERENCES `apartment_type` (`id_aparment_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_apartments_apartmentType1_idx` (`id_apartment_type`),
+  CONSTRAINT `fk_apartments_apartmentType1` FOREIGN KEY (`id_apartment_type`) REFERENCES `apartment_type` (`id_apartment_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_apartments_buildings1` FOREIGN KEY (`id_building`) REFERENCES `building` (`id_building`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

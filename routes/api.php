@@ -30,3 +30,5 @@ Route::post('/user/login', 'Auth\LoginController@credentials');//Login
 //    echo "</pre>";
 //    die();
 //});
+
+Route::get('/apartments', 'ApartmentController@getApartments');//Register
