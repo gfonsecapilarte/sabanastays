@@ -16,6 +16,17 @@ class Apartment extends ModelCore
 
     public function amenities()
     {
-        return $this->hasMany('App\Models\Amenity', 'id_amenity');
+        return $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment');
+        $result = $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment')->get();
+        $amenities = json_decode($result);
+        foreach ($amenities as &$amenity) {
+            
+        }
+        return $amenities;
+        echo "<pre>";
+print_r($amenities);
+echo "</pre>";
+die();
+//        $amenities = json_encode($result);
     }
 }

@@ -189,8 +189,10 @@ CREATE TABLE `apartment` (
   `id_apartment` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_building` int(11) unsigned NOT NULL,
   `id_apartment_type` int(11) NOT NULL,
+  `id_currency` int(11) NOT NULL,
   `floor` int(11) NOT NULL,
   `number` varchar(45) NOT NULL,
+  `price` float NOT NULL,
   PRIMARY KEY (`id_apartment`),
   KEY `fk_apartments_buildings1_idx` (`id_building`),
   KEY `fk_apartments_apartmentType1_idx` (`id_apartment_type`),
@@ -217,7 +219,7 @@ CREATE TABLE `apartment_lang` (
 DROP TABLE IF EXISTS `apartment_amenity`;
 
 CREATE TABLE `apartment_amenity` (
-  `id_apartment_amenity` int(10) unsigned NOT NULL,
+  `id_apartment_amenity` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_apartment` int(11) unsigned NOT NULL,
   `id_amenity` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id_apartment_amenity`),
