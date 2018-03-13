@@ -31,4 +31,4 @@ Route::post('/user/login', 'Auth\LoginController@credentials');//Login
 //    die();
 //});
 
-Route::get('/apartments', 'ApartmentController@getApartments');//Register
+Route::get('/apartments', 'ApartmentController@getApartments');

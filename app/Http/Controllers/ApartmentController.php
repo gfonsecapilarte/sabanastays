@@ -15,6 +15,9 @@ class ApartmentController extends Controller
 //        $result = ApartmentModel::where('id_building', 1)->with(array('type', 'translate'))->get();
         
         return $result;
+
+        
+        //////////////////////////////
         return ApartmentModel::all();
         $apartments = ApartmentModel::all();
 
