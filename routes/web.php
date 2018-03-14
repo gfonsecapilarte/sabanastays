@@ -18,3 +18,7 @@ Route::get('/', function(){
 Route::get('/apartment-detail', function(){
     return view('front/apartment/detail');
 });
+
+Route::get('/booking', function(){
+    return view('front/booking/booking');
+});
