@@ -26,3 +26,7 @@ Route::get('/booking', function(){
 Route::get('/my-bookings', function(){
     return view('front/booking/my-bookings');
 });
+
+Route::get('/contact-us', function(){
+    return view('front/contact-us/contact-us');
+});
