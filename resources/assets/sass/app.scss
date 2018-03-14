@@ -1,9 +1,23 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
-// Variables
-@import "variables";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic");
 
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+// Style of the theme
+@import "../css/owl.carousel.css";
+@import "../css/owl.theme.css";
+@import "../css/owl.transitions.css";
+@import "../css/cs-select.css";
+@import "../css/freepik.hotels.css";
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
+@import "../css/style.css";
+
+// Awesome
+@import "~font-awesome/scss/font-awesome.scss";
+
+// Custom Styles
+@import "classes";
+@import "icons";
+@import "general";

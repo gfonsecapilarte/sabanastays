@@ -1,22 +1,11 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
+import bootstrap from "bootstrap";
+import Modernizr from "modernizr";
+import "./owl.carousel.min.js";
+import "./jssor.slider.mini.js";
+import "./selectFx.js";
+import "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js";
+import "./starrr.min.js";
+import "./nivo-lightbox.min.js";
+import "./jquery.shuffle.min.js";
+import "./jquery.parallax-1.1.3.js";
+import "./script.js";

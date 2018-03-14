@@ -1,0 +1,51 @@
+/*
+ * Home slider style
+ */
+#mega-slider{
+    position: relative;
+    .mg-book-now{
+        background-color: transparent;
+        position: absolute;
+        bottom: 50px;
+        width: 100%;
+    }
+}
+
+/*
+ * Paginator slider
+ */
+.pagination{
+    li.sa-active{
+        a{
+            color: #fff;
+            background-color: #16262e;
+            border-color: #16262e;
+        }
+    }
+    li{
+        a{
+            color: #16262e;
+        }
+    }
+}
+
+/*
+ * Map style
+ */
+#mg-map{
+    body.apartment-detail &{
+        height: 500px;
+    }
+}
+
+.booking-detail{
+    .btn-main{
+        position: absolute;
+        top: -40px;
+        right: 0px;
+    }
+
+    .mg-features{
+        display: none;
+    }
+}

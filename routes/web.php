@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', 'Front\HomeController@index');
+Route::get('/', function(){
+    return view('front/home/index', ['name' => 'James']);
+});
