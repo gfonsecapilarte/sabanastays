@@ -22,3 +22,7 @@ Route::get('/apartment-detail', function(){
 Route::get('/booking', function(){
     return view('front/booking/booking');
 });
+
+Route::get('/my-bookings', function(){
+    return view('front/booking/my-bookings');
+});
