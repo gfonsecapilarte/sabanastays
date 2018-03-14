@@ -25,6 +25,7 @@
         "bootstrap-datepicker": "^1.4.0",
         "desandro-classie": "^1.0.1",
         "font-awesome": "^4.4.0",
-        "jquery": "^1.11.0"
+        "jquery": "^1.11.0",
+        "load-google-maps-api": "^1.2.0"
     }
 }

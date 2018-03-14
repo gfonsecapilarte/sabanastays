@@ -7,7 +7,7 @@
         <title>Sabanastays - @yield('title')</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body>
+    <body class="@yield('bodyClass')">
 
         @yield('content')
 

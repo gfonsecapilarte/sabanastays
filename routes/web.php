@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function(){
-    return view('front/home/index', ['name' => 'James']);
+    return view('front/home/index');
+});
+
+Route::get('/apartment-detail', function(){
+    return view('front/apartment/detail');
 });
