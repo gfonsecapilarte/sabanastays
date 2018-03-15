@@ -264,7 +264,7 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `booking`;
 
 CREATE TABLE `booking` (
-  `id_booking` int(11) unsigned NOT NULL,
+  `id_booking` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_user` int(11) unsigned NOT NULL,
   `booking_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `booking_date_start` date DEFAULT NULL,
