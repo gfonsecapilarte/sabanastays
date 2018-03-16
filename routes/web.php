@@ -38,3 +38,7 @@ Route::get('/about-us', function(){
 Route::get('/login', function(){
     return view('front/users/login');
 });
+
+Route::get('/profile', function(){
+    return view('front/users/profile');
+});

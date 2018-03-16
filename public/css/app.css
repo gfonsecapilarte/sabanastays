@@ -7740,3 +7740,12 @@ body.login .register-form > .row input[type='submit'] {
   bottom: 25px;
 }
 
+/*
+ * Profiles page style
+ */
+
+.my-profile .list-group-item {
+  display: inline-block;
+  width: 100%;
+}
+
