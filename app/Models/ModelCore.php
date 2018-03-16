@@ -8,6 +8,9 @@ class ModelCore extends Model
 {
     public function lang()
     {
-        return $this->hasOne('App\Models\Lang\\'.ucfirst($this->table), $this->primaryKey);
+        $table = str_replace('_', ' ', $this->table);
+        $table = ucwords($table);
+        $table = str_replace(' ', '', $table);
+        return $this->hasOne('App\Models\Lang\\'.$table, $this->primaryKey);
     }
 }
