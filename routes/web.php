@@ -30,3 +30,11 @@ Route::get('/my-bookings', function(){
 Route::get('/contact-us', function(){
     return view('front/contact-us/contact-us');
 });
+
+Route::get('/about-us', function(){
+    return view('front/about-us/about-us');
+});
+
+Route::get('/login', function(){
+    return view('front/users/login');
+});

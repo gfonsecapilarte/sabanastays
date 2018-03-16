@@ -49,3 +49,47 @@
         display: none;
     }
 }
+
+/*
+ * Login style
+ */
+#forgot-password{
+    color: #16262e;
+}
+
+.social-button{
+    color: #ffffff;
+    width: 100%;
+    border-radius: 4px;
+
+    &.blue{
+        background-color: #3B64C4;
+    }
+
+    &.red{
+        background-color: #D04332;
+    }
+
+    i.fa{
+        font-size: 1.4em;
+        margin-right: 15px;
+    }
+
+    &:hover{
+        color: #ffffff;
+    }
+}
+
+body{
+    &.login{
+        .register-form{
+            & > .row{
+                display: flex;
+                input[type='submit']{
+                    position: absolute;
+                    bottom: 25px;
+                }
+            }
+        }
+    }
+}
