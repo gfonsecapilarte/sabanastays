@@ -31,4 +31,13 @@ Route::post('/user/login', 'Auth\LoginController@credentials');//Login
 //    die();
 //});
 
+
+//apartments
 Route::get('/apartments', 'ApartmentController@getApartments');
+Route::get('/apartment', 'ApartmentController@getApartment');
+
+//modules
+Route::get('/module/about', 'Module\AboutController@getAbout');
+Route::get('/module/home', 'Module\HomeController@getHome');
+Route::get('/module/header', 'Module\HeaderController@getHeader');
+Route::get('/module/footer', 'Module\FooterController@getFooter');

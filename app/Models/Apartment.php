@@ -19,14 +19,14 @@ class Apartment extends ModelCore
         return $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment');
         $result = $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment')->get();
         $amenities = json_decode($result);
-        foreach ($amenities as &$amenity) {
-            
-        }
+//        foreach ($amenities as &$amenity) {
+//
+//        }
         return $amenities;
-        echo "<pre>";
-print_r($amenities);
-echo "</pre>";
-die();
+//        echo "<pre>";
+//print_r($amenities);
+//echo "</pre>";
+//die();
 //        $amenities = json_encode($result);
     }
 }

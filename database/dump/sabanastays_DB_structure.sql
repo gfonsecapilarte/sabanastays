@@ -54,7 +54,7 @@ CREATE TABLE `currency` (
 DROP TABLE IF EXISTS `about_module`;
 
 CREATE TABLE `about_module` (
-  `id_about_module` int(11) NOT NULL,
+  `id_about_module` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_about_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -328,7 +328,7 @@ CREATE TABLE `feature` (
 DROP TABLE IF EXISTS `home_module`;
 
 CREATE TABLE `home_module` (
-  `id_home_module` int(11) NOT NULL,
+  `id_home_module` int(11) NOT NULL AUTO_INCREMENT,
   `video_url` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_home_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -342,6 +342,52 @@ CREATE TABLE `home_module_lang` (
   `short_description` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id_home_module`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Volcado de tabla headerModule
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `header_module`;
+
+CREATE TABLE `header_module` (
+  `id_header_module` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_header_module`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `header_module_lang`;
+
+CREATE TABLE `header_module_lang` (
+  `id_header_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `short_description` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id_header_module`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Volcado de tabla footerModule
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `footer_module`;
+
+CREATE TABLE `footer_module` (
+  `id_footer_module` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_footer_module`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `footer_module_lang`;
+
+CREATE TABLE `footer_module_lang` (
+  `id_footer_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `short_description` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id_footer_module`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

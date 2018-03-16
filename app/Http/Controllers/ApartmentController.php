@@ -44,4 +44,17 @@ class ApartmentController extends Controller
 
         return $apartments;
     }
+
+    public function getApartment(Request $request)
+    {
+        $apartment = ApartmentModel::where('id_apartment', '=', $request->input('id_apartment'))
+            ->with(array('amenities', 'lang'))->first();
+        
+        foreach ($apartment->amenities as $i => $amenity) {
+            $apartment->amenities[$i] = AmenityModel::where('id_amenity', $amenity->id_amenity)->with('lang')->get();
+        }
+        $apartment->type = ApartmentTypeModel::where('id_apartment_type',(int)$apartment->id_apartment_type)->with('lang')->first();
+
+        return $apartment;
+    }
 }
