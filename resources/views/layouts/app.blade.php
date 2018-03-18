@@ -9,6 +9,7 @@
     </head>
     <body class="@yield('bodyClass')">
 
+        @yield('header')
         @yield('content')
 
         <footer class="mg-footer">
@@ -18,8 +19,8 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="widget">
                                 <ul>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Contact us</a></li>
+                                    <li><a href="#">@lang('general.aboutUs')</a></li>
+                                    <li><a href="#">@lang('general.contactUs')</a></li>
                                 </ul>
                             </div>
                         </div>
