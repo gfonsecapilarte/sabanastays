@@ -31,6 +31,10 @@ Route::post('/user/login', 'Auth\LoginController@credentials');//Login
 //    die();
 //});
 
+//settings
+Route::get('/languages', 'LanguageController@getLanguages');
+Route::get('/currencies', 'CurrencyController@getCurrencies');
+
 
 //apartments
 Route::get('/apartments', 'ApartmentController@getApartments');
