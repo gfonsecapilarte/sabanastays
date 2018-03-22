@@ -27,6 +27,7 @@ DROP TABLE IF EXISTS `lang`;
 
 CREATE TABLE `lang` (
   `id_lang` int(11) NOT NULL AUTO_INCREMENT,
+  `iso` varchar(4) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
