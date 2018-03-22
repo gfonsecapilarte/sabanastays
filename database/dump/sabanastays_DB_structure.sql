@@ -330,6 +330,7 @@ DROP TABLE IF EXISTS `home_module`;
 CREATE TABLE `home_module` (
   `id_home_module` int(11) NOT NULL AUTO_INCREMENT,
   `video_url` varchar(100) DEFAULT NULL,
+  `id_media_logo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_home_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -397,19 +398,12 @@ CREATE TABLE `footer_module_lang` (
 DROP TABLE IF EXISTS `media`;
 
 CREATE TABLE `media` (
-  `id_media` int(11) unsigned NOT NULL,
-  `path` varchar(45) DEFAULT NULL,
-  `type` enum('AUDIO','IMAGE','VIDEO') DEFAULT NULL,
-  `id_apartment` int(11) unsigned DEFAULT NULL,
-  `id_building` int(11) unsigned DEFAULT NULL,
-  `id_home_module` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_media`),
-  KEY `fk_media_apartments_idx` (`id_apartment`),
-  KEY `fk_media_buildings1_idx` (`id_building`),
-  KEY `fk_media_homeModule1_idx` (`id_home_module`),
-  CONSTRAINT `fk_media_apartments` FOREIGN KEY (`id_apartment`) REFERENCES `apartment` (`id_apartment`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_media_buildings1` FOREIGN KEY (`id_building`) REFERENCES `building` (`id_building`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_media_homeModule1` FOREIGN KEY (`id_home_module`) REFERENCES `home_module` (`id_home_module`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `id_media` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) NOT NULL,
+  `media_type` enum('AUDIO','IMAGE','VIDEO') NOT NULL,
+  `id_type` int(11) unsigned NOT NULL,
+  `type` varchar(45) unsigned NOT NULL,
+  PRIMARY KEY (`id_media`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `media_lang`;
