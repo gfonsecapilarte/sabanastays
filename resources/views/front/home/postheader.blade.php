@@ -38,18 +38,18 @@
                 </div>
                 <div class="col-md-9">
                     <div class="mg-bn-forms">
-                        <form>
+                        <form action="/en/booking" method="get">
                             <div class="row">
                                 <div class="col-md-3 col-xs-6">
                                     <div class="input-group date mg-check-in">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="@lang('general.checkIn')">
+                                        <input type="text" class="form-control" name="checkin" placeholder="@lang('general.checkIn')">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-xs-6">
                                     <div class="input-group date mg-check-out">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="@lang('general.checkOut')">
+                                        <input type="text" class="form-control" name="checkout" placeholder="@lang('general.checkOut')">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
