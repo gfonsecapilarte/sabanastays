@@ -1,38 +1,16 @@
 @extends('layouts.app')
-@section('title', 'Home')
+@section('title',  __('general.booking'))
+@section('description',  'Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
 @section('bodyClass', 'booking')
 @section('content')
 
-    <div class="preloader"></div>
-    <header class="header transp sticky">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><img src="{{ asset('images/LogoSabanaStays.png') }}" alt="LOGO SABANA STAYS"></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">Login</a></li>
-                        <li class="active"><a href="">EN</a></li>
-                        <li><a href="">SP</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-    </header>
+    @section('header')
+        @include('front/header')
+    @stop
 
-    <div class="mg-page-title parallax">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Booking</h2>
-                    <p>Cogitavisse erant puerilis utrum efficiantur adhuc expeteretur.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('postheader')
+        @include('front/postheader')
+    @stop
 
     <div class="mg-page">
         <div class="container">
@@ -42,16 +20,16 @@
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                                <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>Select your apartment</a>
+                                <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>@lang('general.selectApartment')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>Your information</a>
+                                <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>@lang('general.yourInformation')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>Payment Information</a>
+                                <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>@lang('general.payInformation')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>Thank You</a>
+                                <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>@lang('general.thankyou')</a>
                             </li>
                         </ul>
 
@@ -60,7 +38,7 @@
                             <!-- Select the apartment -->
                             <div role="tabpanel" class="tab-pane fade in active" id="select-room">
                                 <div class="mg-available-rooms">
-                                    <h2 class="mg-sec-left-title">Available Apartments: Mar 02 2018 to Mar 06 2018</h2>
+                                    <h2 class="mg-sec-left-title">@lang('general.availApartments'): Mar 02 2018 to Mar 06 2018</h2>
                                     <div class="mg-avl-rooms">
                                         <div class="mg-avl-room">
                                             <div class="row">
@@ -68,7 +46,7 @@
                                                     <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive"></a>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <h3 class="mg-avl-room-title"><a href="#">Penthouse Suite</a> <span>$249<sup>.99</sup>/Night</span></h3>
+                                                    <h3 class="mg-avl-room-title"><a href="#">Penthouse Suite</a> <span>$249<sup>.99</sup>/@lang('general.night')</span></h3>
                                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia minuti firme desperantes vix sempiternum sentiri possunt, philosophia permanentes, sentit careret.</p>
                                                     <div class="row mg-room-fecilities">
                                                         <div class="col-sm-6">
@@ -86,7 +64,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">Book Apartment</a>
+                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +92,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">Book Apartment</a>
+                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +120,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">Book Apartment</a>
+                                                    <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,82 +151,82 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="mg-book-form-personal">
-                                            <h2 class="mg-sec-left-title">We need your information to complete this booking:</h2>
+                                            <h2 class="mg-sec-left-title">@lang('general.weNeedYourInfoToBooking'):</h2>
                                             <div class="row pb40">
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="First Name">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.firstName')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Address">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.address')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="City">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.city')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="State">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.state')">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Last Name">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.lastName')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Postal Code">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.postalCode')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Country">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.country')">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h2 class="mg-sec-left-title">Let's create your account for your future bookings:</h2>
+                                            <h2 class="mg-sec-left-title">@lang('general.accountFutureBookings'):</h2>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="tel" class="form-control" placeholder="Email">
+                                                        <input type="tel" class="form-control" placeholder="@lang('general.email')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="password" class="form-control" placeholder="password">
+                                                        <input type="password" class="form-control" placeholder="@lang('general.password')">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="email" class="form-control" placeholder="Telephone">
+                                                        <input type="email" class="form-control" placeholder="@lang('general.telephone')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="password" class="form-control" placeholder="Retype password">
+                                                        <input type="password" class="form-control" placeholder="@lang('general.retypePassword')">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">Next</a>
-                                            <a href="#select-room" class="btn btn-default btn-prev-tab pull-left">Back</a>
+                                            <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.next')</a>
+                                            <a href="#select-room" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mg-cart-container">
                                             <aside class="mg-widget mt50" id="mg-room-cart">
-                                                <h2 class="mg-widget-title">Your Booking Details</h2>
+                                                <h2 class="mg-widget-title">@lang('general.yourBookingDetails')</h2>
                                                 <div class="mg-widget-cart">
                                                     <div class="mg-cart-room">
                                                         <img src="../images/room-1.png" alt="Delux Room" class="img-responsive">
                                                         <h3>Junior Suite</h3>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>$189.99 /Night</strong>
+                                                        <strong>$189.99 /@lang('general.night')</strong>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>Check In:</strong>
+                                                        <strong>@lang('general.checkIn'):</strong>
                                                         <span>02 Mar, 2018</span>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>Check Out:</strong>
+                                                        <strong>@lang('general.checkOut'):</strong>
                                                         <span>06 Mar, 2018</span>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>4 Nights</strong>
+                                                        <strong>{{trans_choice('general.nights', 4, ['value' => 4])}}</strong>
                                                     </div>
                                                     <div class="mg-cart-total">
-                                                        <strong>Total:</strong>
+                                                        <strong>@lang('general.total'):</strong>
                                                         <span>$759.96</span>
                                                     </div>
                                                 </div>
@@ -263,40 +241,40 @@
                                     <div class="col-md-8">
                                         <div class="mg-book-form-billing">
                                             <h2 class="mg-sec-left-title">
-                                                <input type="checkbox"> Is your billing address different?
+                                                <input type="checkbox"> @lang('general.isYourBillingAddressDiff')
                                             </h2>
                                             <div class="row pb40">
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="First Name">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.firstName')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Address">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.address')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="City">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.city')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="State">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.state')">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Last Name">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.lastName')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Postal Code">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.postalCode')">
                                                     </div>
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Country">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.country')">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h2 class="mg-sec-left-title">Credit Card Info</h2>
+                                            <h2 class="mg-sec-left-title">@lang('general.CreditCardInfo')</h2>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mg-book-form-input">
-                                                        <input type="text" class="form-control" placeholder="Credit Card">
+                                                        <input type="text" class="form-control" placeholder="@lang('general.creditCard')">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -309,7 +287,7 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <select class="form-control">
-                                                                    <option value="">Month</option>
+                                                                    <option value="">@lang('general.month')</option>
                                                                     <option value="1">1</option>
                                                                     <option value="2">2</option>
                                                                     <option value="3">3</option>
@@ -326,7 +304,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <select class="form-control">
-                                                                    <option value="">Year</option>
+                                                                    <option value="">@lang('general.year')</option>
                                                                     <option value="15">15</option>
                                                                     <option value="16">16</option>
                                                                     <option value="17">17</option>
@@ -344,35 +322,35 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="#thank-you" class="btn btn-dark-main btn-next-tab pull-right">Book</a>
-                                            <a href="#personal-info" class="btn btn-default btn-prev-tab pull-left">Back</a>
+                                            <a href="#thank-you" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a>
+                                            <a href="#personal-info" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mg-cart-container">
                                             <aside class="mg-widget mt50" id="mg-room-cart">
-                                                <h2 class="mg-widget-title">Booking Details</h2>
+                                                <h2 class="mg-widget-title">@lang('general.yourBookingDetails')</h2>
                                                 <div class="mg-widget-cart">
                                                     <div class="mg-cart-room">
                                                         <img src="../images/room-1.png" alt="Delux Room" class="img-responsive">
                                                         <h3>Junior Suite</h3>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>$189.99 /Night</strong>
+                                                        <strong>$189.99 /@lang('general.night')</strong>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>Check In:</strong>
+                                                        <strong>@lang('general.checkIn'):</strong>
                                                         <span>02 Mar, 2018</span>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>Check Out:</strong>
+                                                        <strong>@lang('general.checkOut'):</strong>
                                                         <span>06 Mar, 2018</span>
                                                     </div>
                                                     <div class="mg-widget-cart-row">
-                                                        <strong>4 Nights</strong>
+                                                        <strong>{{trans_choice('general.nights', 4, ['value' => 4])}}</strong>
                                                     </div>
                                                     <div class="mg-cart-total">
-                                                        <strong>Total:</strong>
+                                                        <strong>@lang('general.total'):</strong>
                                                         <span>$759.96</span>
                                                     </div>
                                                 </div>
@@ -387,7 +365,7 @@
                                 <div class="alert alert-success alert-dismissible clearfix">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <div class="mg-alert-icon"><i class="fa fa-check"></i></div>
-                                    <h3 class="mg-alert-payment">Thank you! Your booking is confirmed. Invoice Sent in your email address</h3>
+                                    <h3 class="mg-alert-payment">@lang('general.bookingIsConfirmed')</h3>
                                 </div>
                             </div>
                         </div>

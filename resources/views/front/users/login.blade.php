@@ -1,103 +1,82 @@
 @extends('layouts.app')
-@section('title', 'Login')
+@section('title', __('general.login'))
 @section('bodyClass', 'login')
 @section('content')
 
-    <div class="preloader"></div>
-    <header class="header transp sticky">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><img src="{{ asset('images/LogoSabanaStays.png') }}" alt="LOGO SABANA STAYS"></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">Login</a></li>
-                        <li class="active"><a href="">EN</a></li>
-                        <li><a href="">SP</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    @section('header')
+        @include('front/header')
+    @stop
 
-    <div class="mg-page-title parallax">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('postheader')
+        @include('front/postheader')
+    @stop
 
     <div class="mg-page">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
 
-                    <h2 class="mg-sec-left-title">Have an account at Sabana Stays? Log in</h2>
+                    <h2 class="mg-sec-left-title">@lang('general.haveAccountSabanaStays')</h2>
 
                     <form class="clearfix">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="email" placeholder="Email">
+                                    <input type="text" class="form-control" name="email" placeholder="@lang('general.email')">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input type="submit" class="btn btn-dark-main" value="Login">
+                                <input type="submit" class="btn btn-dark-main" value="@lang('general.login')">
                             </div>
                             <div class="col-md-8">
-                                <a href="#" id="forgot-password" class="pull-right">Forgot your password?</a>
+                                <a href="#" id="forgot-password" class="pull-right">@lang('general.ForgotYourPassword')</a>
                             </div>
                         </div>
 
                         <div class="row mt30">
                             <div class="col-md-4">
-                                <button class="btn social-button blue"><i class="fa fa-facebook"></i>Login with Facebook</button>
+                                <button class="btn social-button blue"><i class="fa fa-facebook"></i>@lang('general.loginWithFacebook')</button>
                             </div>
                             <div class="col-md-4">
-                                <button class="btn social-button red"><i class="fa fa-google-plus"></i>Login with Google+</button>
+                                <button class="btn social-button red"><i class="fa fa-google-plus"></i>@lang('general.loginWithGoogle')</button>
                             </div>
                         </div>
                     </form>
 
                     <hr class="mt50">
-                    <h2 class="mg-sec-left-title mt30">If you don't have an account with us, please Register below</h2>
+                    <h2 class="mg-sec-left-title mt30">@lang('general.ifYouDontHaveAnAccount')</h2>
 
                     <form class="clearfix register-form">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="first-name" placeholder="First Name">
+                                    <input type="text" class="form-control" name="first-name" placeholder="@lang('general.firstName')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="email" class="form-control" name="email" placeholder="Email">
+                                    <input type="email" class="form-control" name="email" placeholder="@lang('general.email')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="last-name" placeholder="Last Name">
+                                    <input type="text" class="form-control" name="last-name" placeholder="@lang('general.lastName')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="telephone" placeholder="Telephone">
+                                    <input type="text" class="form-control" name="telephone" placeholder="@lang('general.telephone')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="retype-password" placeholder="Retype Password">
+                                    <input type="password" class="form-control" name="retype-password" placeholder="@lang('general.retypePassword')">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input type="submit" class="btn btn-dark-main" value="Register">
+                                <input type="submit" class="btn btn-dark-main" value="@lang('general.register')">
                             </div>
                         </div>
                     </form>

@@ -10,6 +10,7 @@
     <body class="@yield('bodyClass')">
 
         @yield('header')
+        @yield('postheader')
         @yield('content')
 
         <footer class="mg-footer">
@@ -27,19 +28,19 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="widget">
                                 <ul>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms of Service</a></li>
+                                    <li><a href="#">@lang('general.privacyPolicy')</a></li>
+                                    <li><a href="#">@lang('general.termsService')</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6">
                             <div class="widget">
-                                <h2 class="mg-widget-title">Get our exclusive offers</h2>
+                                <h2 class="mg-widget-title">@lang('general.GetExclOffers')</h2>
                                 <form>
                                     <p>
-                                        <input type="email" class="form-control" placeholder="Your Email">
+                                        <input type="email" class="form-control" placeholder="@lang('general.yourEmail')">
                                     </p>
-                                    <input type="submit" class="btn btn-main" value="Subscribe">
+                                    <input type="submit" class="btn btn-main" value="@lang('general.subscribe')">
                                 </form>
                                 <p>
                                     <ul class="mg-footer-social">

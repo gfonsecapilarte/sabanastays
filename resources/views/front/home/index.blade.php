@@ -3,7 +3,11 @@
 @section('content')
 
     @section('header')
-        @include('front/home/header')
+        @include('front/header')
+    @stop
+
+    @section('postheader')
+        @include('front/home/postheader')
     @stop
 
     <div class="mg-about parallax">

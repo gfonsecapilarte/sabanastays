@@ -1,50 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Home')
+@section('title', __('general.apartment'))
 @section('bodyClass', 'apartment-detail')
 @section('content')
 
-    <header class="header transp sticky">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><img src="{{ asset('images/LogoSabanaStays.png') }}" alt="LOGO SABANA STAYS"></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">Login</a></li>
-                        <li class="active"><a href="">EN</a></li>
-                        <li><a href="">SP</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-    </header>
+    @section('header')
+        @include('front/header')
+    @stop
 
-    <div id="mega-slider" class="carousel slide " data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#mega-slider" data-slide-to="0" class="active"></li>
-            <li data-target="#mega-slider" data-slide-to="1"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-            <div class="item active beactive">
-                <img src="{{ asset('images/slide-2.png') }}" alt="...">
-            </div>
-            <div class="item">
-                <img src="{{ asset('images/slide-4.png') }}" alt="...">
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#mega-slider" role="button" data-slide="prev">
-        </a>
-        <a class="right carousel-control" href="#mega-slider" role="button" data-slide="next">
-        </a>
-    </div>
+    @section('postheader')
+        @include('front/apartment/postheader')
+    @stop
 
     <div class="mg-book-now">
         <div class="container">
@@ -66,7 +31,7 @@
     <div class="container mg-features">
         <div class="row">
             <div class="col-md-12 mg-room-fecilities">
-                <h2 class="mg-sec-left-title">Ameneties</h2>
+                <h2 class="mg-sec-left-title">@lang('general.amenities')</h2>
                 <div class="row">
                     <div class="col-xs-4">
                         <ul>
@@ -103,7 +68,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2 class="mg-sec-left-title">Location</h2>
+                    <h2 class="mg-sec-left-title">@lang('general.location')</h2>
                 </div>
             </div>
         </div>

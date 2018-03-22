@@ -1,27 +1,3 @@
-<header class="header transp sticky">
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="{{ asset('images/LogoSabanaStays.png') }}" alt="LOGO SABANA STAYS"></a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">@lang('general.login')</a></li>
-                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        <li class="{{ $locale == $localeCode ? 'active' : '' }}">
-                            <a class="lang-selector" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                {{ $localeCode }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
 <div id="mega-slider" class="carousel slide " data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -67,13 +43,13 @@
                                 <div class="col-md-3 col-xs-6">
                                     <div class="input-group date mg-check-in">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Check In">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="@lang('general.checkIn')">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-xs-6">
                                     <div class="input-group date mg-check-out">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Check Out">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="@lang('general.checkOut')">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
