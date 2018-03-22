@@ -401,8 +401,8 @@ CREATE TABLE `media` (
   `id_media` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `path` varchar(255) NOT NULL,
   `media_type` enum('AUDIO','IMAGE','VIDEO') NOT NULL,
-  `id_type` int(11) unsigned NOT NULL,
-  `type` varchar(45) unsigned NOT NULL,
+  `id_type` int(11) NOT NULL,
+  `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id_media`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
