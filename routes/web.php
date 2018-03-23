@@ -33,11 +33,9 @@ function()
 		return view('front/apartment/detail',['locale' => LaravelLocalization::getCurrentLocale()]);
 	});
 
-	// Route::post(LaravelLocalization::transRoute('routes.booking'),function(){
-	// 	//return view('front/booking/booking',['locale' => LaravelLocalization::getCurrentLocale()]);
-	// });
-
-	Route::get(LaravelLocalization::transRoute('routes.booking'), 'Front\ApartmentController@getApartments');
+	Route::get(LaravelLocalization::transRoute('routes.booking'),function(){
+		return view('front/booking/booking',['locale' => LaravelLocalization::getCurrentLocale()]);
+	});
 
 	Route::get(LaravelLocalization::transRoute('routes.contactUs'),function(){
 		return view('front/contact-us/contact-us',['locale' => LaravelLocalization::getCurrentLocale()]);

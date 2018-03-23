@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-md-9">
                     <div class="mg-bn-forms">
-                        <form action="/en/booking" method="get">
+                        <form ide="form-search-aptos">
                             <div class="row">
                                 <div class="col-md-3 col-xs-6">
                                     <div class="input-group date mg-check-in">
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn btn-main btn-block">@lang('general.search')</button>
+                                    <button type="submit" id="btn-search-aptos" class="btn btn-main btn-block">@lang('general.search')</button>
                                 </div>
                             </div>
                         </form>

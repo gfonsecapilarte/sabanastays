@@ -38,39 +38,8 @@
                             <!-- Select the apartment -->
                             <div role="tabpanel" class="tab-pane fade in active" id="select-room">
                                 <div class="mg-available-rooms">
-                                    <h2 class="mg-sec-left-title">@lang('general.availApartments'): {{ $checkin }} to {{ $checkout }}</h2>
-                                    <div class="mg-avl-rooms">
-
-                                        @foreach ($apartments as $apartment)
-                                            <div class="mg-avl-room">
-                                                <div class="row">
-                                                    <div class="col-sm-5">
-                                                        <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive"></a>
-                                                    </div>
-                                                    <div class="col-sm-7">
-                                                        <h3 class="mg-avl-room-title"><a href="#">{{ $apartment->lang[0]->name }}</a> <span>$249<sup>.99</sup>/@lang('general.night')</span></h3>
-                                                        <p>{{ $apartment->lang[0]->description }}</p>
-                                                        <div class="row mg-room-fecilities">
-                                                            <div class="col-sm-6">
-                                                                <ul>
-                                                                    <li><i class="fp-ht-bed"></i> 2 King Beds</li>
-                                                                    <li><i class="fp-ht-food"></i> Breakfast</li>
-                                                                    <li><i class="fa fa-sun-o"></i> Air conditioning</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <ul>
-                                                                    <li><i class="fp-ht-dumbbell"></i> GYM fecility</li>
-                                                                    <li><i class="fp-ht-tv"></i> TV LCD</li>
-                                                                    <li><i class="fp-ht-computer"></i> Wi-fi service</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                    <h2 class="mg-sec-left-title">@lang('general.availApartments'):  to </h2>
+                                    <div id="list-found-aptos" class="mg-avl-rooms">
 
                                     </div>
                                 </div>
@@ -321,6 +290,37 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Template to drawn other aptos by Javascript  -->
+    <div id="apto-template" class="mg-avl-room hidden">
+        <div class="row">
+            <div class="col-sm-5">
+                <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-sm-7">
+                <h3 class="mg-avl-room-title"><a href="#">name</a> <span>$249<sup>.99</sup>/@lang('general.night')</span></h3>
+                <p class="sa-apto-description">description</p>
+                <div class="row mg-room-fecilities">
+                    <div class="col-sm-6">
+                        <ul>
+                            <li><i class="fp-ht-bed"></i> 2 King Beds</li>
+                            <li><i class="fp-ht-food"></i> Breakfast</li>
+                            <li><i class="fa fa-sun-o"></i> Air conditioning</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul>
+                            <li><i class="fp-ht-dumbbell"></i> GYM fecility</li>
+                            <li><i class="fp-ht-tv"></i> TV LCD</li>
+                            <li><i class="fp-ht-computer"></i> Wi-fi service</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
             </div>
         </div>
     </div>

@@ -13,6 +13,8 @@
         @yield('postheader')
         @yield('content')
 
+        <div id="sa-location" class="hidden">{{ $locale }}</div>
+        
         <footer class="mg-footer">
             <div class="mg-footer-widget">
                 <div class="container">

@@ -10,8 +10,15 @@ import "./starrr.min.js";
 import "./nivo-lightbox.min.js";
 import "./jquery.shuffle.min.js";
 import "./jquery.parallax-1.1.3.js";
+
+/*
+ * Default Scripts of the themplate
+ */
 import "./script.js";
 
+/*
+ * Plugin to load Google maps
+ */
 loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(function (googleMaps) {
     if($("#mg-map").length > 0){
         var map = new googleMaps.Map(document.querySelector("#mg-map"), {
@@ -32,3 +39,8 @@ loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(functio
 }).catch(function (error) {
     console.error(error)
 })
+
+/*
+ * Plugin to load Google maps
+ */
+import "./aptos/search.js";
