@@ -103,3 +103,40 @@ body{
         width: 100%;
     }
 }
+
+/*
+ * Bookig page styles
+ */
+.mg-available-rooms{
+    .mg-avl-room-title{
+        span{
+            float: none !important;
+        }
+        & > span{
+            float: right !important;
+        }
+    }
+
+    .mg-room-fecilities{
+        ul{
+            li{
+                float: left;
+                width: 50%;
+            }
+        }
+    }
+}
+
+/*
+ * Apto detail page styles
+ */
+.apartment-detail{
+    .mg-room-fecilities{
+        ul{
+            li{
+                float: left;
+                width: 33.3%;
+            }
+        }
+    }
+}

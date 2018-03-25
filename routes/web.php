@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,19 +21,30 @@ function()
 	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
 	Route::get('/', function()
 	{
-		return view('front/home/index',['locale' => LaravelLocalization::getCurrentLocale()]);
+		return view('front/home/index',[
+			'locale' => LaravelLocalization::getCurrentLocale(),
+			'languages'	=> App\Models\Language::all()
+		]);
 	});
 
 	Route::get(LaravelLocalization::transRoute('routes.about'),function(){
 		return view('front/about-us/about-us',['locale' => LaravelLocalization::getCurrentLocale()]);
 	});
 
-	Route::get(LaravelLocalization::transRoute('routes.apartmentDetail'),function(){
-		return view('front/apartment/detail',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
+	/*
+	 * Get detail of Apto
+	 */
+	Route::get(LaravelLocalization::transRoute('routes.apartmentDetail'),'Front\ApartmentController@apartment');
 
+	/*
+	 * Result of a searching to find aptos
+	 * - Sent locale, languages
+	 */
 	Route::get(LaravelLocalization::transRoute('routes.booking'),function(){
-		return view('front/booking/booking',['locale' => LaravelLocalization::getCurrentLocale()]);
+		return view('front/booking/booking',[
+			'locale' 	=> LaravelLocalization::getCurrentLocale(),
+			'languages'	=> App\Models\Language::all()
+		]);
 	});
 
 	Route::get(LaravelLocalization::transRoute('routes.contactUs'),function(){

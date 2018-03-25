@@ -7753,3 +7753,29 @@ body.login .register-form > .row input[type='submit'] {
   width: 100%;
 }
 
+/*
+ * Bookig page styles
+ */
+
+.mg-available-rooms .mg-avl-room-title span {
+  float: none !important;
+}
+
+.mg-available-rooms .mg-avl-room-title > span {
+  float: right !important;
+}
+
+.mg-available-rooms .mg-room-fecilities ul li {
+  float: left;
+  width: 50%;
+}
+
+/*
+ * Apto detail page styles
+ */
+
+.apartment-detail .mg-room-fecilities ul li {
+  float: left;
+  width: 33.3%;
+}
+

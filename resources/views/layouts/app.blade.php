@@ -13,8 +13,17 @@
         @yield('postheader')
         @yield('content')
 
-        <div id="sa-location" class="hidden">{{ $locale }}</div>
-        
+        @if (!empty($languages))
+            @foreach ($languages as $lang)
+                @if ($lang->iso == strtoupper($locale))
+                <script>
+                    var locale_id = {{ $lang->id_lang }};
+                    var locale_pr = '{{ $locale }}';
+                </script>
+                @endif
+            @endforeach
+        @endif
+
         <footer class="mg-footer">
             <div class="mg-footer-widget">
                 <div class="container">

@@ -1,7 +1,7 @@
 <?php
 return [
 	'about' 			=> 'about-us',
-	'apartmentDetail'	=> 'aparment',
+	'apartmentDetail'	=> 'apartment/{id?}',
 	'booking'			=> 'booking',
 	'contactUs'			=> 'contact-us',
 	'login'				=> 'login',

@@ -10427,7 +10427,7 @@ else { delete window.Modernizr; }
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 
 /***/ }),
@@ -10503,7 +10503,7 @@ loadGoogleMapsApi({ key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ" }).then(funct
 });
 
 /*
- * Plugin to load Google maps
+ * Modules to work with aptos
  */
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -16127,7 +16127,7 @@ http://www.gnu.org/licenses/gpl.html
 	$('.input-group.mg-check-in').datepicker({
 		startDate: "dateToday",
 		autoclose: true,
-		format: "yy-mm-dd"
+		format: "yyyy-mm-dd"
 	});
 
 	$('.input-group.mg-check-in').on('hide', function (e) {
@@ -16175,7 +16175,7 @@ http://www.gnu.org/licenses/gpl.html
 	$('.input-group.mg-check-out').datepicker({
 		startDate: "dateToday",
 		autoclose: true,
-		format: "yy-mm-dd"
+		format: "yyyy-mm-dd"
 	});
 
 	// Sticky Header
@@ -16275,9 +16275,10 @@ $(window).load(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
-
-    var locale = $('#sa-location').text();
-
+    /*
+     * - Search aptos from home header form
+     * - Redirect to booking page
+     */
     $('#btn-search-aptos').click(function (e) {
         e.preventDefault();
         var checkIn = $('input[name="checkin"]').val(),
@@ -16286,17 +16287,20 @@ $(window).load(function () {
         localStorage.setItem('checkin', checkIn);
         localStorage.setItem('checkout', checkOut);
 
-        if (locale == 'en') {
-            location.href = '/' + locale + '/booking';
-        } else if (locale == 'es') {
-            location.href = '/' + locale + '/reservacion';
+        if (locale_pr == 'en') {
+            location.href = '/' + locale_pr + '/booking';
+        } else if (locale_pr == 'es') {
+            location.href = '/' + locale_pr + '/reservacion';
         }
     });
 
-    if ($("#list-found-aptos").length > 0) {
-        var checkIn = localStorage.getItem('checkin'),
-            checkOut = localStorage.getItem('checkout');
+    /*
+     * Call api to search aptos with date parameters
+     */
+    var checkIn = localStorage.getItem('checkin'),
+        checkOut = localStorage.getItem('checkout');
 
+    if ($("#list-found-aptos").length > 0) {
         $.ajax({
             url: '/api/apartments',
             type: 'GET',
@@ -16306,32 +16310,61 @@ $(window).load(function () {
         });
     }
 
+    /*
+     * Function to drawn the found aptos
+     */
     function drawAptos(data) {
         var template = $('#apto-template');
-        var html = '';
+
+        /* print dates */
+        $('#sa-check-in').text(checkIn);
+        $('#sa-check-out').text(checkOut);
 
         $(data).each(function (index, el) {
-            var selecLang = '';
-
-            $(el.lang).each(function (langInd, langEl) {
-                if (locale == 'es' && langEl.id_lang == 1) {
-                    $('#apto-template .mg-avl-room-title a').text(el.lang[langInd].name);
-                    $('#apto-template .sa-apto-description').text(el.lang[langInd].description);
-                    $('#list-found-aptos').append('<div class="mg-avl-room">' + template.html() + '</div>');
-                }
-                if (locale == 'en' && langEl.id_lang == 2) {
-                    $('#apto-template .mg-avl-room-title a').text(el.lang[langInd].name);
-                    $('#apto-template .sa-apto-description').text(el.lang[langInd].description);
-                    $('#list-found-aptos').append('<div class="mg-avl-room">' + template.html() + '</div>');
-                }
+            var lang = el.lang.map(function (lang) {
+                return lang.id_lang == locale_id ? lang : null;
+            }).filter(function (lang) {
+                return lang != null;
             });
+            lang = lang[0];
+
+            if (lang != undefined) {
+                $('#apto-template .mg-avl-room-title a').text(lang.name);
+                $('#apto-template .sa-apto-description').text(lang.short_descritpiton);
+                $('#apto-template .sa-apto-price span').text('$' + el.price);
+
+                if (locale_pr == 'en') {
+                    $('#apto-template .sa-apto-link').attr('href', '/' + locale_pr + '/apartment/' + el.id_apartment);
+                } else if (locale_pr == 'es') {
+                    $('#apto-template .sa-apto-link').attr('href', '/' + locale_pr + '/apartamento/' + el.id_apartment);
+                }
+
+                /* Amenities */
+                var amenities = el.amenities.map(function (amenity) {
+                    return amenity[0].lang.map(function (lang) {
+                        return lang.id_lang == locale_id ? lang : null;
+                    }).filter(function (lang) {
+                        return lang != null;
+                    });
+                });
+
+                var amenHtml = '<ul>';
+                amenities.forEach(function (element) {
+                    amenHtml += '<li>' + element[0].name + '</li>';
+                });
+                amenHtml += '</ul>';
+
+                $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
+                $('#list-found-aptos').append('<div class="mg-avl-room">' + template.html() + '</div>');
+            }
         });
     }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

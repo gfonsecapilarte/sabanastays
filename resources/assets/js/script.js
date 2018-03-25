@@ -195,7 +195,7 @@
 	$('.input-group.mg-check-in').datepicker({
 		startDate: "dateToday",
 		autoclose: true,
-		format: "yy-mm-dd"
+		format: "yyyy-mm-dd"
 	});
 
 	$('.input-group.mg-check-in').on('hide', function (e) {
@@ -249,7 +249,7 @@
 	$('.input-group.mg-check-out').datepicker({
 		startDate: "dateToday",
 		autoclose: true,
-		format: "yy-mm-dd"
+		format: "yyyy-mm-dd"
 	});
 
 

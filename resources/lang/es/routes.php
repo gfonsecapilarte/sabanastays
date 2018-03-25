@@ -1,7 +1,7 @@
 <?php
 return [
 	'about' 			=> 'acerca-de-nosotros',
-	'apartmentDetail'	=> 'apartamento',
+	'apartmentDetail'	=> 'apartamento/{id?}',
 	'booking'			=> 'reservacion',
 	'contactUs'			=> 'contactenos',
 	'login'				=> 'iniciar-sesion',

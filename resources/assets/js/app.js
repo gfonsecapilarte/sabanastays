@@ -41,6 +41,6 @@ loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(functio
 })
 
 /*
- * Plugin to load Google maps
+ * Modules to work with aptos
  */
 import "./aptos/search.js";
