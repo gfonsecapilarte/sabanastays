@@ -15,31 +15,18 @@ Route::group(
 	'prefix' => LaravelLocalization::setLocale(),
 	'middleware' => [ 'localize' ]
 ],
-function()
-{
+function(){
 
-	/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
-	Route::get('/', function()
-	{
-		return view('front/home/index',[
-			'locale' => LaravelLocalization::getCurrentLocale(),
-			'languages'	=> App\Models\Language::all()
-		]);
-	});
+	/** Load Home **/
+	Route::get('/','Front\HomeController@index');
 
-	Route::get(LaravelLocalization::transRoute('routes.about'),function(){
-		return view('front/about-us/about-us',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
-
-	/*
-	 * Get detail of Apto
-	 */
+	/** Load abouts page **/
+	Route::get(LaravelLocalization::transRoute('routes.about'),'Front\AboutController@index');
+	
+	/** Get detail of a apto **/
 	Route::get(LaravelLocalization::transRoute('routes.apartmentDetail'),'Front\ApartmentController@apartment');
 
-	/*
-	 * Result of a searching to find aptos
-	 * - Sent locale, languages
-	 */
+	/** Result of a searching to find aptos **/
 	Route::get(LaravelLocalization::transRoute('routes.booking'),function(){
 		return view('front/booking/booking',[
 			'locale' 	=> LaravelLocalization::getCurrentLocale(),
