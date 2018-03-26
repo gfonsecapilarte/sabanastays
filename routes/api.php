@@ -45,3 +45,4 @@ Route::get('/module/about', 'Module\AboutController@getAbout');
 Route::get('/module/home', 'Module\HomeController@getHome');
 Route::get('/module/header', 'Module\HeaderController@getHeader');
 Route::get('/module/footer', 'Module\FooterController@getFooter');
+Route::get('/module/testimonial', 'Module\TestimonialController@getTestimonial');

@@ -9,6 +9,9 @@ class HeaderController extends Controller
 {
     public function getHeader()
     {
-        return HeaderModel::with(array('lang'))->first();
+        $result = HeaderModel::with(array('lang'))->first();
+        $module = json_decode($result);
+        HeaderModel::parseLang($module);
+        return json_encode($module);
     }
 }

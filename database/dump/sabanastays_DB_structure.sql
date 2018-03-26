@@ -64,9 +64,8 @@ DROP TABLE IF EXISTS `about_module_lang`;
 CREATE TABLE `about_module_lang` (
   `id_about_module` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
-  `company_title` varchar(50) DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `image_url` varchar(250) DEFAULT NULL,
+  `id_media` int(11) NULL,
   PRIMARY KEY (`id_about_module`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -363,10 +362,32 @@ DROP TABLE IF EXISTS `header_module_lang`;
 CREATE TABLE `header_module_lang` (
   `id_header_module` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
-  `title` varchar(45) DEFAULT NULL,
-  `short_description` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `id_media` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_header_module`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Volcado de tabla testimonialModule
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `testimonial_module`;
+
+CREATE TABLE `testimonial_module` (
+  `id_testimonial_module` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `id_media` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_testimonial_module`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `testimonial_module_lang`;
+
+CREATE TABLE `testimonial_module_lang` (
+  `id_testimonial_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `text` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_testimonial_module`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

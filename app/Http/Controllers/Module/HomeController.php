@@ -10,8 +10,9 @@ class HomeController extends Controller
 {
     public function getHome()
     {
-        $result = HomeModel::with(array('lang'))->first();
+        $result = HomeModel::with('lang')->first();
         $module = json_decode($result);
+        HomeModel::parseLang($module);
         $module->media_logo = null;
         if (!is_null($module->id_media_logo)) {
             $module->media_logo = MediaModel::where('id_media', '=', $module->id_media_logo)->with('lang')->get();
@@ -19,11 +20,7 @@ class HomeController extends Controller
         //search media images
         $media_result = MediaModel::getMediaByType($module->id_home_module, 'home_module');
         $module->media = json_decode($media_result);
-
-//        echo "<pre>";
-//print_r($module);
-//echo "</pre>";
-//die();
+        MediaModel::parseLang($module->media);
         return json_encode($module);
     }
 }

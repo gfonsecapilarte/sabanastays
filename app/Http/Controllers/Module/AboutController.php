@@ -9,6 +9,9 @@ class AboutController extends Controller
 {
     public function getAbout()
     {
-        return AboutModel::with(array('lang'))->first();
+        $result = AboutModel::with('lang')->first();
+        $module = json_decode($result);
+        AboutModel::parseLang($module);
+        return json_encode($module);
     }
 }
