@@ -23,7 +23,7 @@ class SettingsSeeder extends Seeder
             array('id_currency' => 1, 'name' => 'Dollar','sign' => '$', 'iso_code' => 'USD')
         ));
         //countries
-        DB::table('currency')->insert(array(
+        DB::table('country')->insert(array(
             array('id_country' => 1, 'name' => 'Costa Rica')
         ));
         //states
