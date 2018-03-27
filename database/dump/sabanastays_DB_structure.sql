@@ -64,6 +64,7 @@ DROP TABLE IF EXISTS `about_module_lang`;
 CREATE TABLE `about_module_lang` (
   `id_about_module` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `id_media` int(11) NULL,
   PRIMARY KEY (`id_about_module`, `id_lang`)
@@ -329,8 +330,7 @@ DROP TABLE IF EXISTS `home_module`;
 
 CREATE TABLE `home_module` (
   `id_home_module` int(11) NOT NULL AUTO_INCREMENT,
-  `video_url` varchar(100) DEFAULT NULL,
-  `id_media_logo` int(11) DEFAULT NULL,
+  `id_media` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_home_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -339,8 +339,7 @@ DROP TABLE IF EXISTS `home_module_lang`;
 CREATE TABLE `home_module_lang` (
   `id_home_module` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
-  `title` varchar(45) DEFAULT NULL,
-  `short_description` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id_home_module`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -354,18 +353,33 @@ DROP TABLE IF EXISTS `header_module`;
 
 CREATE TABLE `header_module` (
   `id_header_module` int(11) NOT NULL AUTO_INCREMENT,
+  `id_media_logo` int(11) DEFAULT NULL,
+  `id_media_background` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_header_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `header_module_lang`;
 
-CREATE TABLE `header_module_lang` (
-  `id_header_module` int(11) unsigned NOT NULL,
-  `id_lang` int(11) unsigned NOT NULL,
-  `id_media` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_header_module`, `id_lang`)
+
+# Volcado de tabla homeAboutModule
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `home_about_module`;
+
+CREATE TABLE `home_about_module` (
+  `id_home_about_module` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_home_about_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `home_about_module_lang`;
+
+CREATE TABLE `home_about_module_lang` (
+  `id_home_about_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `video_url` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_home_about_module`, `id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 # Volcado de tabla testimonialModule

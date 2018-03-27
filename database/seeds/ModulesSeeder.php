@@ -12,14 +12,55 @@ class ModulesSeeder extends Seeder
      */
     public function run()
     {
+        //Header
+        self::insertHeaderModule();
+        //Home
+        self::insertHomeModule();
+        //Home About
+        self::insertHomeAboutModule();
+        //About
+        self::insertAboutModule();
+    }
+
+    private static function insertHeaderModule()
+    {
+        DB::table('header_module')->insert(array(
+            'id_media_logo' => null,
+            'id_media_background' => null
+        ));
+    }
+
+    private static function insertHomeModule()
+    {
         $id = DB::table('home_module')->insertGetId(array(
-            'video_url' => 'https://www.youtube.com/watch?v=TFCBMuI2TRk',
-            'id_media_logo' => null
+            'id_media' => null
         ));
         //langs
         DB::table('home_module_lang')->insert(array(
-            array('id_home_module' => $id, 'id_lang' => 1, 'title' => 'Inicio', 'short_description' => 'Descripción de la página', 'description' => 'Descripción larga'),
-            array('id_home_module' => $id, 'id_lang' => 2, 'title' => 'Home', 'short_description' => 'Page description', 'description' => 'Long description'),
+            array('id_home_module' => $id, 'id_lang' => 1, 'title' => 'Inicio', 'description' => 'Descripción de la página'),
+            array('id_home_module' => $id, 'id_lang' => 2, 'title' => 'Home', 'description' => 'Page description'),
+        ));
+    }
+
+    private static function insertHomeAboutModule()
+    {
+        $id = DB::table('home_about_module')->insertGetId(array());
+        //langs
+        $description = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.';
+        DB::table('home_about_module_lang')->insert(array(
+            array('id_home_about_module' => $id, 'id_lang' => 1, 'title' => 'Nosotros', 'description' => $description, 'video_url' => 'https://www.youtube.com/watch?v=M1GIEZHSJco'),
+            array('id_home_about_module' => $id, 'id_lang' => 2, 'title' => 'About Us', 'description' => $description, 'video_url' => 'https://www.youtube.com/watch?v=M1GIEZHSJco'),
+        ));
+    }
+
+    private static function insertAboutModule()
+    {
+        $id = DB::table('about_module')->insertGetId(array());
+        //langs
+        $description = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.';
+        DB::table('about_module_lang')->insert(array(
+            array('id_about_module' => $id, 'id_lang' => 1, 'title' => 'Nosotros', 'description' => $description, 'id_media' => null),
+            array('id_about_module' => $id, 'id_lang' => 2, 'title' => 'About Us', 'description' => $description, 'id_media' => null),
         ));
     }
 }
