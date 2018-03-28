@@ -36,7 +36,7 @@ class DataSeeder extends Seeder
         foreach ($apartments as $id_apartment) {
             $checkin = str_pad($in, 2, '0', STR_PAD_LEFT);
             $checkout = str_pad($out, 2, '0', STR_PAD_LEFT);
-            DB::table('apartment')->insert(array(
+            DB::table('booking')->insert(array(
                 'id_user' => $id_user,
                 'booking_date' => date('Y-m-d H:i:s'),
                 'booking_date_start' => date('Y-m-').$checkin,
