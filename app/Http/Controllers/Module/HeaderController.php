@@ -9,6 +9,9 @@ class HeaderController extends Controller
 {
     public function getHeader()
     {
-        return HeaderModel::first();
+        $result = HeaderModel::first();
+        $module = json_decode($result);
+        HeaderModel::fillMedia($module, array('id_media_logo', 'id_media_background'));
+        return response()->json($module);
     }
 }

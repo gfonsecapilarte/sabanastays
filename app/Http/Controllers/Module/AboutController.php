@@ -12,6 +12,6 @@ class AboutController extends Controller
         $result = AboutModel::with('lang')->first();
         $module = json_decode($result);
         AboutModel::parseLang($module);
-        return json_encode($module);
+        return response()->json($module);
     }
 }

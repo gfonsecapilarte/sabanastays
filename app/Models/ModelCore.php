@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Language as LanguageModel;
+use App\Models\Media as MediaModel;
 
 class ModelCore extends Model
 {
@@ -27,6 +28,9 @@ class ModelCore extends Model
         $lang = array();
         foreach ($data as $row) {
             $row->iso = LanguageModel::find($row->id_lang)->iso;
+            if (property_exists($row, 'id_media')) {
+                self::fillMedia($row, 'id_media');
+            }
             $lang[$row->iso] = $row;
         }
         $model->lang = $lang;
@@ -39,5 +43,29 @@ class ModelCore extends Model
             self::parseLang($model);
         }
         return $models;
+    }
+
+    public static function fillMedia(&$model, $keys = 'id_media')
+    {
+        if (is_array($model)) {
+            foreach ($model as &$m) {
+                self::fillMedia($m, $keys);
+            }
+            return;
+        }
+        if (is_null($keys)) {
+            return;
+        }
+        if (!is_array($keys)) {
+            $keys = array($keys);
+        }
+        foreach ($keys as $key) {
+            $k = str_replace('id_', '', $key);
+            if (property_exists($model, $key) && !empty($model->{$key}) && !is_null($model->{$key})) {
+                $model->{$k} = MediaModel::getMediaById($model->{$key});
+            } else {
+                $model->{$k} = null;
+            }
+        }
     }
 }

@@ -13,6 +13,6 @@ class HomeAboutController extends Controller
         $result = HomeAboutModel::with('lang')->first();
         $module = json_decode($result);
         HomeAboutModel::parseLang($module);
-        return json_encode($module);
+        return response()->json($module);
     }
 }

@@ -12,6 +12,7 @@ class TestimonialController extends Controller
         $result = TestimonialModel::with(array('lang'))->first();
         $module = json_decode($result);
         TestimonialModel::parseLang($module);
-        return json_encode($module);
+        TestimonialModel::fillMedia($module);
+        return response()->json($module);
     }
 }
