@@ -6,6 +6,6 @@ use App\Models\ModelCore;
 
 class Building extends ModelCore
 {
-    protected $table = 'buinding';
+    protected $table = 'building';
     protected $primaryKey = 'id_building';
 }
