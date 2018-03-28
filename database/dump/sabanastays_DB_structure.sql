@@ -164,6 +164,8 @@ CREATE TABLE `building` (
   `id_building` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `address` varchar(100) DEFAULT NULL,
   `postal_code` varchar(20) DEFAULT NULL,
+  `lat` varchar(255) DEFAULT NULL,
+  `lng` varchar(255) DEFAULT NULL,
   `id_city` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id_building`),
   KEY `fk_building_cities1_idx` (`id_city`),
@@ -257,6 +259,39 @@ CREATE TABLE `users` (
   `updated_at` timestamp not null,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Volcado de tabla address
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `address`;
+
+CREATE TABLE `address` (
+  `id_address` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `postcode` varchar(45) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `second_address` varchar(255) DEFAULT NULL,
+  `id_country` int(11) unsigned NOT NULL,
+  `id_state` int(11) unsigned NOT NULL,
+  `id_city` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_address`),
+  KEY `fk_address_country1_idx` (`id_country`),
+  KEY `fk_address_state1_idx` (`id_state`),
+  KEY `fk_address_city1_idx` (`id_city`),
+  CONSTRAINT `fk_address_country1_idx` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_address_state1_idx` FOREIGN KEY (`id_state`) REFERENCES `state` (`id_state`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_address_city1_idx` FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `user_address`;
+
+CREATE TABLE `user_address` (
+  `id_user` int(11) unsigned NOT NULL,
+  `id_address` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_user`, `id_address`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 # Volcado de tabla bookings

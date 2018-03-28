@@ -138,6 +138,8 @@ class DataSeeder extends Seeder
         $building = new BuildingModel();
         $building->address = 'Building Address 123';
         $building->id_city = 1;
+        $building->lat = '9.9212797';
+        $building->lng = '-84.0915074';
         $building->save();
         return $building->id_building;
     }
