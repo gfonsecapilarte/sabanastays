@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Module;
 
 use App\Http\Controllers\Controller;
-use App\Models\Module\Header as HeaderModel;
+use App\Models\Module\Contact as ContactModel;
 
-class HeaderController extends Controller
+class ContactController extends Controller
 {
     public function getModule()
     {
-        $result = HeaderModel::first();
+        $result = ContactModel::with('lang')->first();
         $module = json_decode($result);
-        HeaderModel::fillMedia($module, array('id_media_logo', 'id_media_background'));
+        ContactModel::parseLang($module);
         return response()->json($module);
     }
 }

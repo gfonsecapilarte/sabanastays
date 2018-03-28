@@ -8,7 +8,7 @@ use App\Models\Media as MediaModel;
 
 class HomeController extends Controller
 {
-    public function getHome()
+    public function getModule()
     {
         $result = HomeModel::with('lang')->first();
         $module = json_decode($result);

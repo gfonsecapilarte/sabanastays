@@ -7,7 +7,7 @@ use App\Models\Module\About as AboutModel;
 
 class AboutController extends Controller
 {
-    public function getAbout()
+    public function getModule()
     {
         $result = AboutModel::with('lang')->first();
         $module = json_decode($result);

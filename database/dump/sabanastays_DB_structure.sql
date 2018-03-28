@@ -289,14 +289,23 @@ CREATE TABLE `booking` (
 DROP TABLE IF EXISTS `contact_module`;
 
 CREATE TABLE `contact_module` (
-  `id_contact_module` int(11) NOT NULL,
-  `subject` varchar(50) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `address` varchar(50) DEFAULT NULL,
-  `phone` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `location` varchar(50) DEFAULT NULL,
+  `id_contact_module` int(11) NOT NULL AUTO_INCREMENT,
+  `lat` varchar(255) DEFAULT NULL,
+  `lng` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_contact_module`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `contact_module_lang`;
+
+CREATE TABLE `contact_module_lang` (
+  `id_contact_module` int(11) unsigned NOT NULL,
+  `id_lang` int(11) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_contact_module`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

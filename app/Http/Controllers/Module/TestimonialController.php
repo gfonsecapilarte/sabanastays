@@ -7,7 +7,7 @@ use App\Models\Module\Testimonial as TestimonialModel;
 
 class TestimonialController extends Controller
 {
-    public function getTestimonial()
+    public function getModule()
     {
         $result = TestimonialModel::with(array('lang'))->first();
         $module = json_decode($result);

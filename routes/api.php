@@ -41,12 +41,13 @@ Route::get('/apartments', 'ApartmentController@getApartments');
 Route::get('/apartment', 'ApartmentController@getApartment');
 
 //modules
-Route::get('/module/about', 'Module\AboutController@getAbout');
-Route::get('/module/home', 'Module\HomeController@getHome');
+Route::get('/module/about', 'Module\AboutController@getModule');
+Route::get('/module/home', 'Module\HomeController@getModule');
 Route::get('/module/home/about', 'Module\HomeAboutController@getModule');
-Route::get('/module/header', 'Module\HeaderController@getHeader');
+Route::get('/module/header', 'Module\HeaderController@getModule');
 //Route::get('/module/footer', 'Module\FooterController@getFooter');
-Route::get('/module/testimonial', 'Module\TestimonialController@getTestimonial');
+Route::get('/module/testimonial', 'Module\TestimonialController@getModule');
+Route::get('/module/contact', 'Module\ContactController@getModule');
 
 //media
 Route::get('/media', 'MediaController@getMedia');

@@ -20,6 +20,8 @@ class ModulesSeeder extends Seeder
         self::insertHomeAboutModule();
         //About
         self::insertAboutModule();
+        //contact
+        self::insertContactModule();
     }
 
     private static function insertHeaderModule()
@@ -61,6 +63,33 @@ class ModulesSeeder extends Seeder
         DB::table('about_module_lang')->insert(array(
             array('id_about_module' => $id, 'id_lang' => 1, 'title' => 'Nosotros', 'description' => $description, 'id_media' => null),
             array('id_about_module' => $id, 'id_lang' => 2, 'title' => 'About Us', 'description' => $description, 'id_media' => null),
+        ));
+    }
+
+    private static function insertContactModule()
+    {
+        $id = DB::table('contact_module')->insertGetId(array('lat' => '9.9344347', 'lng' => '-84.1055177'));
+        //langs
+        $description = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.';
+        DB::table('contact_module_lang')->insert(array(
+            array(
+                'id_contact_module' => $id,
+                'id_lang' => 1,
+                'title' => 'Nuestras Oficinas',
+                'description' => $description,
+                'address' => 'Level 13, 2 Elizabeth St, San Jose, Costa Rica',
+                'phone' => '+1 (800) 555-5555',
+                'email' => 'reservations@sabanastays.com'
+            ),
+            array(
+                'id_contact_module' => $id,
+                'id_lang' => 2,
+                'title' => 'Our Offices',
+                'description' => $description,
+                'address' => 'Level 13, 2 Elizabeth St, San Jose, Costa Rica',
+                'phone' => '+1 (800) 555-5555',
+                'email' => 'reservations@sabanastays.com'
+            ),
         ));
     }
 }
