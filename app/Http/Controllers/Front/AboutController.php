@@ -1,30 +1,29 @@
 <?php
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Module\AboutController as About;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use App\Models\Language;
+use Illuminate\Http\Request;
 
-class AboutController extends About{
-    public function index(){
-        $current_locale     = LaravelLocalization::getCurrentLocale();
-        $current_language   = Language::where('iso',$current_locale)->first();
-        $about              = parent::getAbout();
-        $trans_about        = array();
+class AboutController{
+    public function index(Request $request){
+        $locale   = LaravelLocalization::getCurrentLocale();
+        $about    = app('App\Http\Controllers\Module\AboutController')->getAbout();
+        $about    = json_decode($about);
+        $about    = (array)$about->lang;
+        $about    = (array)$about[''.strtoupper($locale).''];
 
-        foreach ($about->lang as $lang){
-            if($lang->id_lang == $current_language->id_lang){
-                $trans_about['company_title']   = $lang->company_title;
-                $trans_about['description']     = $lang->description;
-                $trans_about['image_url']       = $lang->image_url;
-            }
-        }
+        /** Get body image of about us **/
+        $request->request->add(['id_media' => $about['id_media']]);
+        $body_image          = app('App\Http\Controllers\MediaController')->getMedia($request);
+        $about['body_image'] = json_decode($body_image);
 
-        $about = $trans_about;
+        /** Get header and logo images **/
+        #$header_images = app('App\Http\Controllers\Module\HeaderController')->getHeader();
+        #$about['header_images'] = (array) $header_images;
 
         return view('front/about-us/about-us',[
-            'locale' => $current_locale,
-            'about'  => $about
+            'locale' => $locale,
+            'about'  => (object) $about
         ]);
     }
 }

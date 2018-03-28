@@ -2,26 +2,19 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="#mega-slider" data-slide-to="0" class="active"></li>
-        <li data-target="#mega-slider" data-slide-to="1"></li>
-        <li data-target="#mega-slider" data-slide-to="2"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <div class="item active beactive">
-            <img src="{{ asset('images/slide-4.png') }}" alt="...">
-            <div class="carousel-caption">
-                <h2>sabanastays</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        @foreach ($home->header_media as $img_key => $image)
+            <div class="item {{ ($img_key == 0) ? 'active beactive':'' }}">
+                <img src="{{ asset($image->path) }}" alt="...">
+                <div class="carousel-caption">
+                    <h2>{{ $home->header_title }}</h2>
+                    <p>{{ $home->header_descr }}</p>
+                </div>
             </div>
-        </div>
-        <div class="item">
-            <img src="{{ asset('images/slide-2.png') }}" alt="...">
-            <div class="carousel-caption">
-                <h2>sabanastays</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-        </div>
+        @endforeach
     </div>
 
     <!-- Controls -->

@@ -14,8 +14,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h2 class="mg-sec-left-title">{{ $home->lang['title'] }}</h2>
-                    <p>{{ $home->lang['description'] }}</p>
+                    <h2 class="mg-sec-left-title">{{ $home->body_title }}</h2>
+                    <p>{{ $home->body_descr }}</p>
                 </div>
                 <div class="col-md-5">
                     <div class="video-responsive">

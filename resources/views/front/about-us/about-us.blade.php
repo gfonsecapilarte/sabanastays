@@ -16,11 +16,11 @@
             <div class="row">
 
                 <div class="col-md-8">
-                    <h2 class="mg-sec-left-title">{{ $about['company_title'] }}</h2>
-                    <p>{{ $about['description'] }}</p>
+                    <h2 class="mg-sec-left-title">{{ $about->title }}</h2>
+                    <p>{{ $about->description }}</p>
                 </div>
                 <div class="col-md-4">
-                    <img src="{{ asset($about['image_url']) }}" alt="" class="img-responsive">
+                    <img src="{{ asset($about->body_image[0]->path) }}" alt="" class="img-responsive">
                 </div>
             </div>
         </div>
