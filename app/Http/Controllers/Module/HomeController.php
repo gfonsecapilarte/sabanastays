@@ -13,14 +13,10 @@ class HomeController extends Controller
         $result = HomeModel::with('lang')->first();
         $module = json_decode($result);
         HomeModel::parseLang($module);
-        $module->media_logo = null;
-        if (!is_null($module->id_media_logo)) {
-            $module->media_logo = MediaModel::where('id_media', '=', $module->id_media_logo)->with('lang')->get();
-        }
         //search media images
         $media_result = MediaModel::getMediaByType($module->id_home_module, 'home_module');
-        $module->media = json_decode($media_result);
-        MediaModel::parseLang($module->media);
+        $module->sliders = json_decode($media_result);
+        MediaModel::parseLang($module->sliders);
         return json_encode($module);
     }
 }
