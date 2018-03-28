@@ -207,7 +207,7 @@ CREATE TABLE `apartment_lang` (
   `id_apartment` int(11) unsigned NOT NULL,
   `id_lang` int(11) unsigned NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `short_descritpiton` varchar(255) DEFAULT NULL,
+  `short_description` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id_apartment`, `id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
