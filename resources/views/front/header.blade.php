@@ -4,12 +4,14 @@
         <div class="container">
 
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="{{ asset($header->media_logo[0]->path) }}" alt="LOGO SABANA STAYS"></a>
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <img src="{{ asset($header->media_logo[0]->path) }}" alt="LOGO SABANA STAYS">
+                </a>
             </div>
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">@lang('general.login')</a></li>
+                    <li><a href="{{ route('login') }}">@lang('general.login')</a></li>
                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                         <li class="{{ $locale == $localeCode ? 'active' : '' }}">
                             <a class="lang-selector" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">

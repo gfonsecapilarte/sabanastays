@@ -26,16 +26,16 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="widget">
                                 <ul>
-                                    <li><a href="#">@lang('general.aboutUs')</a></li>
-                                    <li><a href="#">@lang('general.contactUs')</a></li>
+                                    <li><a href="{{ route('aboutus') }}">@lang('general.aboutUs')</a></li>
+                                    <li><a href="{{ route('contactus') }}">@lang('general.contactUs')</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6">
                             <div class="widget">
                                 <ul>
-                                    <li><a href="#">@lang('general.privacyPolicy')</a></li>
-                                    <li><a href="#">@lang('general.termsService')</a></li>
+                                    <li><a href="{{ route('privacyPolicy') }}">@lang('general.privacyPolicy')</a></li>
+                                    <li><a href="{{ route('termsService') }}">@lang('general.termsService')</a></li>
                                 </ul>
                             </div>
                         </div>

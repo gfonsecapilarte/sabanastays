@@ -6,5 +6,7 @@ return [
 	'contactUs'			=> 'contact-us',
 	'login'				=> 'login',
 	'myProfile'			=> 'my-profile',
-	'myBookings'		=> 'my-bookings'
+	'myBookings'		=> 'my-bookings',
+	'privacyPolicy'		=> 'privacy-policy',
+	'termsService'		=> 'terms-of-service'
 ];

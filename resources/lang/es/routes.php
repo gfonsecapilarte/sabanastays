@@ -6,5 +6,7 @@ return [
 	'contactUs'			=> 'contactenos',
 	'login'				=> 'iniciar-sesion',
 	'myProfile'			=> 'mi-perfil',
-	'myBookings'		=> 'mis-reservas'
+	'myBookings'		=> 'mis-reservas',
+	'privacyPolicy'		=> 'politicas-de-privacidad',
+	'termsService'		=> 'terminos-de-servicio'
 ];

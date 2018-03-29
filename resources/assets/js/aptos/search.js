@@ -8,17 +8,38 @@ $(document).ready(function(){
      */
     $('#btn-search-aptos').click(function(e){
         e.preventDefault();
-        var checkIn  = $('input[name="checkin"]').val(),
-            checkOut = $('input[name="checkout"]').val();
+        var checkIn     = $('input[name="checkin"]'),
+            checkOut    = $('input[name="checkout"]'),
+            checkInVal  = checkIn.val(),
+            checkOutVal = checkOut.val();
 
-        localStorage.setItem('checkin',checkIn);
-        localStorage.setItem('checkout',checkOut);
-
-        if(locale == 'EN'){
-            location.href = '/en/booking';
+        if(checkInVal.length == 0){
+            checkIn.addClass('error');
+            checkIn.siblings('.input-group-addon').addClass('error');
         }
-        else if(locale == 'ES'){
-            location.href = '/es/reservacion';
+        else{
+            checkIn.removeClass('error');
+            checkIn.siblings('.input-group-addon').removeClass('error');
+        }
+
+        if(checkOutVal.length == 0){
+            checkOut.addClass('error');
+            checkOut.siblings('.input-group-addon').addClass('error');
+        }else{
+            checkOut.removeClass('error');
+            checkOut.siblings('.input-group-addon').removeClass('error');
+        }
+
+        if(checkInVal.length != 0 && checkOutVal.length != 0){
+            localStorage.setItem('checkin',checkInVal);
+            localStorage.setItem('checkout',checkOutVal);
+
+            if(locale == 'EN'){
+                location.href = '/en/booking';
+            }
+            else if(locale == 'ES'){
+                location.href = '/es/reservacion';
+            }
         }
     });
 
@@ -70,10 +91,9 @@ $(document).ready(function(){
                 }
 
                 /* Amenities */
-                var amenities = el.amenities.map(amenity => amenity.lang[''+locale+'']);
                 var amenHtml = '<ul>';
-                amenities.forEach(function(element){
-                    amenHtml += '<li>'+element.name+'</li>';
+                el.amenities.forEach(function(amenity){
+                    amenHtml += '<li><i class="'+amenity.icon+'"></i>'+amenity.lang[''+locale+''].name+'</li>';
                 });
                 amenHtml += '</ul>';
 
