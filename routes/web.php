@@ -29,9 +29,8 @@ function(){
 	/** Load booking page **/
 	Route::get(LaravelLocalization::transRoute('routes.booking'),'Front\BookingController@loadBookingPage');
 
-	Route::get(LaravelLocalization::transRoute('routes.contactUs'),function(){
-		return view('front/contact-us/contact-us',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
+	/** Load contact us page **/
+	Route::get(LaravelLocalization::transRoute('routes.contactUs'),'Front\ContactController@loadContactPage');
 
 	Route::get(LaravelLocalization::transRoute('routes.login'),function(){
 		return view('front/users/login',['locale' => LaravelLocalization::getCurrentLocale()]);

@@ -23,15 +23,15 @@ loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(functio
     if($("#mg-map").length > 0){
         var map = new googleMaps.Map(document.querySelector("#mg-map"), {
             center: {
-                lat: 40.7484405,
-                lng: -73.9944191
+                lat: saLatitude,
+                lng: saLongitude
             },
             zoom: 12,
             zoomControl: false
         });
 
         var marker = new googleMaps.Marker({
-            position: {lat: 40.7484405, lng: -73.9944191},
+            position: {lat: saLatitude, lng: saLongitude},
             map: map,
             title: "Lorem ipsum"
         });

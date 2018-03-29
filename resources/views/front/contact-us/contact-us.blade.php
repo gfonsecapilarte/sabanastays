@@ -11,17 +11,22 @@
         @include('front/postheader')
     @stop
 
+    <script>
+        var saLatitude  = {{ $contact->lat }};
+        var saLongitude = {{ $contact->lng }};
+    </script>
+
     <div class="mg-page">
         <div class="container">
             <div class="row">
 
                 <div class="col-md-7">
-                    <h2 class="mg-sec-left-title">@lang('general.ourOffices')</h2>
-                    <p>Consulatu quietem ipsas obruamus. Controversia unam queo firmam videri, afranius derigatur sine sentit inliberali beatam scribendi splendide. Recusabo maximisque ferentur arbitraretur vellem oritur cupiditatibus copulatas.</p>
+                    <h2 class="mg-sec-left-title">{{ $contact->lang->title }}</h2>
+                    <p>{{ $contact->lang->description }}</p>
                     <ul class="mg-contact-info">
-                        <li><i class="fa fa-map-marker"></i> Level 13, 2 Elizabeth St, San Jose, Costa Rica</li>
-                        <li><i class="fa fa-phone"></i> +1(800) 555-5555</li>
-                        <li><i class="fa fa-envelope"></i> <a href="mailto:#">reservations@sabanastays.com</a></li>
+                        <li><i class="fa fa-map-marker"></i>{{ $contact->lang->address }}</li>
+                        <li><i class="fa fa-phone"></i> {{ $contact->lang->phone }}</li>
+                        <li><i class="fa fa-envelope"></i> <a href="mailto:{{ $contact->lang->email }}">{{ $contact->lang->email }}</a></li>
                     </ul>
                     <div id="mg-map" class="mg-map"></div>
                 </div>
