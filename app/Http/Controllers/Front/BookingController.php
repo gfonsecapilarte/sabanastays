@@ -20,4 +20,18 @@ class BookingController{
             'header'    => $header
 		]);
     }
+
+    /*
+     * Method to load the my booking page
+     */
+    public function loadMyBookingPage(){
+        /** Get header and logo images **/
+        $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
+        $header = $header->getData();
+
+        return view('front/booking/my-bookings',[
+			'locale' 	=> LaravelLocalization::getCurrentLocale(),
+            'header'    => $header
+		]);
+    }
 }

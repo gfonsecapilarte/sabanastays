@@ -11,6 +11,11 @@
         @include('front/apartment/postheader')
     @stop
 
+    <script>
+        var saLatitude  = {{ $apartment->building->lat }};
+        var saLongitude = {{ $apartment->building->lng }};
+    </script>
+
     <div class="mg-book-now">
         <div class="container">
             <div class="row">

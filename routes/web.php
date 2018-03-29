@@ -32,15 +32,12 @@ function(){
 	/** Load contact us page **/
 	Route::get(LaravelLocalization::transRoute('routes.contactUs'),'Front\ContactController@loadContactPage');
 
-	Route::get(LaravelLocalization::transRoute('routes.login'),function(){
-		return view('front/users/login',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
+	/** Load login page **/
+	Route::get(LaravelLocalization::transRoute('routes.login'),'Front\UserController@loadLoginPage');
 
-	Route::get(LaravelLocalization::transRoute('routes.myProfile'),function(){
-		return view('front/users/profile',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
+	/** Load profile page **/
+	Route::get(LaravelLocalization::transRoute('routes.myProfile'),'Front\UserController@loadProfilePage');
 
-	Route::get(LaravelLocalization::transRoute('routes.myBookings'),function(){
-		return view('front/booking/my-bookings',['locale' => LaravelLocalization::getCurrentLocale()]);
-	});
+	/** Load my bookings **/
+	Route::get(LaravelLocalization::transRoute('routes.myBookings'),'Front\BookingController@loadMyBookingPage');
 });

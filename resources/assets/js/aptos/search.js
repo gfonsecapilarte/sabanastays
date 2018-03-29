@@ -11,11 +11,11 @@ $(document).ready(function(){
         localStorage.setItem('checkin',checkIn);
         localStorage.setItem('checkout',checkOut);
 
-        if(locale_pr == 'en'){
-            location.href = '/'+locale_pr+'/booking';
+        if(locale == 'EN'){
+            location.href = '/en/booking';
         }
-        else if(locale_pr == 'es'){
-            location.href = '/'+locale_pr+'/reservacion';
+        else if(locale == 'ES'){
+            location.href = '/es/reservacion';
         }
     });
 
