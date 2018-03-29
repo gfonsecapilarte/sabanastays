@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\User as UserModel;
 use App\Models\Building as BuildingModel;
+use App\Models\Amenity as AmenityModel;
 
 class DataSeeder extends Seeder
 {
@@ -20,11 +21,11 @@ class DataSeeder extends Seeder
         //building
         $id_building = self::createBuilding();
         //amenities
-        $amenities = self::createAmenities();
+//        $amenities = self::createAmenities();
         //apartment type
         $apartment_types = self::createApartmentType();
         //apartments
-        $apartments = self::createApartments($id_building, $apartment_types, $amenities);
+        $apartments = self::createApartments($id_building, $apartment_types);
         //booking
         self::createBooking($id_user, $apartments);
     }
@@ -50,7 +51,7 @@ class DataSeeder extends Seeder
         }
     }
 
-    private static function createApartments($id_building, $apartment_types, $amenities)
+    private static function createApartments($id_building, $apartment_types)
     {
         $ids = array();
         $apartments = array(
@@ -74,11 +75,14 @@ class DataSeeder extends Seeder
                 array('id_apartment' => $id, 'id_lang' => 2, 'name' => 'Apartament #'.$id, 'short_description' => 'Description del apartament #'.$id, 'description' => 'Long description')
             ));
             //amenities
-            foreach ($amenities as $id_amenity) {
-                DB::table('apartment_amenity')->insert(array(
-                    'id_apartment' => $id, 'id_amenity' => $id_amenity
-                ));
-            }
+            self::associateAmenities($id);
+            //media
+            DB::table('media')->insert(array(
+                array('path' => './1.png', 'media_type' => 'IMAGE', 'id_type' => $id, 'type' => 'apartment'),
+                array('path' => './2.png', 'media_type' => 'IMAGE', 'id_type' => $id, 'type' => 'apartment'),
+                array('path' => './3.png', 'media_type' => 'IMAGE', 'id_type' => $id, 'type' => 'apartment'),
+                array('path' => './4.png', 'media_type' => 'IMAGE', 'id_type' => $id, 'type' => 'apartment'),
+            ));
 
             $ids[] = $id;
         }
@@ -110,8 +114,23 @@ class DataSeeder extends Seeder
         return $ids;
     }
 
+    private static function associateAmenities($id_apartment)
+    {
+        $amenities = AmenityModel::all();
+        foreach ($amenities as $amenity) {
+            DB::table('apartment_amenity')->insert(array(
+                'id_apartment' => $id_apartment, 'id_amenity' => $amenity->id_amenity
+            ));
+        }
+    }
+
+    /**
+     * @deprecated since version 1.1 use seeder AmenitySeeder
+     * @return type
+     */
     private static function createAmenities()
     {
+        return;
         $ids = array();
         $amenities = array(
             array('Terraza', 'Terrace'),

@@ -78,6 +78,7 @@ DROP TABLE IF EXISTS `amenity`;
 
 CREATE TABLE `amenity` (
   `id_amenity` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_amenity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
