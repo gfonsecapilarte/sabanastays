@@ -316,7 +316,8 @@
                     <div class="col-sm-12">
                     </div>
                 </div>
-                <a href="#personal-info" class="btn btn-main btn-next-tab">@lang('general.bookApartment')</a>
+                <a href="#" class="btn btn-dark sa-apto-link">@lang('general.viewDetails') <i class="fa fa-angle-double-right"></i></a>
+                <a href="#" class="btn btn-main pull-right">@lang('general.bookApartment')</a>
             </div>
         </div>
     </div>

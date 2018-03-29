@@ -23,6 +23,7 @@
     "dependencies": {
         "bootstrap": "^3.3.7",
         "bootstrap-datepicker": "^1.4.0",
+        "date-and-time": "^0.6.2",
         "desandro-classie": "^1.0.1",
         "font-awesome": "^4.4.0",
         "jquery": "^1.11.0",
