@@ -27,7 +27,7 @@ function(){
 	Route::get(LaravelLocalization::transRoute('routes.apartmentDetail'),'Front\ApartmentController@apartment');
 
 	/** Load booking page **/
-	Route::get(LaravelLocalization::transRoute('routes.booking'),'Front\BookingController@loadBookingPage');
+	Route::get(LaravelLocalization::transRoute('routes.booking'),'Front\BookingController@loadBookingPage')->name('booking');
 
 	/** Load contact us page **/
 	Route::get(LaravelLocalization::transRoute('routes.contactUs'),'Front\ContactController@loadContactPage');

@@ -19,12 +19,11 @@ class ApartmentController{
         $apartment->lang  = $apartment->lang[''.strtoupper($locale).''];
 
         /** Amenities **/
-        $amenities = array();
+        //$amenities = array();
         foreach ($apartment->amenities as $amenity) {
             $amenity->lang = (array)$amenity->lang;
-            array_push($amenities,$amenity->lang[''.strtoupper($locale).'']);
+            $amenity->lang = $amenity->lang[''.strtoupper($locale).''];
         }
-        $apartment->amenities = $amenities;
 
         /** Get header and logo images **/
         $header = app('App\Http\Controllers\Module\HeaderController')->getModule();

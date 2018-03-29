@@ -143,6 +143,9 @@ input[type=radio]:checked:before {
 .mt80 {
   margin-top: 80px !important;
 }
+.mr10 {
+  margin-right: 10px !important;
+}
 .mg-404-error-txt {
   padding: 0 190px;
 }

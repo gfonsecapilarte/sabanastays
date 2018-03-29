@@ -74,5 +74,6 @@ return [
     'bookingId'                 => 'Booking ID',
     'paid'                      => 'PAID',
     'bookingConditions'         => 'Booking Conditions',
-    'viewDetails'               => 'View Details'
+    'viewDetails'               => 'View Details',
+    'comeBack'                  => 'Come Back'
 ];

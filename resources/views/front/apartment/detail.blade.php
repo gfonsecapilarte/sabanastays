@@ -29,6 +29,10 @@
                     <p>{{ $apartment->lang->description }}</p>
                 </div>
             </div>
+            <div class="row" >
+                <a href="#" class="btn btn-main pull-right">@lang('general.bookApartment')</a>
+                <a href="{{ route('booking') }}" class="btn btn-main pull-right mr10">@lang('general.comeBack')</a>
+            </div>
         </div>
     </div>
 
@@ -40,7 +44,7 @@
                     <div class="col-xs-12">
                         <ul>
                             @foreach ($apartment->amenities as $amenity)
-                                <li>{{ $amenity->name }}</li>
+                                <li><i class="{{ $amenity->icon }}"></i> {{ $amenity->lang->name }}</li>
                             @endforeach
                         </ul>
                     </div>

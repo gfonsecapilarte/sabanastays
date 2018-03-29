@@ -74,5 +74,6 @@ return [
     'bookingId'                 => 'ID de Reserva',
     'paid'                      => 'PAGO',
     'bookingConditions'         => 'Condiciones de la Reserva',
-    'viewDetails'               => 'Ver Detalles'
+    'viewDetails'               => 'Ver Detalles',
+    'comeBack'                  => 'Regresar'
 ];
