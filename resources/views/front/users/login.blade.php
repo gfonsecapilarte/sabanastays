@@ -18,16 +18,16 @@
 
                     <h2 class="mg-sec-left-title">@lang('general.haveAccountSabanaStays')</h2>
 
-                    <form class="clearfix">
+                    <form id="sa-login" class="clearfix">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="email" placeholder="@lang('general.email')">
+                                    <input type="email" class="form-control" name="email" placeholder="@lang('general.email')" required data-msg="@lang('validations.required')" data-msg-email="@lang('validations.email')">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')">
+                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')" required data-msg="@lang('validations.required')">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -51,28 +51,28 @@
                     <hr class="mt50">
                     <h2 class="mg-sec-left-title mt30">@lang('general.ifYouDontHaveAnAccount')</h2>
 
-                    <form class="clearfix register-form">
+                    <form id="sa-register" class="clearfix register-form">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="first-name" placeholder="@lang('general.firstName')">
+                                    <input type="text" class="form-control" name="first-name" placeholder="@lang('general.firstName')" required data-msg="@lang('validations.required')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="email" class="form-control" name="email" placeholder="@lang('general.email')">
+                                    <input type="email" class="form-control" name="email" placeholder="@lang('general.email')" required data-msg="@lang('validations.required')" data-msg-email="@lang('validations.email')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')">
+                                    <input type="password" class="form-control" name="password" placeholder="@lang('general.password')" required data-msg="@lang('validations.required')">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="last-name" placeholder="@lang('general.lastName')">
+                                    <input type="text" class="form-control" name="last-name" placeholder="@lang('general.lastName')" required data-msg="@lang('validations.required')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="telephone" placeholder="@lang('general.telephone')">
+                                    <input type="text" class="form-control" name="telephone" placeholder="@lang('general.telephone')" required data-msg="@lang('validations.required')">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="password" class="form-control" name="retype-password" placeholder="@lang('general.retypePassword')">
+                                    <input type="password" class="form-control" name="retype-password" placeholder="@lang('general.retypePassword')" required data-msg="@lang('validations.required')">
                                 </div>
                             </div>
                             <div class="col-md-4">
