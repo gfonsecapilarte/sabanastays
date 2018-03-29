@@ -1,4 +1,4 @@
-<div class="mg-page-title parallax">
+<div class="mg-page-title parallax" style="background-image:url({{ asset($header->media_background[0]->path) }});">
     <div class="container">
         <div class="row">
             <div class="col-md-12">

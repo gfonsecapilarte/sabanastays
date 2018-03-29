@@ -20,7 +20,7 @@
                     <p>{{ $about->description }}</p>
                 </div>
                 <div class="col-md-4">
-                    <img src="{{ asset($about->body_image[0]->path) }}" alt="" class="img-responsive">
+                    <img src="{{ asset($about->media[0]->path) }}" alt="" class="img-responsive">
                 </div>
             </div>
         </div>

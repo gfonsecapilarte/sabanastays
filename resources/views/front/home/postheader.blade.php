@@ -1,7 +1,9 @@
 <div id="mega-slider" class="carousel slide " data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-        <li data-target="#mega-slider" data-slide-to="0" class="active"></li>
+        @foreach ($home->header_media as $img_key => $image)
+            <li data-target="#mega-slider" data-slide-to="0" class="{{ ($img_key == 0) ? 'active':'' }}"></li>
+        @endforeach
     </ol>
 
     <!-- Wrapper for slides -->

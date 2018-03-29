@@ -16,12 +16,12 @@
             <div class="row">
                 <div class="col-md-12 mg-available-rooms">
                     <h3 class="mg-avl-room-title font-white">
-                        {{ $apartment->lang['name'] }}
+                        {{ $apartment->lang->name }}
                         <span>${{ $apartment->price }}<sup></sup>/Night</span>
                     </h3>
                 </div>
                 <div class="col-md-12">
-                    <p>{{ $apartment->lang['description'] }}</p>
+                    <p>{{ $apartment->lang->description }}</p>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                     <div class="col-xs-12">
                         <ul>
                             @foreach ($apartment->amenities as $amenity)
-                                <li>{{ $amenity }}</li>
+                                <li>{{ $amenity->name }}</li>
                             @endforeach
                         </ul>
                     </div>

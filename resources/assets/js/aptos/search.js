@@ -46,37 +46,32 @@ $(document).ready(function(){
         $('#sa-check-out').text(checkOut);
 
         $(data).each(function(index, el){
-            var lang = el.lang.map(lang => (lang.id_lang == locale_id) ? lang : null).filter(lang => lang != null);
-                lang = lang[0];
+            var lang = el.lang[''+locale+''];
 
             if(lang != undefined){
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_descritpiton);
                 $('#apto-template .sa-apto-price span').text('$'+el.price);
 
-                if(locale_pr == 'en'){
-                    $('#apto-template .sa-apto-link').attr('href', '/'+locale_pr+'/apartment/'+el.id_apartment);
+                if(locale == 'EN'){
+                    $('#apto-template .sa-apto-link').attr('href', '/en/apartment/'+el.id_apartment);
                 }
-                else if(locale_pr == 'es'){
-                    $('#apto-template .sa-apto-link').attr('href', '/'+locale_pr+'/apartamento/'+el.id_apartment);
+                else if(locale == 'ES'){
+                    $('#apto-template .sa-apto-link').attr('href', '/es/apartamento/'+el.id_apartment);
                 }
-
-
 
                 /* Amenities */
-                var amenities = el.amenities.map(
-                    amenity => amenity[0].lang.map(lang => (lang.id_lang == locale_id) ? lang : null).filter(lang => lang != null)
-                );
-
+                var amenities = el.amenities.map(amenity => amenity.lang[''+locale+'']);
                 var amenHtml = '<ul>';
                 amenities.forEach(function(element){
-                    amenHtml += '<li>'+element[0].name+'</li>';
+                    amenHtml += '<li>'+element.name+'</li>';
                 });
                 amenHtml += '</ul>';
 
                 $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
                 $('#list-found-aptos').append('<div class="mg-avl-room">'+template.html()+'</div>');
             }
+
         });
     }
 });

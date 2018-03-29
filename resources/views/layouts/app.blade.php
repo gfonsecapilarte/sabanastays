@@ -13,15 +13,10 @@
         @yield('postheader')
         @yield('content')
 
-        @if (!empty($languages))
-            @foreach ($languages as $lang)
-                @if ($lang->iso == strtoupper($locale))
-                <script>
-                    var locale_id = {{ $lang->id_lang }};
-                    var locale_pr = '{{ $locale }}';
-                </script>
-                @endif
-            @endforeach
+        @if (!empty($locale))
+            <script>
+                var locale = '{{ strtoupper($locale) }}';
+            </script>
         @endif
 
         <footer class="mg-footer">

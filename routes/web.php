@@ -22,17 +22,12 @@ function(){
 
 	/** Load abouts page **/
 	Route::get(LaravelLocalization::transRoute('routes.about'),'Front\AboutController@index');
-	
+
 	/** Get detail of a apto **/
 	Route::get(LaravelLocalization::transRoute('routes.apartmentDetail'),'Front\ApartmentController@apartment');
 
-	/** Result of a searching to find aptos **/
-	Route::get(LaravelLocalization::transRoute('routes.booking'),function(){
-		return view('front/booking/booking',[
-			'locale' 	=> LaravelLocalization::getCurrentLocale(),
-			'languages'	=> App\Models\Language::all()
-		]);
-	});
+	/** Load booking page **/
+	Route::get(LaravelLocalization::transRoute('routes.booking'),'Front\BookingController@loadBookingPage');
 
 	Route::get(LaravelLocalization::transRoute('routes.contactUs'),function(){
 		return view('front/contact-us/contact-us',['locale' => LaravelLocalization::getCurrentLocale()]);

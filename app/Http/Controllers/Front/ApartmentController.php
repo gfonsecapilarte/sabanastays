@@ -2,47 +2,38 @@
 namespace App\Http\Controllers\Front;
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use App\Http\Controllers\ApartmentController as Apartment;
 use Illuminate\Http\Request;
 use App\Models\Language;
 
-class ApartmentController extends Apartment
-{
+class ApartmentController{
     /*
      * Method to return details of a apartment
-     * - it consults the apartment controller API
      */
-    public function apartment($id = null, Request $request)
-    {
+    public function apartment($id = null, Request $request){
         $request->request->add(['id_apartment' => $id]);
-        $apartment            = parent::getApartment($request);
-        $current_locale       = LaravelLocalization::getCurrentLocale();
-        $current_language     = Language::where('iso',$current_locale)->first();
-        $translated_apartment = array();
-        $translated_amenities = array();
 
-        foreach($apartment->lang as $lang){
-            if($lang->id_lang == $current_language->id_lang){
-                $translated_apartment['name']           = $lang->name;
-                $translated_apartment['description']    = $lang->description;
-            }
+        $locale           = LaravelLocalization::getCurrentLocale();
+        $apartment        = app('App\Http\Controllers\ApartmentController')->getApartment($request);
+        $apartment        = $apartment->getData();
+        $apartment->lang  = (array)$apartment->lang;
+        $apartment->lang  = $apartment->lang[''.strtoupper($locale).''];
+
+        /** Amenities **/
+        $amenities = array();
+        foreach ($apartment->amenities as $amenity) {
+            $amenity->lang = (array)$amenity->lang;
+            array_push($amenities,$amenity->lang[''.strtoupper($locale).'']);
         }
+        $apartment->amenities = $amenities;
 
-        $apartment->lang = $translated_apartment;
-
-        foreach($apartment->amenities as $amenity) {
-            foreach($amenity[0]->lang as $lang){
-                if($lang->id_lang == $current_language->id_lang){
-                    $translated_amenities[] = $lang->name;
-                }
-            }
-        }
-        $apartment->amenities = $translated_amenities;
+        /** Get header and logo images **/
+        $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
+        $header = $header->getData();
 
         return view('front/apartment/detail',[
-    		'locale' 	=> $current_locale,
-    		'languages'	=> Language::all(),
-            'apartment' => $apartment
+            'apartment' => $apartment,
+            'header'    => $header,
+            'locale'    => $locale
     	]);
     }
 }
