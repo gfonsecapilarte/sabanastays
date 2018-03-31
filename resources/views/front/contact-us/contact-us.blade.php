@@ -33,22 +33,22 @@
 
                 <div class="col-md-5">
                     <h2 class="mg-sec-left-title">@lang('general.eMailUs')</h2>
-                    <form class="clearfix">
+                    <form id="sa-contact-form" class="clearfix">
                         <div class="mg-contact-form-input">
                             <label for="full-name">@lang('general.fullName')</label>
-                            <input type="text" class="form-control" id="full-name">
+                            <input type="text" class="form-control" name="name" required data-msg="@lang('validations.required')">
                         </div>
                         <div class="mg-contact-form-input">
                             <label for="email">@lang('general.email')</label>
-                            <input type="text" class="form-control" id="email">
+                            <input type="email" class="form-control" name="email" required data-msg="@lang('validations.required')" data-msg-email="@lang('validations.email')">
                         </div>
                         <div class="mg-contact-form-input">
                             <label for="subject">@lang('general.subject')</label>
-                            <input type="text" class="form-control" id="subject">
+                            <input type="text" class="form-control" name="subject" required data-msg="@lang('validations.required')" >
                         </div>
                         <div class="mg-contact-form-input">
-                            <label for="subject">@lang('general.message')</label>
-                            <textarea class="form-control" id="subject" rows="5"></textarea>
+                            <label for="message">@lang('general.message')</label>
+                            <textarea class="form-control" name="message" rows="5" required data-msg="@lang('validations.required')"></textarea>
                         </div>
                         <input type="submit" class="btn btn-dark-main pull-right" value="@lang('general.send')">
                     </form>

@@ -49,3 +49,13 @@ import "./aptos/search.js";
  * Modules to work with users
  */
 import "./users/login.js";
+
+/*
+ * Module for contact form page
+ */
+import "./contact/contact.js";
+
+/*
+ * Module to booking functions
+ */
+import "./booking/booking.js";

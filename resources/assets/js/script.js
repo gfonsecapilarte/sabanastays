@@ -34,39 +34,6 @@
 	$('.beactive').addClass('active');
 	$('.beactive').removeClass('beactive');
 
-	$('.btn-next-tab').click(function (e) {
-
-		e.preventDefault();
-
-		// console.log($($(this).attr('href')));
-		$(this).tab('show');
-
-		$('html, body').animate({
-			scrollTop: $(".mg-booking-form").offset().top - 100
-		}, 300);
-
-		$('a[href="'+$(this).attr('href')+'"]').parents('li').trigger('click');
-		$('.mg-booking-form > ul > li.active').removeClass('active');
-		$('a[href="'+$(this).attr('href')+'"]').parents('li').addClass('active');
-	});
-
-	$('.btn-prev-tab').click(function (e) {
-
-		e.preventDefault();
-
-		// console.log($($(this).attr('href')));
-		$(this).tab('show');
-
-		$('html, body').animate({
-			scrollTop: $(".mg-booking-form").offset().top - 100
-		}, 300);
-
-		$('a[href="'+$(this).attr('href')+'"]').parents('li').trigger('click');
-		$('.mg-booking-form > ul > li.active').removeClass('active');
-		$('a[href="'+$(this).attr('href')+'"]').parents('li').addClass('active');
-	});
-
-
 	/*
 	 * Owl Carousel for Testimonials
 	 */
