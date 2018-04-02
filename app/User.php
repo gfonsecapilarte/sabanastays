@@ -20,6 +20,7 @@ class User extends Authenticatable
         'lastname',
         'gender',
         'birthdate',
+        'social_id',
         'role',
         'email',
         'password',

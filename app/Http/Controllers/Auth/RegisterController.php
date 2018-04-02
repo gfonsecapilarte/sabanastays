@@ -51,11 +51,10 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'firstname' => 'required|string|max:50',
             'lastname' => 'required|string|max:50',
-            'gender' => 'required|string|max:6',
-            'birthdate' => 'required|date|max:10',
             'role' => 'required|string|max:5',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'email' => 'string|email|max:100|unique:users',
+            'social_id' => 'string|max:100|unique:users',
+            'password' => 'string|min:6|confirmed',
         ]);
     }
 
@@ -71,11 +70,22 @@ class RegisterController extends Controller
         return User::create(array(
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
-            'gender' => $data['gender'],
-            'birthdate' => $data['birthdate'],
-            'role' => $data['role'],
+//            'gender' => $data['gender'],
+//            'birthdate' => $data['birthdate'],
+            'role' => $request->has('role') ? $data['role'] : 'USER',//$data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+        ));
+    }
+
+    public static function createSocial(Request $request)
+    {
+        $data = $request->all();
+        return User::create(array(
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'role' => 'USER',
+            'social_id' => $data['social_id'],
         ));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -40,6 +41,30 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    private function socialLogin(Request $request)
+    {
+//        if (Auth::attempt(array('social_id' => $request->input('social_id')))) {
+
+        $user = User::where('social_id', '=', $request->input('social_id'))->first();
+        if (empty($user)) {
+            return false;
+        }
+
+        if (Auth::loginUsingId($user->id_user)) {
+            Session::put('id_user', Auth::user()->id_user);
+//            Session::put('email', Auth::user()->email);
+            Session::put('social_id', Auth::user()->social_id);
+            Session::put('role', Auth::user()->role);
+            Session::put('firstname', Auth::user()->firstname);
+            Session::put('lastname', Auth::user()->lastname);
+            Session::save();
+
+            return Session::all();
+        }
+
+        return false;
+    }
+
     /**
      * Get the needed authorization credentials from the request.
      *
@@ -48,20 +73,27 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-//        echo "<pre>";
-//var_dump(Auth::check());
-//echo "</pre>";
-//die();
         if (Auth::check()) {
-//            Auth::getSession();
             return Session::all();
         }
-//        die('sad');
+
+        if ($request->has('social_id')) {
+            $login = $this->socialLogin($request);
+            if ($login !== false) {
+                return $login;
+            } else {
+                $create = RegisterController::createSocial($request);
+                if ($create === false) {
+                    return array(
+                        'success' => false,
+                        'message' => 'Cannot create account'
+                    );
+                }
+                return $this->socialLogin($request);
+            }
+        }
+
         if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')))) {
-//            echo "<pre>";
-//print_r(Auth::user());
-//echo "</pre>";
-//die();
             Session::put('id_user', Auth::user()->id_user);
             Session::put('email', Auth::user()->email);
             Session::put('role', Auth::user()->role);
@@ -70,18 +102,6 @@ class LoginController extends Controller
             Session::save();
 
             return Session::all();
-
-            
-//            return Auth::getSession();
-            // Authentication passed...
-            echo "<pre>";
-            var_dump(Auth::check());
-//            echo '***********************';
-//            print_r(Auth::guard());
-            echo '***********************';
-            print_r(Auth::getSession());
-            echo "</pre>";
-            die('**********');
         }
 
         return array(
