@@ -8,5 +8,6 @@ return [
 	'myProfile'			=> 'my-profile',
 	'myBookings'		=> 'my-bookings',
 	'privacyPolicy'		=> 'privacy-policy',
-	'termsService'		=> 'terms-of-service'
+	'termsService'		=> 'terms-of-service',
+	'dashboard'			=> 'dashboard'
 ];

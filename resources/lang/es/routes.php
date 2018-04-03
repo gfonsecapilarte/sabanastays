@@ -8,5 +8,6 @@ return [
 	'myProfile'			=> 'mi-perfil',
 	'myBookings'		=> 'mis-reservas',
 	'privacyPolicy'		=> 'politicas-de-privacidad',
-	'termsService'		=> 'terminos-de-servicio'
+	'termsService'		=> 'terminos-de-servicio',
+	'dashboard'			=> 'dashboard'
 ];

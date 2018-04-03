@@ -47,8 +47,10 @@ function(){
 	/** Load Terms of Service  page **/
 	Route::get(LaravelLocalization::transRoute('routes.termsService'),'Front\TermsServiceController@loadPage')->name('termsService');
 
-
-
+	/** Load dashboard page **/
+	Route::get(LaravelLocalization::transRoute('routes.dashboard'),function(){
+		return view('backoffice/dashboard');
+	});
 
 
 

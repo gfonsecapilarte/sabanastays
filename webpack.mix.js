@@ -13,8 +13,10 @@ const webpack = require('webpack');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js/app.js')
+    .js('resources/assets/js/backoffice.js', 'public/js/backoffice.js')
+    .sass('resources/assets/sass/backoffice/main.scss', 'public/css/backoffice/backoffice.css')
+    .sass('resources/assets/sass/app.scss', 'public/css/app.css');
 
 
 mix.webpackConfig({
