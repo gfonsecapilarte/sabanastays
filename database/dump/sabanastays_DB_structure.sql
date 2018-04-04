@@ -256,6 +256,7 @@ CREATE TABLE `users` (
   `last_login` timestamp NULL DEFAULT NULL,
   `active` enum('YES','NO') DEFAULT NULL,
   `role` enum('USER','ADMIN') DEFAULT NULL,
+  `api_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp not null default current_timestamp,
   `updated_at` timestamp not null,
   PRIMARY KEY (`id_user`)

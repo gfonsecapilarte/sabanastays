@@ -40,6 +40,10 @@ Route::get('/currencies', 'CurrencyController@getCurrencies');
 Route::get('/apartments', 'ApartmentController@getApartments');
 Route::get('/apartment', 'ApartmentController@getApartment');
 
+//bookings
+Route::post('/booking', 'BookingController@create');
+
+
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');
 
