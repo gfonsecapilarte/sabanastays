@@ -247,6 +247,7 @@ CREATE TABLE `users` (
   `avatar` varchar(255) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
   `gender` enum('MALE','FEMALE') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `since` timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -304,13 +305,21 @@ DROP TABLE IF EXISTS `booking`;
 CREATE TABLE `booking` (
   `id_booking` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_user` int(11) unsigned NOT NULL,
+  `reference` varchar(45) NOT NULL,
   `booking_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `booking_date_start` date DEFAULT NULL,
   `booking_date_end` date DEFAULT NULL,
   `total_payment` varchar(45) DEFAULT NULL,
   `special_requests` varchar(255) DEFAULT NULL,
   `id_apartment` int(11) unsigned NOT NULL,
+  `id_rate` int(11) DEFAULT NULL,
+  `variant` double DEFAULT NULL,
+  `variant_value` float DEFAULT NULL,
+  `nights` int(11) NOT NULL,
+  `value` float NOT NULL,
   `status` enum('RESERVED','PAID','CANCELLED','UNAVAILABLE') DEFAULT NULL,
+  `created_at` timestamp DEFAULT NULL,
+  `updated_at` timestamp DEFAULT NULL,
   PRIMARY KEY (`id_booking`),
   KEY `fk_bookings_users1_idx` (`id_user`),
   KEY `fk_bookings_apartments1_idx` (`id_apartment`),
@@ -542,7 +551,7 @@ CREATE TABLE `payment` (
 DROP TABLE IF EXISTS `rate`;
 
 CREATE TABLE `rate` (
-  `id_rate` int(11) unsigned NOT NULL,
+  `id_rate` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `variant` double DEFAULT NULL,
   `id_apartment` int(11) unsigned NOT NULL,
   `name` varchar(45) DEFAULT NULL,

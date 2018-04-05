@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'firstname' => 'required|string|max:50',
             'lastname' => 'required|string|max:50',
             'role' => 'required|string|max:5',
+            'phone' => 'string|max:45',
             'email' => 'string|email|max:100|unique:users',
             'social_id' => 'string|max:100|unique:users',
             'password' => 'string|min:6|confirmed',
@@ -70,8 +71,8 @@ class RegisterController extends Controller
         return User::create(array(
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
-//            'gender' => $data['gender'],
-//            'birthdate' => $data['birthdate'],
+            'gender' => $request->has('gender') ? $data['gender'] : null,
+            'birthdate' => $request->has('birthdate') ? $data['birthdate'] : null,
             'role' => $request->has('role') ? $data['role'] : 'USER',//$data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

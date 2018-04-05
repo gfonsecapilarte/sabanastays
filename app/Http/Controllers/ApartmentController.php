@@ -16,7 +16,12 @@ use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
-    //
+
+    public function getTypes()
+    {
+        $types = ApartmentTypeModel::with('lang')->get();
+        return response()->json($types);
+    }
 
     public function getApartments(Request $request)
     {
@@ -35,6 +40,19 @@ class ApartmentController extends Controller
             $query_apartments->where('id_apartment_type', '=', $filter['type']);
         }
 
+
+        //pagination
+        $total = $query_apartments->get()->count();
+        $page = 1;
+        $items_per_page = 5;
+        if ($request->has('page')) {
+            $page = $request->input('page');
+            $items_per_page = $request->has('items_per_page') ? $request->input('items_per_page') : 5;
+            $query_apartments->paginate($items_per_page);
+        }
+        $total_pages = ceil($total / $items_per_page);
+
+        //get apartments
         $available_apartments = $query_apartments->get();
         $apartments = json_decode($available_apartments);
 
@@ -56,9 +74,19 @@ class ApartmentController extends Controller
             $apartment_type_result = ApartmentTypeModel::where('id_apartment_type',(int)$apartment->id_apartment_type)->with('lang')->first();
             $apartment->type = json_decode($apartment_type_result);
             ApartmentTypeModel::parseLang($apartment->type);
+            //thumbnail
+            $apartment->thumbnail = MediaModel::getFirstMediaByType($apartment->id_apartment, 'apartment');
         }
 
-        return response()->json($apartments);
+        return response()->json(array(
+            'pagination' => array(
+                'total' => $total,
+                'page' => $page,
+                'pages' => $total_pages,
+                'items_per_page' => $items_per_page
+            ),
+            'apartments' => $apartments
+        ));
     }
 
     public function getApartment(Request $request)

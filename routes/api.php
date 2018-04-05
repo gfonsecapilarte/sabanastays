@@ -39,6 +39,7 @@ Route::get('/currencies', 'CurrencyController@getCurrencies');
 //apartments
 Route::get('/apartments', 'ApartmentController@getApartments');
 Route::get('/apartment', 'ApartmentController@getApartment');
+Route::get('/apartment/types', 'ApartmentController@getTypes');
 
 //bookings
 Route::post('/booking', 'BookingController@create');
@@ -58,3 +59,8 @@ Route::get('/module/contact', 'Module\ContactController@getModule');
 
 //media
 Route::get('/media', 'MediaController@getMedia');
+
+//location
+Route::get('/location/countries', 'LocationController@getCountries');
+Route::get('/location/states', 'LocationController@getStates');
+Route::get('/location/cities', 'LocationController@getCities');
