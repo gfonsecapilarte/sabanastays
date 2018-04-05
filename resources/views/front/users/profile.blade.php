@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <h2 class="mg-sec-left-title">John Smith</h2>
 
-                    <ul class="list-group">
+                    <ul id="user-detail" class="list-group">
                         <li class="list-group-item">
                             <div>
                                 <h4>@lang('general.homeAddress')</h4>

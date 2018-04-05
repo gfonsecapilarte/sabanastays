@@ -75,5 +75,9 @@ return [
     'paid'                      => 'PAID',
     'bookingConditions'         => 'Booking Conditions',
     'viewDetails'               => 'View Details',
-    'comeBack'                  => 'Come Back'
+    'comeBack'                  => 'Come Back',
+    'female'                    => 'Female',
+    'male'                      => 'Male',
+    'gender'                    => 'Gender',
+    'birthdate'                 => 'Birthdate'
 ];

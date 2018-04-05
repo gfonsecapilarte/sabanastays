@@ -36,7 +36,7 @@ function(){
 	Route::get(LaravelLocalization::transRoute('routes.login'),'Front\UserController@loadLoginPage')->name('login');
 
 	/** Load profile page **/
-	Route::get(LaravelLocalization::transRoute('routes.myProfile'),'Front\UserController@loadProfilePage');
+	Route::get(LaravelLocalization::transRoute('routes.myProfile'),'Front\UserController@loadProfilePage')->name('profile');
 
 	/** Load my bookings **/
 	Route::get(LaravelLocalization::transRoute('routes.myBookings'),'Front\BookingController@loadMyBookingPage');

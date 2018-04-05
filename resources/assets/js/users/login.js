@@ -2,26 +2,32 @@ let validate = require('jquery-validation');
 
 $(document).ready(function() {
 
-    /** Validate forms **/
-    if($('#sa-login').length > 0){
+    /** Validate form **/
+    if($('#sa-login').length){
         $('#sa-login').validate({
             submitHandler: function(form) {
-                alert('Login...')
+                login();
             }
         });
+    }
 
-        $('#sa-register').validate({
-            rules : {
-                password : {
-                    minlength : 5
-                },
-                password_confirm : {
-                    minlength : 5,
-                    equalTo : "#password"
+    /** Function to login **/
+    function login(){
+        $.ajax({
+            url: '/api/user/login',
+            type: 'POST',
+            data: $('#sa-login').serialize(),
+            success: function(reply){
+                if(!reply.success && reply.success != null){
+                    $('#sa-login .alert-danger').removeClass('hidden').children('span').text(reply.message);
                 }
-            },
-            submitHandler: function(form) {
-                alert('Registering...')
+                else{
+                    $('#sa-login .alert-danger').addClass('hidden');
+                    $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
+                    localStorage.setItem('api_token',reply.api_token);
+                    localStorage.setItem('id_user',reply.id_user);
+                    location.href = profile_link;
+                }
             }
         });
     }

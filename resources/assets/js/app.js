@@ -49,6 +49,8 @@ import "./aptos/search.js";
  * Modules to work with users
  */
 import "./users/login.js";
+import "./users/register.js";
+import "./users/user.js";
 
 /*
  * Module for contact form page

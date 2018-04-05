@@ -75,5 +75,9 @@ return [
     'paid'                      => 'PAGO',
     'bookingConditions'         => 'Condiciones de la Reserva',
     'viewDetails'               => 'Ver Detalles',
-    'comeBack'                  => 'Regresar'
+    'comeBack'                  => 'Regresar',
+    'female'                    => 'Femenino',
+    'male'                      => 'Masculino',
+    'gender'                    => 'Género',
+    'birthdate'                 => 'Cumpleaños'
 ];
