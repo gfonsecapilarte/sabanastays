@@ -37,6 +37,13 @@ class BookingController extends Controller
             ));
         }
 
+
+        /**
+         * Instructions:
+         * https://github.com/2Checkout/2checkout-php
+         */
+
+
         //booking
         $booking = new BookingModel();
         $booking->id_user = $request->input('id_user');

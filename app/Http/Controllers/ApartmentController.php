@@ -12,7 +12,8 @@ use App\Models\City as CityModel;
 use App\Models\State as StateModel;
 use App\Models\Country as CountryModel;
 use App\Models\Media as MediaModel;
-use Illuminate\Support\Facades\DB;
+use App\Models\Rate as RateModel;
+//use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
@@ -76,6 +77,11 @@ class ApartmentController extends Controller
             ApartmentTypeModel::parseLang($apartment->type);
             //thumbnail
             $apartment->thumbnail = MediaModel::getFirstMediaByType($apartment->id_apartment, 'apartment');
+            //rate variant
+            $rate = RateModel::getRateByApartment($apartment->id_apartment);
+            if (!empty($rate)) {
+                $apartment->price += ($apartment->price * ($rate->variant / 100));
+            }
         }
 
         return response()->json(array(
@@ -114,6 +120,12 @@ class ApartmentController extends Controller
         $apartment_type_result = ApartmentTypeModel::where('id_apartment_type',(int)$apartment->id_apartment_type)->with('lang')->first();
         $apartment->type = json_decode($apartment_type_result);
         ApartmentTypeModel::parseLang($apartment->type);
+
+        //rate variant
+        $rate = RateModel::getRateByApartment($apartment->id_apartment);
+        if (!empty($rate)) {
+            $apartment->price += ($apartment->price * ($rate->variant / 100));
+        }
 
         //media
         $apartment->sliders = MediaModel::getMediaByType($apartment->id_apartment, 'apartment');
