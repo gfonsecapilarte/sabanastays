@@ -26,10 +26,7 @@
                                 <a href="#personal-info" aria-controls="personal-info" role="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>@lang('general.yourInformation')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#payment" aria-controls="payment" role="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>@lang('general.payInformation')</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#thank-you" aria-controls="thank-you" role="tab"><span class="mg-bs-tab-num">4</span>@lang('general.thankyou')</a>
+                                <a href="#payment" aria-controls="payment" role="tab"><span class="mg-bs-tab-num">3</span>@lang('general.payInformation')</a>
                             </li>
                         </ul>
 
@@ -46,10 +43,6 @@
 
                             <div role="tabpanel" class="tab-pane fade" id="payment">
                                 @include('front/booking/payment')
-                            </div>
-
-                            <div role="tabpanel" class="tab-pane fade" id="thank-you">
-                                @include('front/booking/thank-you')
                             </div>
                         </div>
 

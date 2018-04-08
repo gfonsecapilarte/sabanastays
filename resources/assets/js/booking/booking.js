@@ -9,26 +9,12 @@ $(document).ready(function() {
         paymentDone  = false;
 
     /*
-     * Validate form of personal information
-     */
-    if($('#sa-booking-personal-info-form').length > 0){
-        $('#sa-booking-personal-info-form').validate({
-            submitHandler: function(form) {
-                personalInfo = true;
-            },
-            invalidHandler: function(event, validator) {
-                personalInfo = false;
-            }
-        });
-    }
-
-    /*
      * Validate form of payment
      */
     if($('#sa-payment-form').length > 0){
         $('#sa-payment-form').validate({
             submitHandler: function(form) {
-                paymentDone = true;
+                payBooking();
             },
             invalidHandler: function(event, validator) {
                 paymentDone = false;
@@ -70,25 +56,13 @@ $(document).ready(function() {
             alert("tiene que seleccionar primero un apto")
         }
         else{
-            $('#sa-booking-personal-info-form').submit();
-            if(!personalInfo){
-                alert('Tiene que diligenciar el formulario de información personal')
+            if(localStorage.getItem('api_token') == null){
+                alert('Tiene que diligenciar la información personal')
             }
             else{
                 saBookingStepThree();
                 $('a',this).tab('show');
             }
-        }
-    });
-
-    /*
-     * When somebody select the fourth tab (4)
-     */
-    $('.mg-booking-form > ul > li:nth-child(4)').click(function(e){
-        e.preventDefault();
-        if(paymentDone){
-            saBookingStepFour();
-            $('a',this).tab('show');
         }
     });
 
@@ -99,20 +73,25 @@ $(document).ready(function() {
     $('.tab-content').on('click','.btn-next-tab',function(e){
         e.preventDefault();
         if($(this).attr('href') == '#personal-info'){
-            aptoSelected = true;
-            saNextStep($(this));
+            if(localStorage.getItem('api_token') == null){
+                aptoSelected = true;
+                saNextStep($(this));
+            }
+            else{
+                aptoSelected = true;
+                saNextStep($('a[href="#payment"]'));
+            }
         }
         else if($(this).attr('href') == '#payment'){
-            $('#sa-booking-personal-info-form').submit();
-            if(personalInfo){
+            if(localStorage.getItem('api_token') != null){
                 saNextStep($(this));
+            }
+            else{
+                alert("Debe diligenciar la información personal")
             }
         }
         else if($(this).attr('href') == '#thank-you'){
             $('#sa-payment-form').submit();
-            if(paymentDone){
-                saNextStep($(this));
-            }
         }
     });
 
@@ -129,5 +108,12 @@ $(document).ready(function() {
             saRemoveValidationRules();
         }
     });
+
+    /*
+     * Function to do the payment
+     */
+    function payBooking(){
+        
+    }
 
 });

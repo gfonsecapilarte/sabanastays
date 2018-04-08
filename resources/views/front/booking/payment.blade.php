@@ -8,27 +8,27 @@
             <form id='sa-payment-form'>
                 <div class="row pb40 hidden address-info">
                     <div class="col-md-6">
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentFirstName" placeholder="@lang('general.firstName')" tabindex="1" data-msg="@lang('validations.required')">
                         </div>
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentAddress" placeholder="@lang('general.address')" tabindex="3" data-msg="@lang('validations.required')">
                         </div>
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentCity" placeholder="@lang('general.city')" tabindex="5" data-msg="@lang('validations.required')">
                         </div>
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentState" placeholder="@lang('general.state')" tabindex="7" data-msg="@lang('validations.required')">
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentLastName" placeholder="@lang('general.lastName')" tabindex="2" data-msg="@lang('validations.required')">
                         </div>
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentPostalCode" placeholder="@lang('general.postalCode')" tabindex="4" data-msg="@lang('validations.required')">
                         </div>
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="paymentCountry" placeholder="@lang('general.country')" tabindex="6" data-msg="@lang('validations.required')">
                         </div>
                     </div>
@@ -38,17 +38,17 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="creditCard" placeholder="@lang('general.creditCard')" required data-msg="@lang('validations.required')">
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="mg-book-form-input">
+                        <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="cvv" placeholder="CVV" required data-msg="@lang('validations.required')">
                         </div>
                     </div>
                     <div class="col-md-12">
-                    <div class="mg-book-form-input">
+                    <div class="mg-contact-form-input">
                         <div class="row">
                             <div class="col-md-6">
                                 <select class="form-control" name="month" required data-msg="@lang('validations.required')">

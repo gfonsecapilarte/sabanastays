@@ -3,6 +3,12 @@ date.locale(locale.toLowerCase());
 
 $(document).ready(function(){
     /*
+     * Vars to identify what page we are
+     */
+    var currentPage = 1;
+    var totalPages  = 0;
+
+    /*
      * - Search aptos from home header form
      * - Redirect to booking page
      */
@@ -50,13 +56,24 @@ $(document).ready(function(){
         checkOut = localStorage.getItem('checkout');
 
     if($("#list-found-aptos").length > 0){
-        $.ajax({
+        getAptos();
+    }
+
+    /*
+     * Function to get apartments
+     */
+    function getAptos(){
+        var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: {checkin: checkIn, checkout: checkOut}
+            data: {checkin: checkIn, checkout: checkOut, page: currentPage, items_per_page: 1}
         }).done(function(data){
+            $('#list-found-aptos').html('');
+            totalPages = data.pagination.pages;
             drawAptos(data);
         });
+
+        return ajax;
     }
 
     /*
@@ -75,10 +92,11 @@ $(document).ready(function(){
         $('#sa-check-in').text(date.format(_checkIn, 'MMMM DD YYYY'));
         $('#sa-check-out').text(date.format(_checkOut, 'MMMM DD YYYY'));
 
-        $(data).each(function(index, el){
+        $(data.apartments).each(function(index, el){
             var lang = el.lang[''+locale+''];
 
             if(lang != undefined){
+                $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);
                 $('#apto-template .sa-apto-price span').text('$'+el.price);
@@ -100,7 +118,53 @@ $(document).ready(function(){
                 $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
                 $('#list-found-aptos').append('<div class="mg-avl-room">'+template.html()+'</div>');
             }
-
         });
+
+        drawPaginator(data.pagination.pages);
     }
+
+    /*
+     * Select page
+     */
+    $('.pagination').on('click','li',function(e){
+        e.preventDefault();
+        var page  = $(this).children('a').attr('href').split('#')[1];
+
+        if(page == "prev"){
+            if(currentPage > 1){
+                currentPage--;
+            }
+        }
+        else if(page == "next"){
+            if(currentPage < totalPages){
+                currentPage++;
+            }
+        }
+        else{
+            currentPage = page;
+        }
+
+        getAptos().then(function(data){
+            $('.pagination a[href="#'+currentPage+'"]').parent('li').addClass('sa-active');
+            $('.pagination a[href="#'+currentPage+'"]').parent('li').siblings('li').removeClass('sa-active');
+        });
+    });
+
+    /*
+     * Function to drawn paginator
+     */
+    function drawPaginator(pages){
+        if(currentPage == 1){
+            var html = '<li><a href="#prev" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+            for(i=0;i<pages;i++){
+                var page    = i+1;
+                var active  = (i == 0) ? 'sa-active' : '';
+                html += '<li class="'+active+'"><a href="#'+page+'">'+page+'</a></li>';
+            }
+            html += '<li><a href="#next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+            $('.pagination').html(html);
+        }
+    }
+
+
 });
