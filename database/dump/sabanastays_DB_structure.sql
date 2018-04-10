@@ -527,17 +527,19 @@ CREATE TABLE `newsletter` (
 DROP TABLE IF EXISTS `payment`;
 
 CREATE TABLE `payment` (
-  `id_payment` int(11) unsigned NOT NULL,
-  `id_stripe` varchar(45) DEFAULT NULL,
+  `id_payment` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_booking` int(11) unsigned NOT NULL,
   `id_user` int(11) unsigned NOT NULL,
   `amount` varchar(45) DEFAULT NULL,
   `id_currency` int(11) DEFAULT NULL,
-  `descritpion` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `transaction_id` varchar(255) DEFAULT NULL,
   `payment_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `payment_type` enum('ONETIME','RECURRENT') DEFAULT NULL,
   `payment_method` enum('CREDIT CARD','CHECK','WIRE TRANSFER','CASH') DEFAULT NULL,
+  `created_at` timestamp not null default CURRENT_TIMESTAMP,
+  `updated_at` timestamp default null,
   PRIMARY KEY (`id_payment`),
   KEY `fk_payments_users1_idx` (`id_user`),
   CONSTRAINT `fk_payments_users1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION

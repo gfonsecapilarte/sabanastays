@@ -1,0 +1,3 @@
+[submodule "app/Lib/2checkout"]
+	path = app/Lib/2checkout
+	url = https://github.com/2Checkout/2checkout-php.git

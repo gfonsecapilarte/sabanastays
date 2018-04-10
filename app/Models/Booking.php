@@ -10,6 +10,11 @@ class Booking extends Model
     protected $table      = 'booking';
     protected $primaryKey = 'id_booking';
 
+    const RESERVED = 'RESERVED';
+    const PAID = 'PAID';
+    const CANCELLED = 'CANCELLED';
+    const UNAVAILABLE = 'UNAVAILABLE';
+
     public static function getBookingsByDate($checkin, $checkout, $type = null)
     {
         $query = self::getByDate($checkin, $checkout);
