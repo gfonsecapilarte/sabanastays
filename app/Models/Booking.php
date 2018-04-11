@@ -14,6 +14,7 @@ class Booking extends Model
     const PAID = 'PAID';
     const CANCELLED = 'CANCELLED';
     const UNAVAILABLE = 'UNAVAILABLE';
+    const INCOMPLETED = 'INCOMPLETED';
 
     public static function getBookingsByDate($checkin, $checkout, $type = null)
     {

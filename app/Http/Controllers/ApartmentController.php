@@ -20,7 +20,9 @@ class ApartmentController extends Controller
 
     public function getTypes()
     {
-        $types = ApartmentTypeModel::with('lang')->get();
+        $types_result = ApartmentTypeModel::with('lang')->get();
+        $types = json_decode($types_result);
+        ApartmentTypeModel::parseLang($types);
         return response()->json($types);
     }
 

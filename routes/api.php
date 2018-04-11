@@ -31,6 +31,10 @@ Route::post('/user/login', 'Auth\LoginController@credentials');//Login
 //    die();
 //});
 
+//address
+Route::get('/addresses', 'AddressController@getAddresses');
+Route::post('/address/create', 'AddressController@create');
+
 //settings
 Route::get('/languages', 'LanguageController@getLanguages');
 Route::get('/currencies', 'CurrencyController@getCurrencies');
@@ -43,7 +47,6 @@ Route::get('/apartment/types', 'ApartmentController@getTypes');
 
 //bookings
 Route::post('/booking', 'BookingController@create');
-
 
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');

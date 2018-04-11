@@ -27,13 +27,18 @@ class BookingController extends Controller
         //check if payment is of before booking
         if ($request->has('id_booking')) {
             $booking = BookingModel::find($request->input('id_booking'));
-            if ($booking->status !== BookingModel::PAID) {
-                return $this->makeCheckout($request, $booking);
-            } else {
+            if ($booking->status === BookingModel::PAID) {
                 return response()->json(array(
                     'success' => false,
                     'message' => 'Booking already paid'
                 ));
+            } else if ($booking->status === BookingModel::INCOMPLETED) {
+                return response()->json(array(
+                    'success' => false,
+                    'message' => 'Booking process is incompleted'
+                ));
+            } else {
+                return $this->makeCheckout($request, $booking);
             }
         }
 
@@ -62,6 +67,7 @@ class BookingController extends Controller
         $booking->booking_date_start = $request->input('checkin');
         $booking->booking_date_end = $request->input('checkout');
         $booking->id_apartment = $request->input('id_apartment');
+        $booking->id_address = $request->input('id_address_booking');
         $booking->status = BookingModel::RESERVED;
         //reference
         $reference = uniqid();
@@ -75,6 +81,7 @@ class BookingController extends Controller
         $apartment = ApartmentModel::find($request->input('id_apartment'));
         $total_payment = $nights * $apartment->price;
         $booking->value = $apartment->price;
+        $booking->attempt = 1;
         //check rates
         $rate = RateModel::getRateByApartment($request->input('id_apartment'));
         if (!empty($rate)) {
@@ -114,22 +121,22 @@ class BookingController extends Controller
 //        $user = UserModel::find($booking->id_user);
 //        $address = AddressModel::getAddressByIdUser($user->id_user);
 
-        $address_data = array(
-//            'name'        => $user->firstname.' '.$user->lastname,
-//            'addrLine1'   => $address->address,
-//            'city'        => CityModel::find($address->id_city)->name,
-//            'state'       => StateModel::find($address->id_state)->name,
-//            'zipCode'     => $address->postcode,
-//            'country'     => CountryModel::find($address->id_country)->name,
-            'name'        => $request->input('name'),
-            'addrLine1'   => $request->input('address'),
-            'city'        => $request->input('city'),
-            'state'       => $request->input('state'),
-            'zipCode'     => $request->input('postcode'),
-            'country'     => $request->input('country'),
-            'email'       => $request->input('email'),
-            'phoneNumber' => $request->input('phone')
-        );
+//        $address_data = array(
+////            'name'        => $user->firstname.' '.$user->lastname,
+////            'addrLine1'   => $address->address,
+////            'city'        => CityModel::find($address->id_city)->name,
+////            'state'       => StateModel::find($address->id_state)->name,
+////            'zipCode'     => $address->postcode,
+////            'country'     => CountryModel::find($address->id_country)->name,
+//            'name'        => $request->input('name'),
+//            'addrLine1'   => $request->input('address'),
+//            'city'        => $request->input('city'),
+//            'state'       => $request->input('state'),
+//            'zipCode'     => $request->input('postcode'),
+//            'country'     => $request->input('country'),
+//            'email'       => $request->input('email'),
+//            'phoneNumber' => $request->input('phone')
+//        );
 
 
         try {
@@ -157,8 +164,12 @@ class BookingController extends Controller
                 $payment->payment_date = date('Y-m-d');
                 $payment->payment_type = PaymentModel::ONETIME;
                 $payment->payment_method = PaymentModel::CREDIT_CARD;
+                $payment->id_address = $request->input('id_address_payment');
                 if ($payment->save()) {
                     $booking->status = BookingModel::PAID;
+                    if ($request->has('attempt')) {
+                        $booking->attempt = (int)$request->input('attempt');
+                    }
                     $booking->save();
                 }
                 //return response
@@ -167,12 +178,20 @@ class BookingController extends Controller
                     'checkout' => $checkout['response']
                 ));
             }
-//            $this->assertEquals('APPROVED', $charge['response']['responseCode']);
         } catch (\Twocheckout_Error $e) {
-//            $this->assertEquals('Unauthorized', $e->getMessage());
+            //change attempt
+            if ($request->has('attempt')) {
+                $booking->attempt = (int)$request->input('attempt');
+                if ((int)$request->input('attempt') === 3) {
+                    $booking->status = BookingModel::INCOMPLETED;
+                }
+                $booking->save();
+            }
+            //response
             return response()->json(array(
                 'success' => false,
                 'message' => $e->getMessage(),
+                'attempt' => $booking->attempt,
                 'id_booking' => $booking->id_booking
             ));
         }
