@@ -9,6 +9,30 @@ $(document).ready(function() {
         paymentDone  = false;
 
     /*
+     * Hidden forms if api token exists
+     */
+    if(localStorage.getItem('api_token') != null){
+        if($('#contLoginUser').length > 0){
+            $('#contLoginUser').addClass('hidden');
+            $('#contRegisterUser').addClass('hidden');
+        }
+    }
+
+    /*
+     * Validate address form
+     */
+    if($('#sa-address').length > 0){
+        $('#sa-address').validate({
+            submitHandler: function(form) {
+                
+            },
+            invalidHandler: function(event, validator) {
+                paymentDone = false;
+            }
+        });
+    }
+
+    /*
      * Validate form of payment
      */
     if($('#sa-payment-form').length > 0){
@@ -73,14 +97,8 @@ $(document).ready(function() {
     $('.tab-content').on('click','.btn-next-tab',function(e){
         e.preventDefault();
         if($(this).attr('href') == '#personal-info'){
-            if(localStorage.getItem('api_token') == null){
-                aptoSelected = true;
-                saNextStep($(this));
-            }
-            else{
-                aptoSelected = true;
-                saNextStep($('a[href="#payment"]'));
-            }
+            aptoSelected = true;
+            saNextStep($(this));
         }
         else if($(this).attr('href') == '#payment'){
             if(localStorage.getItem('api_token') != null){
@@ -113,7 +131,7 @@ $(document).ready(function() {
      * Function to do the payment
      */
     function payBooking(){
-        
+
     }
 
 });

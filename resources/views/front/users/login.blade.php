@@ -12,7 +12,9 @@
     @stop
 
     <script>
-        var profile_link = '{{ route("profile") }}';
+        var profile_link        = '{{ route("profile") }}';
+        var regisUserSuccMsg    = '{{ __('general.registeredUserSuccess') }}';
+        var loginSuccess        = '{{ __('general.loginSuccess') }}';
     </script>
 
     <div class="mg-page">
@@ -23,6 +25,7 @@
                     <h2 class="mg-sec-left-title">@lang('general.haveAccountSabanaStays')</h2>
 
                     <form id="sa-login" class="clearfix">
+                        @include('messages/success')
                         @include('messages/error')
                         <div class="row">
                             <div class="col-md-4">
@@ -57,6 +60,7 @@
                     <h2 class="mg-sec-left-title mt30">@lang('general.ifYouDontHaveAnAccount')</h2>
 
                     <form id="sa-register" class="clearfix register-form">
+                        @include('messages/success')
                         @include('messages/error')
                         <div class="row">
                             <div class="col-md-4">

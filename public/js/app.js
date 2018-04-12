@@ -15751,6 +15751,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__contact_contact_js__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__booking_booking_js__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__location_location_js__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__location_location_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__location_location_js__);
 var loadGoogleMapsApi = __webpack_require__(54);
 
 
@@ -15812,6 +15814,11 @@ loadGoogleMapsApi({ key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ" }).then(funct
 
 /*
  * Module to booking functions
+ */
+
+
+/*
+ * Module for locations
  */
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
@@ -19119,8 +19126,10 @@ $(document).ready(function () {
         e.preventDefault();
         var checkIn = $('input[name="checkin"]'),
             checkOut = $('input[name="checkout"]'),
+            type = $('select[name="type"]'),
             checkInVal = checkIn.val(),
-            checkOutVal = checkOut.val();
+            checkOutVal = checkOut.val(),
+            typeVal = type.val();
 
         if (checkInVal.length == 0) {
             checkIn.addClass('error');
@@ -19138,9 +19147,16 @@ $(document).ready(function () {
             checkOut.siblings('.input-group-addon').removeClass('error');
         }
 
-        if (checkInVal.length != 0 && checkOutVal.length != 0) {
+        if (typeVal == null) {
+            type.siblings('span').addClass('error');
+        } else {
+            type.siblings('span').removeClass('error');
+        }
+
+        if (checkInVal.length != 0 && checkOutVal.length != 0 && typeVal != null) {
             localStorage.setItem('checkin', checkInVal);
             localStorage.setItem('checkout', checkOutVal);
+            localStorage.setItem('atpoType', typeVal);
 
             if (locale == 'EN') {
                 location.href = '/en/booking';
@@ -19154,7 +19170,8 @@ $(document).ready(function () {
      * Call api to search aptos with date parameters
      */
     var checkIn = localStorage.getItem('checkin'),
-        checkOut = localStorage.getItem('checkout');
+        checkOut = localStorage.getItem('checkout'),
+        atpoType = localStorage.getItem('atpoType');
 
     if ($("#list-found-aptos").length > 0) {
         getAptos();
@@ -19167,7 +19184,7 @@ $(document).ready(function () {
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: { checkin: checkIn, checkout: checkOut, page: currentPage, items_per_page: 1 }
+            data: { checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 1 }
         }).done(function (data) {
             $('#list-found-aptos').html('');
             totalPages = data.pagination.pages;
@@ -19360,33 +19377,11 @@ webpackContext.id = 66;
 var validate = __webpack_require__(2);
 
 
-/** Setup and login with Google API **/
-__webpack_require__(73)().then(function (gapi) {
-    var auth2 = null;
-    gapi.load('auth2', function () {
-        auth2 = gapi.auth2.init({
-            client_id: '89349671547-up4d307mi1qthqne01llcetm80v85hd0.apps.googleusercontent.com',
-            cookiepolicy: 'single_host_origin'
-        });
-        attachSignin(document.getElementById('btn-google-login'));
-    });
-
-    function attachSignin(element) {
-        auth2.attachClickHandler(element, {}, function (googleUser) {
-            console.log(googleUser.getBasicProfile().getName());
-            console.log(googleUser.getBasicProfile().getEmail());
-            console.log(googleUser.getBasicProfile().getId());
-        }, function (error) {
-            console.log(JSON.stringify(error, undefined, 2));
-        });
-    }
-});
-
 /** Setup Facebook **/
 var Facebook = __WEBPACK_IMPORTED_MODULE_0_fb_sdk___default()({
     appId: '155464328481769',
     status: true,
-    version: 'v2.7'
+    version: 'v2.8'
 });
 
 $(document).ready(function () {
@@ -19412,6 +19407,7 @@ $(document).ready(function () {
                 } else {
                     $('#sa-login .alert-danger').addClass('hidden');
                     $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
+                    $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
                     //location.href = profile_link;
@@ -19428,6 +19424,28 @@ $(document).ready(function () {
                 console.log(response);
             });
         }, { scope: 'public_profile,email' });
+    });
+
+    /** Setup and login with Google API **/
+    __webpack_require__(73)().then(function (gapi) {
+        var auth2 = null;
+        gapi.load('auth2', function () {
+            auth2 = gapi.auth2.init({
+                client_id: '89349671547-up4d307mi1qthqne01llcetm80v85hd0.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin'
+            });
+            attachSignin(document.getElementById('btn-google-login'));
+        });
+
+        function attachSignin(element) {
+            auth2.attachClickHandler(element, {}, function (googleUser) {
+                console.log(googleUser.getBasicProfile().getName());
+                console.log(googleUser.getBasicProfile().getEmail());
+                console.log(googleUser.getBasicProfile().getId());
+            }, function (error) {
+                console.log(JSON.stringify(error, undefined, 2));
+            });
+        }
     });
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
@@ -20385,10 +20403,10 @@ $(document).ready(function () {
                 if (!reply.success && reply.success != null) {
                     $('#sa-register .alert-danger').removeClass('hidden').children('span').text(reply.message);
                 } else {
-                    // $('.alert-danger').addClass('hidden');
-                    // $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
-                    // localStorage.setItem('api_token',reply.api_token);
-                    // localStorage.setItem('id_user',reply.id_user);
+                    $('.alert-danger').addClass('hidden');
+                    $('#sa-register .alert-success').removeClass('hidden').children('span').text(regisUserSuccMsg);
+                    localStorage.setItem('api_token', reply.api_token);
+                    localStorage.setItem('id_user', reply.id_user);
                     // location.href = profile_link;
                 }
             }
@@ -20441,6 +20459,28 @@ $(document).ready(function () {
     var aptoSelected = false,
         personalInfo = false,
         paymentDone = false;
+
+    /*
+     * Hidden forms if api token exists
+     */
+    if (localStorage.getItem('api_token') != null) {
+        if ($('#contLoginUser').length > 0) {
+            $('#contLoginUser').addClass('hidden');
+            $('#contRegisterUser').addClass('hidden');
+        }
+    }
+
+    /*
+     * Validate address form
+     */
+    if ($('#sa-address').length > 0) {
+        $('#sa-address').validate({
+            submitHandler: function submitHandler(form) {},
+            invalidHandler: function invalidHandler(event, validator) {
+                paymentDone = false;
+            }
+        });
+    }
 
     /*
      * Validate form of payment
@@ -20504,13 +20544,8 @@ $(document).ready(function () {
     $('.tab-content').on('click', '.btn-next-tab', function (e) {
         e.preventDefault();
         if ($(this).attr('href') == '#personal-info') {
-            if (localStorage.getItem('api_token') == null) {
-                aptoSelected = true;
-                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
-            } else {
-                aptoSelected = true;
-                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($('a[href="#payment"]'));
-            }
+            aptoSelected = true;
+            Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
         } else if ($(this).attr('href') == '#payment') {
             if (localStorage.getItem('api_token') != null) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
@@ -20667,6 +20702,146 @@ function saRemoveValidationRules() {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+    /*
+     * Call states
+     */
+    $('select[name="country"]').change(function (event) {
+        var id_country = $(this).val();
+        $.ajax({
+            url: '/api/location/states',
+            type: 'GET',
+            data: { id_country: id_country },
+            success: function success(reply) {
+                console.log(reply);
+            }
+        });
+    });
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ })
 /******/ ]);

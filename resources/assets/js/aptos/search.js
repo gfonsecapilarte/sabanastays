@@ -16,8 +16,10 @@ $(document).ready(function(){
         e.preventDefault();
         var checkIn     = $('input[name="checkin"]'),
             checkOut    = $('input[name="checkout"]'),
+            type        = $('select[name="type"]'),
             checkInVal  = checkIn.val(),
-            checkOutVal = checkOut.val();
+            checkOutVal = checkOut.val(),
+            typeVal     = type.val();
 
         if(checkInVal.length == 0){
             checkIn.addClass('error');
@@ -36,9 +38,16 @@ $(document).ready(function(){
             checkOut.siblings('.input-group-addon').removeClass('error');
         }
 
-        if(checkInVal.length != 0 && checkOutVal.length != 0){
+        if(typeVal == null){
+            type.siblings('span').addClass('error');
+        }else{
+            type.siblings('span').removeClass('error');
+        }
+
+        if(checkInVal.length != 0 && checkOutVal.length != 0 && typeVal != null){
             localStorage.setItem('checkin',checkInVal);
             localStorage.setItem('checkout',checkOutVal);
+            localStorage.setItem('atpoType',typeVal);
 
             if(locale == 'EN'){
                 location.href = '/en/booking';
@@ -53,7 +62,8 @@ $(document).ready(function(){
      * Call api to search aptos with date parameters
      */
     var checkIn  = localStorage.getItem('checkin'),
-        checkOut = localStorage.getItem('checkout');
+        checkOut = localStorage.getItem('checkout'),
+        atpoType = localStorage.getItem('atpoType');
 
     if($("#list-found-aptos").length > 0){
         getAptos();
@@ -66,7 +76,7 @@ $(document).ready(function(){
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: {checkin: checkIn, checkout: checkOut, page: currentPage, items_per_page: 1}
+            data: {checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 1}
         }).done(function(data){
             $('#list-found-aptos').html('');
             totalPages = data.pagination.pages;

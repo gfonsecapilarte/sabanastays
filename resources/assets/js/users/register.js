@@ -35,10 +35,10 @@ $(document).ready(function() {
                     $('#sa-register .alert-danger').removeClass('hidden').children('span').text(reply.message);
                 }
                 else{
-                    // $('.alert-danger').addClass('hidden');
-                    // $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
-                    // localStorage.setItem('api_token',reply.api_token);
-                    // localStorage.setItem('id_user',reply.id_user);
+                    $('.alert-danger').addClass('hidden');
+                    $('#sa-register .alert-success').removeClass('hidden').children('span').text(regisUserSuccMsg);
+                    localStorage.setItem('api_token',reply.api_token);
+                    localStorage.setItem('id_user',reply.id_user);
                     // location.href = profile_link;
                 }
             }

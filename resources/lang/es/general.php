@@ -79,5 +79,10 @@ return [
     'female'                    => 'Femenino',
     'male'                      => 'Masculino',
     'gender'                    => 'Género',
-    'birthdate'                 => 'Cumpleaños'
+    'birthdate'                 => 'Cumpleaños',
+    'kindApto'                  => 'Tipo',
+    'registeredUserSuccess'     => 'Usuario registrado con éxito',
+    'loginSuccess'              => 'Ha iniciado sesión',
+    'addressInformation'        => 'Información de Dirección',
+    'registerAddress'           => 'Registrar dirección'
 ];

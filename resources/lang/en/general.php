@@ -79,5 +79,10 @@ return [
     'female'                    => 'Female',
     'male'                      => 'Male',
     'gender'                    => 'Gender',
-    'birthdate'                 => 'Birthdate'
+    'birthdate'                 => 'Birthdate',
+    'kindApto'                  => 'Type',
+    'registeredUserSuccess'     => 'Registered user successfully',
+    'loginSuccess'              => 'You have logged in',
+    'addressInformation'        => 'Address Information',
+    'registerAddress'           => 'Register address'
 ];

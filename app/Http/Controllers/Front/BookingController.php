@@ -14,10 +14,15 @@ class BookingController{
         $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
         $header = $header->getData();
 
+        /** Load countries **/
+        $countries = app('App\Http\Controllers\LocationController')->getCountries();
+        $countries = $countries->getData();
+
         return view('front/booking/booking',[
-			'locale' 	=> LaravelLocalization::getCurrentLocale(),
-			'languages'	=> Language::all(),
-            'header'    => $header
+			'locale' 	    => LaravelLocalization::getCurrentLocale(),
+			'languages'  	=> Language::all(),
+            'header'        => $header,
+            'countries'     => $countries
 		]);
     }
 

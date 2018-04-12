@@ -24,11 +24,20 @@ class HomeController{
 
         $home['header_title'] = $header_home->lang->title;
         $home['header_descr'] = $header_home->lang->description;
-        //$home['media_logo']   = $header_home->media;
         $home['header_media'] = $header_home->sliders;
         $home['body_title']   = $body_home->lang->title;
         $home['body_descr']   = $body_home->lang->description;
         $home['video_url']    = $body_home->lang->video_url;
+
+        /** Ger types of aparments **/
+        $typeAptos    = app('App\Http\Controllers\ApartmentController')->getTypes();
+        $typeAptos    = $typeAptos->getData();
+        $types        = array();
+
+        foreach ($typeAptos as $typeApto) {
+            $lang = (array)$typeApto->lang;
+            array_push($types,$lang[''.strtoupper($locale).'']);
+        }
 
         /** Get header and logo images **/
         $header['media_logo'] = $header_home->media;
@@ -36,7 +45,8 @@ class HomeController{
         return view('front/home/index',[
             'locale'        => $locale ,
             'home'	        => (object) $home,
-            'header'        => (object) $header
+            'header'        => (object) $header,
+            'typeAptos'     => (object) $types,
         ]);
     }
 }

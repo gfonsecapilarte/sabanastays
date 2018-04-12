@@ -50,12 +50,11 @@
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <select class="cs-select cs-skin-elastic">
-                                                <option value="" disabled selected>@lang('general.bedroom')</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                            <select name="type" class="cs-select cs-skin-elastic">
+                                                <option value="" disabled selected>@lang('general.kindApto')</option>
+                                                @foreach ($typeAptos as $typeApto)
+                                                    <option value="{{ $typeApto->id_apartment_type }}">{{ $typeApto->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
