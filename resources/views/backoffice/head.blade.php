@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/backoffice/favicon.png') }}">
     <title>Sabanastays - Dashboard</title>
     <link href="{{ asset('css/backoffice/backoffice.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/backoffice/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -24,11 +25,5 @@
         <!-- Left navbar-header -->
         @include('backoffice/menu_left')
 
-        <!-- Page Content -->
-        @include('backoffice/content')
-
-    </div>
-    <script type="text/javascript" src="{{ asset('js/backoffice.js') }}"></script>
-</body>
-
-</html>
+        <div id="page-wrapper">
+            <div class="container-fluid content-page">
