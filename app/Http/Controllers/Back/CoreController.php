@@ -14,13 +14,13 @@ class CoreController extends Controller
         return true;
     }
 
-    protected function display($view, $display_header = true, $display_footer = true)
+    protected function display($view, $data = array(), $display_header = true, $display_footer = true)
     {
         if ($display_header) {
             $this->html .= $this->displayHeader();
         }
 
-        $this->html .= view($view);
+        $this->html .= view($view, $data);
 
         if ($display_footer) {
             $this->html .= $this->displayFooter();

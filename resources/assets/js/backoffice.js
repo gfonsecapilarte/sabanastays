@@ -8,7 +8,7 @@ import "waypoints/lib/jquery.waypoints";
 import "jquery.counterup/jquery.counterup.min.js";
 //import "./backoffice/liraries/raphael-min.js";
 import "./backoffice/libraries/custom.js";
-import "./backoffice/libraries/dashboard1.js";
+//import "./backoffice/libraries/dashboard1.js";
 import "./backoffice/libraries/jquery-sparkline/jquery.charts-sparkline.js";
 import "./backoffice/libraries/jquery-sparkline/jquery.sparkline.min.js";
 import "./backoffice/libraries/jQuery.style.switcher.js";
@@ -24,3 +24,5 @@ $(document).ready(function() {
         stack: 6
     });
 });
+
+import "./backoffice/booking.js";
