@@ -24,12 +24,12 @@
         </div>
     </div>
 
-    <div class="row mt30">
+    <!-- <div class="row mt30">
         <div class="col-md-6">
             <button id="btn-facebook-login" class="btn social-button blue"><i class="fa fa-facebook"></i>@lang('general.loginWithFacebook')</button>
         </div>
         <div class="col-md-6">
             <button id="btn-google-login" class="btn social-button red"><i class="fa fa-google-plus"></i>@lang('general.loginWithGoogle')</button>
         </div>
-    </div>
+    </div> -->
 </form>

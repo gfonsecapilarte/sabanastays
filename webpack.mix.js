@@ -49,7 +49,7 @@ mix.webpackConfig({
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery",
-            "classie": "desandro-classie/classie.js"
+            "classie": "desandro-classie/classie.js",
         })
     ]
 });

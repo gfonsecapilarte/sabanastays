@@ -1,11 +1,12 @@
 import { saBookingStepOne, saBookingStepTwo, saBookingStepThree, saBookingStepFour, saNextStep } from "./tabs.js";
 import { saAddValidationRules, saRemoveValidationRules } from "./validations.js";
+//import TCO from "../2co.min.js"
 
 let validate = require('jquery-validation');
 
 $(document).ready(function() {
     var aptoSelected = false,
-        personalInfo = false,
+        adressInfo   = false,
         paymentDone  = false;
 
     /*
@@ -24,10 +25,11 @@ $(document).ready(function() {
     if($('#sa-address').length > 0){
         $('#sa-address').validate({
             submitHandler: function(form) {
-                
+                adressInfo = true;
+                saveAdress();
             },
             invalidHandler: function(event, validator) {
-                paymentDone = false;
+                //paymentDone = false;
             }
         });
     }
@@ -84,8 +86,13 @@ $(document).ready(function() {
                 alert('Tiene que diligenciar la información personal')
             }
             else{
-                saBookingStepThree();
-                $('a',this).tab('show');
+                if(!adressInfo){
+                    alert('Tiene que diligenciar la dirección');
+                }
+                else{
+                    saBookingStepThree();
+                    $('a',this).tab('show');
+                }
             }
         }
     });
@@ -101,11 +108,16 @@ $(document).ready(function() {
             saNextStep($(this));
         }
         else if($(this).attr('href') == '#payment'){
-            if(localStorage.getItem('api_token') != null){
-                saNextStep($(this));
+            if(localStorage.getItem('api_token') == null){
+                alert('Tiene que diligenciar la información personal')
             }
             else{
-                alert("Debe diligenciar la información personal")
+                if(!adressInfo){
+                    alert('Tiene que diligenciar la dirección');
+                }
+                else{
+                    saNextStep($(this));
+                }
             }
         }
         else if($(this).attr('href') == '#thank-you'){
@@ -128,10 +140,41 @@ $(document).ready(function() {
     });
 
     /*
-     * Function to do the payment
+     * Function to save the primary address
+     */
+    function saveAdress(){
+        $('#sa-address .alert-success').removeClass('hidden').children('span').text(addressSuccess);
+        // $.ajax({
+        //     url: '/api/address/create',
+        //     type: 'GET',
+        //     data: $('#sa-address').serialize(),
+        //     success: function(reply){
+        //         console.log(reply);
+        //     }
+        // });
+    }
+
+    /*
+     * Generate token in 2checkout
      */
     function payBooking(){
+        var args = {
+            sellerId: '901376526',
+            publishableKey: '90B1A5E1-6C0C-40CA-AEF0-86CC82E74CFB',
+            ccNo: '4000000000000002',
+            cvv: '123',
+            expMonth: '05',
+            expYear: '2020'
+        };
 
+        //TCO.loadPubKey('sandbox');
+        //
+        // TCO.requestToken(function(response) {
+        //     //console.log('GOOD', response);
+        //     console.log(response.response.token.token);
+        // },function(error) {
+        //     console.log('ERROR', error);
+        // },args);
     }
 
 });
