@@ -5,6 +5,11 @@
                 <input type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
             </h2>
 
+            <script>
+                var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
+                var sellerId        = '{{ env('TCO_SELLER_ID') }}';
+            </script>
+
             <form id='sa-payment-form'>
                 <div class="row pb40 hidden address-info">
                     <div class="col-md-6">

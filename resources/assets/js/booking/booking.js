@@ -1,13 +1,14 @@
 import { saBookingStepOne, saBookingStepTwo, saBookingStepThree, saBookingStepFour, saNextStep } from "./tabs.js";
 import { saAddValidationRules, saRemoveValidationRules } from "./validations.js";
-//import TCO from "../2co.min.js"
+
 
 let validate = require('jquery-validation');
 
 $(document).ready(function() {
     var aptoSelected = false,
         adressInfo   = false,
-        paymentDone  = false;
+        paymentDone  = false,
+        id_apartment = 0;
 
     /*
      * Hidden forms if api token exists
@@ -40,7 +41,7 @@ $(document).ready(function() {
     if($('#sa-payment-form').length > 0){
         $('#sa-payment-form').validate({
             submitHandler: function(form) {
-                payBooking();
+                generataPaymentToken();
             },
             invalidHandler: function(event, validator) {
                 paymentDone = false;
@@ -104,6 +105,7 @@ $(document).ready(function() {
     $('.tab-content').on('click','.btn-next-tab',function(e){
         e.preventDefault();
         if($(this).attr('href') == '#personal-info'){
+            id_apartment = $(this).attr('id').split('_')[1];
             aptoSelected = true;
             saNextStep($(this));
         }
@@ -147,7 +149,7 @@ $(document).ready(function() {
         // $.ajax({
         //     url: '/api/address/create',
         //     type: 'GET',
-        //     data: $('#sa-address').serialize(),
+        //     data: $('#sa-address').serialize()+'&api_token='+localStorage.getItem('api_token')+'&id_user='+localStorage.getItem('id_user'),
         //     success: function(reply){
         //         console.log(reply);
         //     }
@@ -157,24 +159,48 @@ $(document).ready(function() {
     /*
      * Generate token in 2checkout
      */
-    function payBooking(){
+    TCO.loadPubKey('sandbox');
+    function generataPaymentToken(){
         var args = {
-            sellerId: '901376526',
-            publishableKey: '90B1A5E1-6C0C-40CA-AEF0-86CC82E74CFB',
-            ccNo: '4000000000000002',
-            cvv: '123',
-            expMonth: '05',
-            expYear: '2020'
+            sellerId: sellerId,
+            publishableKey: publishableKey,
+            ccNo: $('input[name="creditCard"]').val(),
+            cvv: $('input[name="cvv"]').val(),
+            expMonth: $('select[name="month"]').val(),
+            expYear: $('select[name="year"]').val()
         };
 
-        //TCO.loadPubKey('sandbox');
-        //
-        // TCO.requestToken(function(response) {
-        //     //console.log('GOOD', response);
-        //     console.log(response.response.token.token);
-        // },function(error) {
-        //     console.log('ERROR', error);
-        // },args);
+        TCO.requestToken(function(response) {
+            //console.log('GOOD', response);
+            savePayment(response.response.token.token);
+        },function(error) {
+            console.log('ERROR', error);
+        },args);
+    }
+
+    /*
+     * Do the payment
+     */
+    function savePayment(paymentToken){
+        var currency = $.parseJSON(localStorage.getItem("currency"));
+        //console.log('Calling method to save the payment');
+        $.ajax({
+            url: '/api/booking',
+            type: 'POST',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token'),
+                id_apartment: id_apartment,
+                checkin: localStorage.getItem('checkin'),
+                checkout: localStorage.getItem('checkout'),
+                tco_token: paymentToken,
+                currency_iso: currency.iso_code,
+                name: '',
+                id_currency: currency.id_currency,
+                id_address_booking: 1,
+                id_address_payment: 1
+            }
+        });
     }
 
 });

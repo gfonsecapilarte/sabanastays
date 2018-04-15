@@ -64,6 +64,7 @@
             </div>
         </footer>
 
+        <script src="{{ asset('js/2co.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

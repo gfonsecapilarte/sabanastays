@@ -76,7 +76,7 @@ $(document).ready(function(){
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: {checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 1}
+            data: {checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 5}
         }).done(function(data){
             $('#list-found-aptos').html('');
             totalPages = data.pagination.pages;
@@ -124,6 +124,8 @@ $(document).ready(function(){
                     amenHtml += '<li><i class="'+amenity.icon+'"></i>'+amenity.lang[''+locale+''].name+'</li>';
                 });
                 amenHtml += '</ul>';
+
+                $('#apto-template .btn-next-tab').attr('id', 'apto_'+el.id_apartment);
 
                 $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
                 $('#list-found-aptos').append('<div class="mg-avl-room">'+template.html()+'</div>');
