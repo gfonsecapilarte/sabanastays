@@ -7,7 +7,7 @@
             <h3 class="mg-avl-room-title">
                 <a href="#"></a>
                 <span class="sa-apto-price">
-                    <span>$249<sup>.99</sup></span>
+                    <span><span id="sa-currency-sign"></span>249<sup>.99</sup></span>
                     /@lang('general.night')
                 </span>
             </h3>

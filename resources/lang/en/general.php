@@ -84,5 +84,6 @@ return [
     'registeredUserSuccess'     => 'Registered user successfully',
     'loginSuccess'              => 'You have logged in',
     'addressInformation'        => 'Address Information',
-    'registerAddress'           => 'Register address'
+    'registerAddress'           => 'Register address',
+    'addressSuccess'            => 'The address has been registered'
 ];

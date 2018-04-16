@@ -356,7 +356,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
     date.locale = function (code) {
         if (code) {
             if (!locales[code] && "function" === 'function' && global) {
-                __webpack_require__(66)("./" + code);
+                __webpack_require__(67)("./" + code);
             }
             lang = code;
         }
@@ -11473,7 +11473,7 @@ function asap(task) {
 module.exports = asap;
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(51), __webpack_require__(76).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(51), __webpack_require__(77).setImmediate))
 
 /***/ }),
 /* 5 */
@@ -15709,8 +15709,8 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(53);
-__webpack_require__(88);
-module.exports = __webpack_require__(89);
+__webpack_require__(89);
+module.exports = __webpack_require__(90);
 
 
 /***/ }),
@@ -15741,18 +15741,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__jquery_parallax_1_1_3_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__jquery_parallax_1_1_3_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__script_js__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__script_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__script_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__aptos_search_js__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__aptos_search_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__aptos_search_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__users_login_js__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__users_register_js__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__users_register_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__users_register_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_user_js__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_user_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__users_user_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__contact_contact_js__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__contact_contact_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__booking_booking_js__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__location_location_js__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__location_location_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__location_location_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__currency_currency_js__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__currency_currency_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__currency_currency_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__aptos_search_js__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__aptos_search_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__aptos_search_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__users_login_js__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_register_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_register_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__users_register_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_user_js__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_user_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__users_user_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__location_location_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__location_location_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__location_location_js__);
 var loadGoogleMapsApi = __webpack_require__(54);
 
 
@@ -15794,6 +15796,11 @@ loadGoogleMapsApi({ key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ" }).then(funct
 }).catch(function (error) {
   console.error(error);
 });
+
+/*
+ * Load currency information
+ */
+
 
 /*
  * Modules to work with aptos
@@ -19108,6 +19115,25 @@ $(window).load(function () {
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+    $.ajax({
+        url: '/api/currencies',
+        type: 'GET',
+        success: function success(currencies) {
+            console.log(currencies[0]);
+            localStorage.setItem("currency", JSON.stringify(currencies[0]));
+            if ($('#sa-currency-sign').length > 0) {
+                $('#sa-currency-sign').text(currencies[0].sign);
+            }
+        }
+    });
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function($) {var date = __webpack_require__(0);
 date.locale(locale.toLowerCase());
 
@@ -19184,7 +19210,7 @@ $(document).ready(function () {
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: { checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 1 }
+            data: { checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 5 }
         }).done(function (data) {
             $('#list-found-aptos').html('');
             totalPages = data.pagination.pages;
@@ -19231,6 +19257,8 @@ $(document).ready(function () {
                     amenHtml += '<li><i class="' + amenity.icon + '"></i>' + amenity.lang['' + locale + ''].name + '</li>';
                 });
                 amenHtml += '</ul>';
+
+                $('#apto-template .btn-next-tab').attr('id', 'apto_' + el.id_apartment);
 
                 $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
                 $('#list-found-aptos').append('<div class="mg-avl-room">' + template.html() + '</div>');
@@ -19284,7 +19312,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -19365,14 +19393,14 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 66;
+webpackContext.id = 67;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk__ = __webpack_require__(68);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fb_sdk__);
 var validate = __webpack_require__(2);
 
@@ -19410,6 +19438,13 @@ $(document).ready(function () {
                     $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
+
+                    if (currentPage == 'booking') {
+                        setTimeout(function () {
+                            $('#contLoginUser').slideUp();
+                            $('#contRegisterUser').slideUp();
+                        }, 2000);
+                    }
                     //location.href = profile_link;
                 }
             }
@@ -19427,7 +19462,7 @@ $(document).ready(function () {
     });
 
     /** Setup and login with Google API **/
-    __webpack_require__(73)().then(function (gapi) {
+    __webpack_require__(74)().then(function (gapi) {
         var auth2 = null;
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
@@ -19451,7 +19486,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19461,11 +19496,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _loadFacebookSDK = __webpack_require__(69);
+var _loadFacebookSDK = __webpack_require__(70);
 
 var _loadFacebookSDK2 = _interopRequireDefault(_loadFacebookSDK);
 
-var _FacebookSDK = __webpack_require__(71);
+var _FacebookSDK = __webpack_require__(72);
 
 var _FacebookSDK2 = _interopRequireDefault(_FacebookSDK);
 
@@ -19514,7 +19549,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19524,7 +19559,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _loadScript = __webpack_require__(70);
+var _loadScript = __webpack_require__(71);
 
 var _loadScript2 = _interopRequireDefault(_loadScript);
 
@@ -19554,7 +19589,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 
@@ -19625,7 +19660,7 @@ function ieOnEnd (script, cb) {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19635,7 +19670,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _functionNames = __webpack_require__(72);
+var _functionNames = __webpack_require__(73);
 
 var _functionNames2 = _interopRequireDefault(_functionNames);
 
@@ -19669,7 +19704,7 @@ FacebookSDK.promisify = function (fbAPIReady) {
 exports.default = FacebookSDK;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19684,13 +19719,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ["__globalCallbacks", "api", "AppEvents", "getLoginStatus", "getAuthResponse", "getAccessToken", "getUserID", "login", "logout", "Canvas", "Event", "Frictionless", "init", "ui", "XFBML"];
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** @module google-client-api */
 
-var scriptjs = __webpack_require__( 74 ),
-	promise = __webpack_require__( 75 );
+var scriptjs = __webpack_require__( 75 ),
+	promise = __webpack_require__( 76 );
 
 var callbacks = [];
 
@@ -19754,7 +19789,7 @@ module.exports = function( onComplete ) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -19887,19 +19922,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = __webpack_require__(3)
-__webpack_require__(78)
 __webpack_require__(79)
 __webpack_require__(80)
+__webpack_require__(81)
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -19952,7 +19987,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(77);
+__webpack_require__(78);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -19966,7 +20001,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -20159,7 +20194,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(51)))
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20179,7 +20214,7 @@ Promise.prototype.done = function (onFulfilled, onRejected) {
 }
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20294,7 +20329,7 @@ Promise.prototype['catch'] = function (onRejected) {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20364,7 +20399,7 @@ Promise.prototype.nodeify = function (callback, ctx) {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var validate = __webpack_require__(2);
@@ -20416,7 +20451,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
@@ -20425,7 +20460,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var validate = __webpack_require__(2);
@@ -20444,12 +20479,12 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validations_js__ = __webpack_require__(86);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validations_js__ = __webpack_require__(87);
 
 
 
@@ -20457,8 +20492,9 @@ var validate = __webpack_require__(2);
 
 $(document).ready(function () {
     var aptoSelected = false,
-        personalInfo = false,
-        paymentDone = false;
+        adressInfo = false,
+        paymentDone = false,
+        id_apartment = 0;
 
     /*
      * Hidden forms if api token exists
@@ -20475,9 +20511,12 @@ $(document).ready(function () {
      */
     if ($('#sa-address').length > 0) {
         $('#sa-address').validate({
-            submitHandler: function submitHandler(form) {},
+            submitHandler: function submitHandler(form) {
+                adressInfo = true;
+                saveAdress();
+            },
             invalidHandler: function invalidHandler(event, validator) {
-                paymentDone = false;
+                //paymentDone = false;
             }
         });
     }
@@ -20488,7 +20527,7 @@ $(document).ready(function () {
     if ($('#sa-payment-form').length > 0) {
         $('#sa-payment-form').validate({
             submitHandler: function submitHandler(form) {
-                payBooking();
+                generataPaymentToken();
             },
             invalidHandler: function invalidHandler(event, validator) {
                 paymentDone = false;
@@ -20531,8 +20570,12 @@ $(document).ready(function () {
             if (localStorage.getItem('api_token') == null) {
                 alert('Tiene que diligenciar la información personal');
             } else {
-                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["b" /* saBookingStepThree */])();
-                $('a', this).tab('show');
+                if (!adressInfo) {
+                    alert('Tiene que diligenciar la dirección');
+                } else {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["b" /* saBookingStepThree */])();
+                    $('a', this).tab('show');
+                }
             }
         }
     });
@@ -20544,13 +20587,18 @@ $(document).ready(function () {
     $('.tab-content').on('click', '.btn-next-tab', function (e) {
         e.preventDefault();
         if ($(this).attr('href') == '#personal-info') {
+            id_apartment = $(this).attr('id').split('_')[1];
             aptoSelected = true;
             Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
         } else if ($(this).attr('href') == '#payment') {
-            if (localStorage.getItem('api_token') != null) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
+            if (localStorage.getItem('api_token') == null) {
+                alert('Tiene que diligenciar la información personal');
             } else {
-                alert("Debe diligenciar la información personal");
+                if (!adressInfo) {
+                    alert('Tiene que diligenciar la dirección');
+                } else {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
+                }
             }
         } else if ($(this).attr('href') == '#thank-you') {
             $('#sa-payment-form').submit();
@@ -20571,14 +20619,71 @@ $(document).ready(function () {
     });
 
     /*
-     * Function to do the payment
+     * Function to save the primary address
      */
-    function payBooking() {}
+    function saveAdress() {
+        $('#sa-address .alert-success').removeClass('hidden').children('span').text(addressSuccess);
+        // $.ajax({
+        //     url: '/api/address/create',
+        //     type: 'GET',
+        //     data: $('#sa-address').serialize()+'&api_token='+localStorage.getItem('api_token')+'&id_user='+localStorage.getItem('id_user'),
+        //     success: function(reply){
+        //         console.log(reply);
+        //     }
+        // });
+    }
+
+    /*
+     * Generate token in 2checkout
+     */
+    TCO.loadPubKey('sandbox');
+    function generataPaymentToken() {
+        var args = {
+            sellerId: sellerId,
+            publishableKey: publishableKey,
+            ccNo: $('input[name="creditCard"]').val(),
+            cvv: $('input[name="cvv"]').val(),
+            expMonth: $('select[name="month"]').val(),
+            expYear: $('select[name="year"]').val()
+        };
+
+        TCO.requestToken(function (response) {
+            //console.log('GOOD', response);
+            savePayment(response.response.token.token);
+        }, function (error) {
+            console.log('ERROR', error);
+        }, args);
+    }
+
+    /*
+     * Do the payment
+     */
+    function savePayment(paymentToken) {
+        var currency = $.parseJSON(localStorage.getItem("currency"));
+        //console.log('Calling method to save the payment');
+        $.ajax({
+            url: '/api/booking',
+            type: 'POST',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token'),
+                id_apartment: id_apartment,
+                checkin: localStorage.getItem('checkin'),
+                checkout: localStorage.getItem('checkout'),
+                tco_token: paymentToken,
+                currency_iso: currency.iso_code,
+                name: '',
+                id_currency: currency.id_currency,
+                id_address_booking: 1,
+                id_address_payment: 1
+            }
+        });
+    }
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20644,7 +20749,7 @@ function saNextStep(element) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20692,21 +20797,43 @@ function saRemoveValidationRules() {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+
     /*
      * Call states
      */
-    $('select[name="country"]').change(function (event) {
+    $('select[name="id_country"]').change(function (event) {
         var id_country = $(this).val();
         $.ajax({
             url: '/api/location/states',
             type: 'GET',
-            data: { id_country: id_country },
-            success: function success(reply) {
-                console.log(reply);
+            success: function success(states) {
+                var options = '<option value="" disabled selected></opion>';
+                $(states).each(function (index, el) {
+                    options += '<option value=' + el.id_state + '>' + el.name + '</option>';
+                });
+                $('select[name="id_state"]').html(options);
+            }
+        });
+    });
+
+    /*
+     * Call cities
+     */
+    $('select[name="id_state"]').change(function (event) {
+        var id_state = $(this).val();
+        $.ajax({
+            url: '/api/location/cities',
+            type: 'GET',
+            success: function success(cities) {
+                var options = '<option value="" disabled selected></opion>';
+                $(cities).each(function (index, el) {
+                    options += '<option value=' + el.id_city + '>' + el.name + '</option>';
+                });
+                $('select[name="id_city"]').html(options);
             }
         });
     });
@@ -20714,13 +20841,13 @@ function saRemoveValidationRules() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

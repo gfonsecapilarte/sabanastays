@@ -84,5 +84,6 @@ return [
     'registeredUserSuccess'     => 'Usuario registrado con éxito',
     'loginSuccess'              => 'Ha iniciado sesión',
     'addressInformation'        => 'Información de Dirección',
-    'registerAddress'           => 'Registrar dirección'
+    'registerAddress'           => 'Registrar dirección',
+    'addressSuccess'            => 'La dirección ha sido registrada'
 ];

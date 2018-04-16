@@ -12,3 +12,6 @@ yarn-error.log
 .env
 /nbproject/private/
 /nbproject
+/public/js/app.js
+/public/js/backoffice.js
+/public/css/backoffice/backoffice.css

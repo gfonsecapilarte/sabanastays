@@ -1,6 +1,8 @@
 <script>
     var regisUserSuccMsg    = '{{ __('general.registeredUserSuccess') }}';
     var loginSuccess        = '{{ __('general.loginSuccess') }}';
+    var addressSuccess      = '{{ __('general.addressSuccess') }}';
+    var currentPage         = 'booking';
 </script>
 
 <div class="row">

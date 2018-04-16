@@ -41,6 +41,11 @@ loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(functio
 })
 
 /*
+ * Load currency information
+ */
+import "./currency/currency.js";
+
+/*
  * Modules to work with aptos
  */
 import "./aptos/search.js";

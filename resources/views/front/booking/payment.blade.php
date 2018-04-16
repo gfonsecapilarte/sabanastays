@@ -5,6 +5,11 @@
                 <input type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
             </h2>
 
+            <script>
+                var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
+                var sellerId        = '{{ env('TCO_SELLER_ID') }}';
+            </script>
+
             <form id='sa-payment-form'>
                 <div class="row pb40 hidden address-info">
                     <div class="col-md-6">
@@ -70,9 +75,6 @@
                             <div class="col-md-6">
                                 <select class="form-control" name="year" required data-msg="@lang('validations.required')">
                                     <option value="">@lang('general.year')</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
                                     <option value="18">18</option>
                                     <option value="19">19</option>
                                     <option value="20">20</option>

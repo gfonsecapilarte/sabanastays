@@ -35,6 +35,13 @@ $(document).ready(function() {
                     $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token',reply.api_token);
                     localStorage.setItem('id_user',reply.id_user);
+
+                    if(currentPage == 'booking'){
+                        setTimeout(function(){
+                            $('#contLoginUser').slideUp();
+                            $('#contRegisterUser').slideUp();
+                        },2000);
+                    }
                     //location.href = profile_link;
                 }
             }

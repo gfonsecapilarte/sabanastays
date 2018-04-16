@@ -15,6 +15,7 @@
         var profile_link        = '{{ route("profile") }}';
         var regisUserSuccMsg    = '{{ __('general.registeredUserSuccess') }}';
         var loginSuccess        = '{{ __('general.loginSuccess') }}';
+        var currentPage         = 'booking';
     </script>
 
     <div class="mg-page">

@@ -26,7 +26,7 @@ mix.webpackConfig({
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: 'babel-loader'
                 }
             },
             {
@@ -49,7 +49,7 @@ mix.webpackConfig({
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery",
-            "classie": "desandro-classie/classie.js"
+            "classie": "desandro-classie/classie.js",
         })
     ]
 });
