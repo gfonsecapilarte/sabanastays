@@ -1,3 +1,10 @@
 .content-page {
     padding-top: 25px;
 }
+
+.app-search-list {
+    margin: 0 25px;
+}
+.app-search-list input {
+    border: 1px solid #cccccc !important;
+}

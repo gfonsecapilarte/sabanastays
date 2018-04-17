@@ -24,7 +24,14 @@ class BookingController extends Controller
 
     public function getBookings(Request $request)
     {
-        $bookings = BookingModel::with(array('payment', 'user'))->paginate($request->input('items_per_page', 15));
+        $bookings = array();
+        if ($request->has('term')) {
+            $bookings = BookingModel::where('id_booking', '=', $request->input('term'))
+                ->orWhere('reference', '=', $request->input('term'))
+                ->with(array('payment', 'user'))->paginate($request->input('items_per_page', 15));
+        } else {
+            $bookings = BookingModel::with(array('payment', 'user'))->paginate($request->input('items_per_page', 15));
+        }
         return response()->json(array(
             'success' => true,
             'bookings' => $bookings

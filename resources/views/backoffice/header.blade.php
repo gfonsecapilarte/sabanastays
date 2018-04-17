@@ -121,7 +121,7 @@
             <li class="hidden-xs"><a href="javascript:void(0)">New</a></li>
         </ul>
         <ul class="nav navbar-top-links navbar-right pull-right">
-            <li>
+            <li class="hidden">
                 <form role="search" class="app-search hidden-xs m-r-10">
                     <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a>
                 </form>

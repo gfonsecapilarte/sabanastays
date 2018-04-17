@@ -1,7 +1,12 @@
 var Booking = {
     init: function() {
         Booking.clear();
+        Booking.createEvents();
         Booking.getBookings();
+    },
+    createEvents: function() {
+        $('.app-search-list').on('click', 'a', Booking.onSearch);
+        $('.app-search-list').on('keyup', 'input', Booking.onSearch);
     },
     clear: function() {
         $('#table-bookings tbody').empty();
@@ -13,9 +18,10 @@ var Booking = {
             type: 'GET',
             cache: false,
             dataType: 'json',
-            data: {
-                page: data.page
-            },
+            data: data,
+//            data: {
+//                page: data.page
+//            },
             success: function(response) {
                 console.log('>>', response);
                 if (response.success) {
@@ -25,6 +31,12 @@ var Booking = {
                 }
             }
         });
+    },
+    onSearch: function(event) {
+        event.preventDefault();
+        if (event.type === 'click' || (event.type === 'keyup' && event.which === 13)) {
+            Booking.getBookings({term: $('.app-search-list input').val()});
+        }
     },
     showResults: function(response) {
         console.log('bookings', response);
@@ -49,7 +61,7 @@ var Booking = {
             $('<td/>').text(booking.payment.currency.sign+booking.payment.amount).appendTo($row);
         }
         $('<td/>').appendTo($row).append(
-            $('<div/>').addClass('label label-table label-success').text(Booking.getStatus(booking.status))
+            $('<div/>').addClass('label label-table '+Booking.getStatusLabel(booking.status)).text(Booking.getStatus(booking.status))
         );
         $('<td/>').appendTo($row).addClass('text-center').append(
             $('<span/>').addClass('btn btn-default').append(
@@ -58,6 +70,27 @@ var Booking = {
         );
 
         $row.appendTo($('#table-bookings tbody'));
+    },
+    getStatusLabel: function(status) {
+        var label = 'label-default';
+        switch (status) {
+            case 'RESERVED':
+                label = 'label-info';
+                break;
+            case 'PAID':
+                label = 'label-success';
+                break;
+            case 'CANCELLED':
+                label = 'label-warning';
+                break;
+            case 'UNAVAILABLE':
+            case 'INCOMPLETED':
+            default:
+                label = 'label-default';
+                break;
+        }
+
+        return label;
     },
     onView: function(event) {
         console.log('booking detail', event.data.booking);
@@ -127,7 +160,7 @@ var Booking = {
                     ),
                     $('<div/>').addClass('modal-footer').append(
                         $('<button/>').attr('type','button').addClass('btn btn-default').attr('data-dismiss','modal').text('Close'),
-                        $('<button/>').attr('type','button').addClass('btn btn-warning').text('Cancel booking').on('click', {$modal:$modal,booking:booking}, Booking.onCancelBooking)
+                        (booking.status === 'CANCELLED') ? null : $('<button/>').attr('type','button').addClass('btn btn-warning').text('Cancel booking').on('click', {$modal:$modal,booking:booking}, Booking.onCancelBooking)
                     )
                 )
             )
@@ -138,15 +171,31 @@ var Booking = {
         if (!confirm('Sure cancel booking')) {
             return false;
         }
-        console.log('>>>', event.data);
         Booking.cancelBooking(event.data.booking, event.data.$modal);
     },
     cancelBooking: function(booking, $modal) {
-        console.log('cancel', $modal);
-//        alert('Booking canceled');
-//        $modal.modal('hide');
-//        $('body').find('.booking-modal').remove();
-//        Booking.getBookings();
+        if (booking.status === 'CANCELLED') {
+            return;
+        }
+        $.ajax({
+            url: '/api/booking/cancel',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+                id_booking: booking.id_booking
+            },
+            success: function(response) {
+                if (response.success) {
+                    $modal.modal('hide');
+                    alert('Booking cancelled');
+                    $('body').find('.booking-modal').remove();
+                    Booking.getBookings();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
     },
     getStatus: function(status) {
         var label = ' - ';
