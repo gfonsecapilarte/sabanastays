@@ -66,8 +66,3 @@ import "./contact/contact.js";
  * Module to booking functions
  */
 import "./booking/booking.js";
-
-/*
- * Module for locations
- */
-import "./location/location.js";

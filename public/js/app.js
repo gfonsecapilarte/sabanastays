@@ -15753,8 +15753,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__location_location_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__location_location_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__location_location_js__);
 var loadGoogleMapsApi = __webpack_require__(54);
 
 
@@ -15821,11 +15819,6 @@ loadGoogleMapsApi({ key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ" }).then(funct
 
 /*
  * Module to booking functions
- */
-
-
-/*
- * Module for locations
  */
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
@@ -20484,8 +20477,7 @@ $(document).ready(function () {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validations_js__ = __webpack_require__(87);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__location_location_js__ = __webpack_require__(88);
 
 
 var validate = __webpack_require__(2);
@@ -20494,7 +20486,9 @@ $(document).ready(function () {
     var aptoSelected = false,
         adressInfo = false,
         paymentDone = false,
-        id_apartment = 0;
+        apartmentId = 0,
+        address = null,
+        secondAddress = null;
 
     /*
      * Hidden forms if api token exists
@@ -20512,8 +20506,17 @@ $(document).ready(function () {
     if ($('#sa-address').length > 0) {
         $('#sa-address').validate({
             submitHandler: function submitHandler(form) {
-                adressInfo = true;
-                saveAdress();
+                saveAdress($('#sa-address')).then(function (reply) {
+                    if (reply.success) {
+                        adressInfo = true;
+                        address = reply.address;
+                        $('#sa-address').children('.alert-success').removeClass('hidden').children('span').text(addressSuccess);
+                        setTimeout(function () {
+                            paymentAddress();
+                            $('a[href="#payment"]').parents('li').trigger('click');
+                        }, 2000);
+                    }
+                });
             },
             invalidHandler: function invalidHandler(event, validator) {
                 //paymentDone = false;
@@ -20527,7 +20530,10 @@ $(document).ready(function () {
     if ($('#sa-payment-form').length > 0) {
         $('#sa-payment-form').validate({
             submitHandler: function submitHandler(form) {
-                generataPaymentToken();
+                saveAdress($('#sa-payment-form')).then(function (reply) {
+                    secondAddress = reply.address;
+                    generataPaymentToken();
+                });
             },
             invalidHandler: function invalidHandler(event, validator) {
                 paymentDone = false;
@@ -20587,7 +20593,7 @@ $(document).ready(function () {
     $('.tab-content').on('click', '.btn-next-tab', function (e) {
         e.preventDefault();
         if ($(this).attr('href') == '#personal-info') {
-            id_apartment = $(this).attr('id').split('_')[1];
+            apartmentId = $(this).attr('id').split('_')[1];
             aptoSelected = true;
             Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
         } else if ($(this).attr('href') == '#payment') {
@@ -20610,27 +20616,48 @@ $(document).ready(function () {
      */
     $('#sa-check-diff-address').click(function () {
         if ($(this).is(':checked')) {
-            $('#sa-payment-form > .address-info').removeClass('hidden');
-            Object(__WEBPACK_IMPORTED_MODULE_1__validations_js__["a" /* saAddValidationRules */])();
+            $('#sa-payment-form select[name="id_country"]').attr('readonly', false);
+            $('#sa-payment-form select[name="id_city"]').attr('readonly', false);
+            $('#sa-payment-form select[name="id_state"]').attr('readonly', false);
+            $('#sa-payment-form input[name="address"]').attr('readonly', false);
+            $('#sa-payment-form input[name="postcode"]').attr('readonly', false);
         } else {
-            $('#sa-payment-form > .address-info').addClass('hidden');
-            Object(__WEBPACK_IMPORTED_MODULE_1__validations_js__["b" /* saRemoveValidationRules */])();
+            $('#sa-payment-form select[name="id_country"]').attr('readonly', true);
+            $('#sa-payment-form select[name="id_city"]').attr('readonly', true);
+            $('#sa-payment-form select[name="id_state"]').attr('readonly', true);
+            $('#sa-payment-form input[name="address"]').attr('readonly', true);
+            $('#sa-payment-form input[name="postcode"]').attr('readonly', true);
+            paymentAddress();
         }
     });
 
     /*
      * Function to save the primary address
      */
-    function saveAdress() {
-        $('#sa-address .alert-success').removeClass('hidden').children('span').text(addressSuccess);
-        // $.ajax({
-        //     url: '/api/address/create',
-        //     type: 'GET',
-        //     data: $('#sa-address').serialize()+'&api_token='+localStorage.getItem('api_token')+'&id_user='+localStorage.getItem('id_user'),
-        //     success: function(reply){
-        //         console.log(reply);
-        //     }
-        // });
+    function saveAdress(form) {
+        var ajax = $.ajax({
+            url: '/api/address/create',
+            type: 'POST',
+            data: form.serialize() + '&id_user=' + localStorage.getItem('id_user') + '&api_token=' + localStorage.getItem('api_token')
+        });
+
+        return ajax;
+    }
+
+    /*
+     * Function to load de first address
+     */
+    function paymentAddress() {
+        var form = $('#sa-payment-form');
+        $('select[name="id_country"]', form).val(address.id_country);
+        Object(__WEBPACK_IMPORTED_MODULE_1__location_location_js__["b" /* callStates */])().then(function () {
+            $('select[name="id_state"]', form).val(address.id_state);
+            Object(__WEBPACK_IMPORTED_MODULE_1__location_location_js__["a" /* callCities */])().then(function () {
+                $('select[name="id_city"]', form).val(address.id_city);
+                $('input[name="address"]', form).val(address.address);
+                $('input[name="postcode"]', form).val(address.postcode);
+            });
+        });
     }
 
     /*
@@ -20648,7 +20675,6 @@ $(document).ready(function () {
         };
 
         TCO.requestToken(function (response) {
-            //console.log('GOOD', response);
             savePayment(response.response.token.token);
         }, function (error) {
             console.log('ERROR', error);
@@ -20660,22 +20686,23 @@ $(document).ready(function () {
      */
     function savePayment(paymentToken) {
         var currency = $.parseJSON(localStorage.getItem("currency"));
-        //console.log('Calling method to save the payment');
         $.ajax({
-            url: '/api/booking',
+            url: '/api/booking/create',
             type: 'POST',
             data: {
                 id_user: localStorage.getItem('id_user'),
                 api_token: localStorage.getItem('api_token'),
-                id_apartment: id_apartment,
+                id_apartment: apartmentId,
                 checkin: localStorage.getItem('checkin'),
                 checkout: localStorage.getItem('checkout'),
                 tco_token: paymentToken,
                 currency_iso: currency.iso_code,
-                name: '',
                 id_currency: currency.id_currency,
-                id_address_booking: 1,
-                id_address_payment: 1
+                id_address_booking: address.id_address,
+                id_address_payment: secondAddress.id_address
+            },
+            success: function success(reply) {
+                console.log(reply);
             }
         });
     }
@@ -20749,96 +20776,62 @@ function saNextStep(element) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 87 */
+/* 87 */,
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = saAddValidationRules;
-/* harmony export (immutable) */ __webpack_exports__["b"] = saRemoveValidationRules;
-function saAddValidationRules() {
-			$('input[name="paymentFirstName"]').rules('add', {
-						required: true
-			});
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["b"] = callStates;
+/* harmony export (immutable) */ __webpack_exports__["a"] = callCities;
+/*
+ * Call states
+ */
+$('select[name="id_country"]').change(function (event) {
+    //var id_country = $(this).val();
+    callStates();
+});
 
-			$('input[name="paymentAddress"]').rules('add', {
-						required: true
-			});
+/*
+ * Call cities
+ */
+$('select[name="id_state"]').change(function (event) {
+    //var id_state = $(this).val();
+    callCities();
+});
 
-			$('input[name="paymentCity"]').rules('add', {
-						required: true
-			});
-
-			$('input[name="paymentState"]').rules('add', {
-						required: true
-			});
-
-			$('input[name="paymentLastName"]').rules('add', {
-						required: true
-			});
-
-			$('input[name="paymentPostalCode"]').rules('add', {
-						required: true
-			});
-
-			$('input[name="paymentCountry"]').rules('add', {
-						required: true
-			});
+/*
+ * Function to call states
+ */
+function callStates() {
+    var ajax = $.ajax({
+        url: '/api/location/states',
+        type: 'GET',
+        success: function success(states) {
+            var options = '<option value="" disabled selected></opion>';
+            $(states).each(function (index, el) {
+                options += '<option value=' + el.id_state + '>' + el.name + '</option>';
+            });
+            $('select[name="id_state"]').html(options);
+        }
+    });
+    return ajax;
 }
 
-function saRemoveValidationRules() {
-			$('input[name="paymentFirstName"]').rules('remove');
-			$('input[name="paymentAddress"]').rules('remove');
-			$('input[name="paymentCity"]').rules('remove');
-			$('input[name="paymentState"]').rules('remove');
-			$('input[name="paymentLastName"]').rules('remove');
-			$('input[name="paymentPostalCode"]').rules('remove');
-			$('input[name="paymentCountry"]').rules('remove');
+function callCities() {
+    var ajax = $.ajax({
+        url: '/api/location/cities',
+        type: 'GET',
+        success: function success(cities) {
+            var options = '<option value="" disabled selected></opion>';
+            $(cities).each(function (index, el) {
+                options += '<option value=' + el.id_city + '>' + el.name + '</option>';
+            });
+            $('select[name="id_city"]').html(options);
+        }
+    });
+    return ajax;
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
-
-    /*
-     * Call states
-     */
-    $('select[name="id_country"]').change(function (event) {
-        var id_country = $(this).val();
-        $.ajax({
-            url: '/api/location/states',
-            type: 'GET',
-            success: function success(states) {
-                var options = '<option value="" disabled selected></opion>';
-                $(states).each(function (index, el) {
-                    options += '<option value=' + el.id_state + '>' + el.name + '</option>';
-                });
-                $('select[name="id_state"]').html(options);
-            }
-        });
-    });
-
-    /*
-     * Call cities
-     */
-    $('select[name="id_state"]').change(function (event) {
-        var id_state = $(this).val();
-        $.ajax({
-            url: '/api/location/cities',
-            type: 'GET',
-            success: function success(cities) {
-                var options = '<option value="" disabled selected></opion>';
-                $(cities).each(function (index, el) {
-                    options += '<option value=' + el.id_city + '>' + el.name + '</option>';
-                });
-                $('select[name="id_city"]').html(options);
-            }
-        });
-    });
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 89 */

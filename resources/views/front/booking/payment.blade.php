@@ -1,40 +1,42 @@
 <div class="row">
     <div class="col-md-8">
         <div class="mg-book-form-billing">
-            <h2 class="mg-sec-left-title">
-                <input type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
-            </h2>
-
             <script>
                 var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
                 var sellerId        = '{{ env('TCO_SELLER_ID') }}';
             </script>
 
             <form id='sa-payment-form'>
-                <div class="row pb40 hidden address-info">
+                <h2 class="mg-sec-left-title">
+                    <input name="second_address" type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
+                </h2>
+                <div class="row">
                     <div class="col-md-6">
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentFirstName" placeholder="@lang('general.firstName')" tabindex="1" data-msg="@lang('validations.required')">
+                            <select readonly class="form-control" name="id_country" required data-msg="@lang('validations.required')">
+                                <option value="" disabled selected>@lang('general.country')</option>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->id_country }}">{{ $country->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentAddress" placeholder="@lang('general.address')" tabindex="3" data-msg="@lang('validations.required')">
+                            <select readonly class="form-control" name="id_city" required data-msg="@lang('validations.required')">
+                                <option value="" disabled selected>@lang('general.city')</option>
+                            </select>
                         </div>
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentCity" placeholder="@lang('general.city')" tabindex="5" data-msg="@lang('validations.required')">
-                        </div>
-                        <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentState" placeholder="@lang('general.state')" tabindex="7" data-msg="@lang('validations.required')">
+                            <input readonly type="text" class="form-control" name="postcode" placeholder="@lang('general.postalCode')" required data-msg="@lang('validations.required')">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentLastName" placeholder="@lang('general.lastName')" tabindex="2" data-msg="@lang('validations.required')">
+                            <select readonly class="form-control" name="id_state" required data-msg="@lang('validations.required')">
+                                <option value="" disabled selected>@lang('general.state')</option>
+                            </select>
                         </div>
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentPostalCode" placeholder="@lang('general.postalCode')" tabindex="4" data-msg="@lang('validations.required')">
-                        </div>
-                        <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="paymentCountry" placeholder="@lang('general.country')" tabindex="6" data-msg="@lang('validations.required')">
+                            <input readonly type="text" class="form-control" name="address" placeholder="@lang('general.address')" required data-msg="@lang('validations.required')">
                         </div>
                     </div>
                 </div>
