@@ -63,4 +63,18 @@ class Booking extends Model
 
         return $query;
     }
+
+    /**
+     * Associations
+     */
+
+    public function payment()
+    {
+        return $this->hasOne(\App\Models\Payment::class, 'id_booking')->with('currency');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class, 'id_user');
+    }
 }

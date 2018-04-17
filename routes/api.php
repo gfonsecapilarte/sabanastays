@@ -46,7 +46,9 @@ Route::get('/apartment', 'ApartmentController@getApartment');
 Route::get('/apartment/types', 'ApartmentController@getTypes');
 
 //bookings
-Route::post('/booking', 'BookingController@create');
+Route::post('/booking/create', 'BookingController@create');
+Route::post('/booking/cancel', 'BookingController@cancelBooking');
+Route::get('/booking/list', 'BookingController@getBookings');
 
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');

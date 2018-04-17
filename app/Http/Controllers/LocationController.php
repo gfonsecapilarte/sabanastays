@@ -18,7 +18,7 @@ class LocationController extends Controller
     public function getStates(Request $request)
     {
         if ($request->has('id_country')) {
-            $states = State::where('id_country', '=', $request->input('id_country'));
+            $states = State::where('id_country', '=', $request->input('id_country'))->get();
         } else {
             $states = State::all();
         }
@@ -28,7 +28,7 @@ class LocationController extends Controller
     public function getCities(Request $request)
     {
         if ($request->has('id_state')) {
-            $cities = City::where('id_state', '=', $request->input('id_state'));
+            $cities = City::where('id_state', '=', $request->input('id_state'))->get();
         } else {
             $cities = City::all();
         }

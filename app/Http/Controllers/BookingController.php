@@ -19,7 +19,46 @@ class BookingController extends Controller
 {
     public function __construct(Request $request)
     {
-        $this->checkSession($request);
+//        $this->checkSession($request);
+    }
+
+    public function getBookings(Request $request)
+    {
+        $bookings = BookingModel::with(array('payment', 'user'))->paginate($request->input('items_per_page', 15));
+        return response()->json(array(
+            'success' => true,
+            'bookings' => $bookings
+        ));
+    }
+
+    public function cancelBooking(Request $request)
+    {
+        if (!$request->has('id_booking')) {
+            return response()->json(array(
+                'success' => false,
+                'message' => 'Bad request'
+            ));
+        }
+        $booking = BookingModel::find($request->input('id_booking'));
+        if (!$booking) {
+            return response()->json(array(
+                'success' => false,
+                'message' => 'Booking not found'
+            ));
+        }
+
+        $booking->status = BookingModel::CANCELLED;
+
+        if (!$booking->save()) {
+            return response()->json(array(
+                'success' => false,
+                'message' => 'Problem saving booking'
+            ));
+        }
+
+        return response()->json(array(
+            'success' => true
+        ));
     }
 
     public function create(Request $request)
@@ -96,7 +135,6 @@ class BookingController extends Controller
         $booking->total_payment = $total_payment;
 
         //create booking
-//        $booking->id_booking = 1;
         if (!$booking->save()) {
             return response()->json(array(
                 'success' => false,
@@ -118,26 +156,33 @@ class BookingController extends Controller
             \Twocheckout::sandbox(true);
         }
 
-//        $user = UserModel::find($booking->id_user);
-//        $address = AddressModel::getAddressByIdUser($user->id_user);
+        $user = UserModel::find($booking->id_user);
+        $address_booking = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+        $address_booking_data = array(
+            'name'        => $user->firstname.' '.$user->lastname,
+            'addrLine1'   => $address_booking->address,
+            'city'        => $address_booking->city->name,
+            'state'       => $address_booking->state->name,
+            'country'     => $address_booking->country->name,
+            'zipCode'     => $address_booking->postcode,
+            'email'       => $user->email,
+            'phoneNumber' => !empty($user->phone) ? $user->phone : '-'
+        );
+        $address_billing_data = $address_booking_data;
 
-//        $address_data = array(
-////            'name'        => $user->firstname.' '.$user->lastname,
-////            'addrLine1'   => $address->address,
-////            'city'        => CityModel::find($address->id_city)->name,
-////            'state'       => StateModel::find($address->id_state)->name,
-////            'zipCode'     => $address->postcode,
-////            'country'     => CountryModel::find($address->id_country)->name,
-//            'name'        => $request->input('name'),
-//            'addrLine1'   => $request->input('address'),
-//            'city'        => $request->input('city'),
-//            'state'       => $request->input('state'),
-//            'zipCode'     => $request->input('postcode'),
-//            'country'     => $request->input('country'),
-//            'email'       => $request->input('email'),
-//            'phoneNumber' => $request->input('phone')
-//        );
-
+        if ($request->input('id_address_payment') !== $request->input('id_address_booking')) {
+            $address_billing = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+            $address_billing_data = array(
+                'name'        => $user->firstname.' '.$user->lastname,
+                'addrLine1'   => $address_billing->address,
+                'city'        => $address_billing->city->name,
+                'state'       => $address_billing->state->name,
+                'country'     => $address_billing->country->name,
+                'zipCode'     => $address_billing->postcode,
+                'email'       => $user->email,
+                'phoneNumber' => !empty($user->phone) ? $user->phone : '-'
+            );
+        }
 
         try {
             $data = array(
@@ -146,8 +191,8 @@ class BookingController extends Controller
                 "token"           => $request->input('tco_token'),
                 "currency"        => $request->input('currency_iso'),
                 "total"           => $booking->total_payment,
-                "billingAddr"     => $address_data,
-                "shippingAddr"     => $address_data
+                "billingAddr"     => $address_billing_data,
+                "shippingAddr"     => $address_booking_data
             );
 
             $checkout = \Twocheckout_Charge::auth($data);
@@ -200,10 +245,5 @@ class BookingController extends Controller
             'success' => false,
             'message' => 'Error processing payment'
         ));
-
-//        return response()->json(array(
-//            'booking' => $booking,
-//            'checkout' => $checkout
-//        ));
     }
 }
