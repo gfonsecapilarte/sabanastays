@@ -11820,7 +11820,7 @@ module.exports = __webpack_require__(92);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_metismenu__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_metismenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_metismenu__);
@@ -11846,6 +11846,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backoffice_booking_js__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backoffice_booking_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__backoffice_booking_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__backoffice_apartment_js__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__backoffice_apartment_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__backoffice_apartment_js__);
 
 
 
@@ -11861,20 +11863,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-$(document).ready(function () {
-    $.toast({
-        heading: 'Welcome to Pixel admin',
-        text: 'Use the predefined ones, or specify a custom position object.',
-        position: 'top-right',
-        loaderBg: '#ff6849',
-        icon: 'info',
-        hideAfter: 3500,
-        stack: 6
-    });
-});
+//$(document).ready(function() {
+//    $.toast({
+//        heading: 'Welcome to Pixel admin',
+//        text: 'Use the predefined ones, or specify a custom position object.',
+//        position: 'top-right',
+//        loaderBg: '#ff6849',
+//        icon: 'info',
+//        hideAfter: 3500,
+//        stack: 6
+//    });
+//});
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
 
 /***/ }),
 /* 93 */
@@ -14149,6 +14151,9 @@ $(document).ready(function () {
 
 var Booking = {
     init: function init() {
+        if (_typeof($('#container-bookings')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
         Booking.clear();
         Booking.createEvents();
         Booking.getBookings();
@@ -14201,7 +14206,7 @@ var Booking = {
         if (booking.payment === null) {
             $('<td/>').text('$' + booking.total_payment).appendTo($row);
         } else {
-            $('<td/>').text(booking.payment.currency.sign + booking.payment.amount).appendTo($row);
+            $('<td/>').text(booking.payment.currency.iso_code + booking.payment.currency.sign + booking.payment.amount).appendTo($row);
         }
         $('<td/>').appendTo($row).append($('<div/>').addClass('label label-table ' + Booking.getStatusLabel(booking.status)).text(Booking.getStatus(booking.status)));
         $('<td/>').appendTo($row).addClass('text-center').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { booking: booking }, Booking.onView));
@@ -14302,6 +14307,128 @@ var Booking = {
 
 $(function () {
     Booking.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var Apartment = {
+    init: function init() {
+        if (_typeof($('#container-apartments')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+        Apartment.clear();
+        Apartment.createEvents();
+        Apartment.getApartments();
+    },
+    createEvents: function createEvents() {
+        $('.app-search-list').on('click', 'a', Apartment.onSearch);
+        $('.app-search-list').on('keyup', 'input', Apartment.onSearch);
+    },
+    clear: function clear() {
+        $('#table-apartments tbody').empty();
+    },
+    getApartments: function getApartments(params) {
+        var data = $.extend(params, { page: 1 });
+        $.ajax({
+            url: '/api/apartment/list',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            data: data,
+            success: function success(response) {
+                if (response.success) {
+                    Apartment.showResults(response.apartments);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    onSearch: function onSearch(event) {
+        event.preventDefault();
+        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
+            if ($('.app-search-list input').val() === '') {
+                Apartment.getApartments();
+            } else {
+                Apartment.getApartments({ term: $('.app-search-list input').val() });
+            }
+        }
+    },
+    showResults: function showResults(response) {
+        Apartment.clear();
+        $.each(response.data, Apartment.printRow);
+    },
+    printRow: function printRow(i, apartment) {
+        console.log('>APARTMENT', apartment);
+        var $row = $('<tr/>');
+
+        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + apartment.id_apartment).on('click', { apartment: apartment }, Apartment.onView));
+        $('<td/>').text(apartment.lang[0].name).appendTo($row);
+        $('<td/>').text(apartment.type.lang[0].name).appendTo($row);
+        $('<td/>').text(apartment.number).appendTo($row);
+        $('<td/>').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price).appendTo($row);
+        $('<td/>').appendTo($row).addClass('text-center').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { apartment: apartment }, Apartment.onView));
+
+        $row.appendTo($('#table-apartments tbody'));
+    },
+    onView: function onView(event) {
+        var $modal = Apartment.buildModal(event.data.apartment);
+        $modal.modal('show');
+    },
+    buildModal: function buildModal(apartment) {
+        var id = 'apartment-modal-' + apartment.id_apartment;
+        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
+            return $('#' + id);
+        }
+        var $modal = $('<div/>');
+        $modal.attr('id', id).addClass('modal fade apartment-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('Apartment #' + apartment.id_apartment)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Information'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(apartment.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Price'), $('<span/>').addClass('col-xs-8').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('City'), $('<span/>').addClass('col-xs-8').text(apartment.building.city.name + ' (' + apartment.building.postal_code + ')')), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Building'), $('<span/>').addClass('col-xs-8').text(apartment.building.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Address'), $('<span/>').addClass('col-xs-8').text(apartment.building.address)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Type'), $('<span/>').addClass('col-xs-8').text(apartment.type.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Floor'), $('<span/>').addClass('col-xs-8').text(apartment.floor)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Number'), $('<span/>').addClass('col-xs-8').text(apartment.number))), $('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Amenities'), $('<hr/>'), Apartment.getAmenitiesList(apartment.amenities)))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close')
+        //                        $('<button/>').attr('type','button').addClass('btn btn-warning').text('Delete apartment').on('click', {$modal:$modal,apartment:apartment}, Apartment.onDeleteApartment)
+        )))).appendTo($('body'));
+        return $modal;
+    },
+    getAmenitiesList: function getAmenitiesList(amenities) {
+        var $amenities = [];
+        $.each(amenities, function (i, amenity) {
+            $amenities.push($('<div/>').append($('<i/>').addClass('fa ' + amenity.icon.icon), ' ', $('<span/>').text(amenity.lang.name)));
+        });
+        return $amenities;
+    },
+    onDeleteApartment: function onDeleteApartment(event) {
+        if (!confirm('Sure delete apartment')) {
+            return false;
+        }
+        Apartment.deleteApartment(event.data.apartment, event.data.$modal);
+    },
+    deleteApartment: function deleteApartment(apartment, $modal) {
+        $.ajax({
+            url: '/api/apartment/remove',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+                id_apartment: apartment.id_apartment
+            },
+            success: function success(response) {
+                if (response.success) {
+                    $modal.modal('hide');
+                    alert('Apartment deleted');
+                    $('body').find('.apartment-modal').remove();
+                    Apartment.getApartments();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    }
+};
+
+$(function () {
+    Apartment.init();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 

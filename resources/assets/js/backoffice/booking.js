@@ -1,5 +1,8 @@
 var Booking = {
     init: function() {
+        if (typeof $('#container-bookings')[0] === typeof undefined) {
+            return;
+        }
         Booking.clear();
         Booking.createEvents();
         Booking.getBookings();
@@ -58,7 +61,7 @@ var Booking = {
         if (booking.payment === null) {
             $('<td/>').text('$'+booking.total_payment).appendTo($row);
         } else {
-            $('<td/>').text(booking.payment.currency.sign+booking.payment.amount).appendTo($row);
+            $('<td/>').text(booking.payment.currency.iso_code+booking.payment.currency.sign+booking.payment.amount).appendTo($row);
         }
         $('<td/>').appendTo($row).append(
             $('<div/>').addClass('label label-table '+Booking.getStatusLabel(booking.status)).text(Booking.getStatus(booking.status))

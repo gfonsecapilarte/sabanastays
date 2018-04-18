@@ -11,22 +11,24 @@ class Apartment extends ModelCore
 
     public function type()
     {
-        return $this->hasOne('App\Models\ApartmentType', 'id_apartment_type');
+        return $this->hasOne(\App\Models\ApartmentType::class, 'id_apartment_type')->with('lang');
     }
 
     public function amenities()
     {
-        return $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment');
+        return $this->hasMany(\App\Models\ApartmentAmenity::class, 'id_apartment')->with(array('lang', 'icon'));
         $result = $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment')->get();
         $amenities = json_decode($result);
-//        foreach ($amenities as &$amenity) {
-//
-//        }
         return $amenities;
-//        echo "<pre>";
-//print_r($amenities);
-//echo "</pre>";
-//die();
-//        $amenities = json_encode($result);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(\App\Models\Currency::class, 'id_currency');
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(\App\Models\Building::class, 'id_building')->with(array('city', 'lang'));
     }
 }

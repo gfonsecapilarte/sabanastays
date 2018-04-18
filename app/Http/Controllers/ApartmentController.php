@@ -26,6 +26,27 @@ class ApartmentController extends Controller
         return response()->json($types);
     }
 
+    public function listApartments(Request $request)
+    {
+        $apartments = array();
+        if ($request->has('term')) {
+            $apartments = ApartmentModel::where('id_apartment', '=', $request->input('term'))
+                ->with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
+        } else {
+            $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
+        }
+
+//        foreach ($apartments as &$apartment) {
+//            $apartment = ApartmentModel::parseLang($apartment);
+//            $apartment->type = ApartmentModel::parseLang($apartment->type);
+//            $apartment->amenities = ApartmentModel::parseLang($apartment->amenities);
+//        }
+        return response()->json(array(
+            'success' => true,
+            'apartments' => $apartments
+        ));
+    }
+
     public function getApartments(Request $request)
     {
         $filter = $request->all();
@@ -42,7 +63,6 @@ class ApartmentController extends Controller
         if ($request->has('type')) {
             $query_apartments->where('id_apartment_type', '=', $filter['type']);
         }
-
 
         //pagination
         $total = $query_apartments->get()->count();

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="container-bookings">
     <div class="col-md-12">
         <div role="search" class="app-search app-search-list pull-right">
             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a>
