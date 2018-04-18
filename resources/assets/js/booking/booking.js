@@ -1,6 +1,7 @@
 import { saBookingStepOne, saBookingStepTwo, saBookingStepThree, saBookingStepFour, saNextStep } from "./tabs.js";
 import { callStates, callCities } from "../location/location.js";
 let validate = require('jquery-validation');
+require('../../../../node_modules/jquery-validation/dist/additional-methods.js');
 
 $(document).ready(function() {
     var aptoSelected    = false,
@@ -8,7 +9,7 @@ $(document).ready(function() {
         paymentDone     = false,
         apartmentId     = 0,
         address         = null,
-        secondAddress   = null;
+        secondAddressId = null;
 
     /*
      * Hidden forms if api token exists
@@ -49,11 +50,36 @@ $(document).ready(function() {
      */
     if($('#sa-payment-form').length > 0){
         $('#sa-payment-form').validate({
+            rules: {
+                creditCard: {
+                    creditcard: true
+                },
+                cvv:{
+                    maxlength: 3,
+                    digits: true,
+                    minlength: 3
+                },
+                month:{
+                    maxlength: 2,
+                    digits: true
+                },
+                year:{
+                    maxlength: 4,
+                    digits: true,
+                    minlength: 4
+                }
+            },
             submitHandler: function(form) {
-                saveAdress($('#sa-payment-form')).then(function(reply){
-                    secondAddress = reply.address;
+                if(!$('#sa-check-diff-address').is(':checked')){
+                    secondAddressId = address.id_address;
                     generataPaymentToken();
-                });
+                }
+                else{
+                    saveAdress($('#sa-payment-form')).then(function(reply){
+                        secondAddressId = reply.address.id_address;
+                        generataPaymentToken();
+                    });
+                }
             },
             invalidHandler: function(event, validator) {
                 paymentDone = false;
@@ -174,7 +200,7 @@ $(document).ready(function() {
     }
 
     /*
-     * Function to load de first address
+     * Function to load de first address in form to pay
      */
     function paymentAddress(){
         var form = $('#sa-payment-form');
@@ -199,26 +225,29 @@ $(document).ready(function() {
             publishableKey: publishableKey,
             ccNo: $('input[name="creditCard"]').val(),
             cvv: $('input[name="cvv"]').val(),
-            expMonth: $('select[name="month"]').val(),
-            expYear: $('select[name="year"]').val()
+            expMonth: $('input[name="month"]').val(),
+            expYear: $('input[name="year"]').val()
         };
 
         TCO.requestToken(function(response) {
             savePayment(response.response.token.token);
         },function(error) {
-            console.log('ERROR', error);
+            //console.log('ERROR', error);
+            $('#sa-payment-form').children('.alert-success').addClass('hidden');
+            $('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(paymentError);
         },args);
     }
 
     /*
      * Do the payment
      */
+    var attempt  = 0;
+    var bookinID = 0;
     function savePayment(paymentToken){
         var currency = $.parseJSON(localStorage.getItem("currency"));
-        $.ajax({
-            url: '/api/booking/create',
-            type: 'POST',
-            data: {
+
+        if(attempt == 0){
+            var data = {
                 id_user: localStorage.getItem('id_user'),
                 api_token: localStorage.getItem('api_token'),
                 id_apartment: apartmentId,
@@ -228,10 +257,45 @@ $(document).ready(function() {
                 currency_iso: currency.iso_code,
                 id_currency: currency.id_currency,
                 id_address_booking: address.id_address,
-                id_address_payment: secondAddress.id_address
-            },
-            success: function(reply){
-                console.log(reply);
+                id_address_payment: secondAddressId
+            }
+        }
+        else{
+            var data = {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token'),
+                id_apartment: apartmentId,
+                checkin: localStorage.getItem('checkin'),
+                checkout: localStorage.getItem('checkout'),
+                tco_token: paymentToken,
+                currency_iso: currency.iso_code,
+                id_currency: currency.id_currency,
+                id_address_booking: address.id_address,
+                id_address_payment: secondAddressId,
+                attempt: attempt,
+                id_booking: bookinID
+            }
+        }
+
+        $.ajax({
+            url: '/api/booking/create',
+            type: 'POST',
+            data: data,
+            success: function(payment){
+                if(payment.success != null){
+                    if(!payment.success){
+                        $('#sa-payment-form').children('.alert-success').addClass('hidden');
+                        $('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(payment.message);
+                        if(payment.attempt != null){
+                            attempt  = attempt + payment.attempt;
+                            bookinID = payment.id_booking;
+                            alert("Intento "+attempt);
+                        }
+                    }
+                }
+                else{
+                    console.log(payment);
+                }
             }
         });
     }

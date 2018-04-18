@@ -85,5 +85,10 @@ return [
     'loginSuccess'              => 'Ha iniciado sesión',
     'addressInformation'        => 'Información de Dirección',
     'registerAddress'           => 'Registrar dirección',
-    'addressSuccess'            => 'La dirección ha sido registrada'
+    'addressSuccess'            => 'La dirección ha sido registrada',
+    'paymentError'              => 'Hay un error generando el pago. Intenta de nuevo.',
+    'badRequest'                => 'Solicitud incorrecta',
+    'aptoNotAvailable'          => 'No está disponible',
+    'errorSavingBooking'        => 'Error al guardar la reserva',
+    'errorProcessingPayment'    => 'Error procesando el pago'
 ];

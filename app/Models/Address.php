@@ -17,16 +17,16 @@ class Address extends Model
 
     public function city()
     {
-        return $this->hasOne('App\Models\City', 'id_city');
+        return $this->hasOne('App\Models\City', 'id_city','id_city');
     }
 
     public function state()
     {
-        return $this->hasOne('App\Models\State', 'id_state');
+        return $this->hasOne('App\Models\State', 'id_state', 'id_state');
     }
 
     public function country()
     {
-        return $this->hasOne('App\Models\Country', 'id_country');
+        return $this->hasOne('App\Models\Country', 'id_country', 'id_state');
     }
 }

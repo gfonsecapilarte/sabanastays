@@ -4,9 +4,12 @@
             <script>
                 var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
                 var sellerId        = '{{ env('TCO_SELLER_ID') }}';
+                var paymentError    = '{{ __('general.paymentError') }}';
             </script>
 
             <form id='sa-payment-form'>
+                @include('messages/success')
+                @include('messages/error')
                 <h2 class="mg-sec-left-title">
                     <input name="second_address" type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
                 </h2>
@@ -46,46 +49,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="creditCard" placeholder="@lang('general.creditCard')" required data-msg="@lang('validations.required')">
+                            <input type="text" class="form-control" name="creditCard" placeholder="@lang('general.creditCard')" required data-msg="@lang('validations.required')" data-msg-creditcard="@lang('validations.creditCard')">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mg-contact-form-input">
-                            <input type="text" class="form-control" name="cvv" placeholder="CVV" required data-msg="@lang('validations.required')">
+                            <input type="text" class="form-control" name="cvv" placeholder="CVV" required data-msg="@lang('validations.required')" data-msg-maxlength="@lang('validations.cvvMaxlength')" data-msg-minlength="@lang('validations.cvvMinlength')"
+                            data-msg-digits="@lang('validations.digits')">
                         </div>
                     </div>
                     <div class="col-md-12">
                     <div class="mg-contact-form-input">
                         <div class="row">
                             <div class="col-md-6">
-                                <select class="form-control" name="month" required data-msg="@lang('validations.required')">
-                                    <option value="">@lang('general.month')</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
+                                <input type="text" class="form-control" placeholder="@lang('general.month')" name="month" required data-msg="@lang('validations.required')" data-msg-maxlength="@lang('validations.monthMaxlength')" data-msg-digits="@lang('validations.digits')">
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control" name="year" required data-msg="@lang('validations.required')">
-                                    <option value="">@lang('general.year')</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                    <option value="25">25</option>
-                                </select>
+                                <input type="text" class="form-control" placeholder="@lang('general.year')" name="year" required data-msg="@lang('validations.required')" data-msg-maxlength="@lang('validations.yearMaxlength')" data-msg-minlength="@lang('validations.yearMinlength')" data-msg-digits="@lang('validations.digits')">
                             </div>
                         </div>
                     </div>

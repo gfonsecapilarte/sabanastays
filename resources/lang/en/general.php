@@ -85,5 +85,10 @@ return [
     'loginSuccess'              => 'You have logged in',
     'addressInformation'        => 'Address Information',
     'registerAddress'           => 'Register address',
-    'addressSuccess'            => 'The address has been registered'
+    'addressSuccess'            => 'The address has been registered',
+    'paymentError'              => 'There is an error doing the payment. Please try again.',
+    'badRequest'                => 'Bad request',
+    'aptoNotAvailable'          => 'Not available',
+    'errorSavingBooking'        => 'Error saving booking',
+    'errorProcessingPayment'    => 'Error processing payment'
 ];

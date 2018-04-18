@@ -91,7 +91,7 @@ class BookingController extends Controller
         if (!$request->has('id_apartment') || !$request->has('checkin') || !$request->has('checkout')) {
             return response()->json(array(
                 'success' => false,
-                'message' => 'Bad request'
+                'message' => __('general.badRequest')
             ));
         }
 
@@ -103,7 +103,7 @@ class BookingController extends Controller
         if (!$available) {
             return response()->json(array(
                 'success' => false,
-                'message' => 'Not available'
+                'message' => __('general.aptoNotAvailable')
             ));
         }
 
@@ -145,12 +145,12 @@ class BookingController extends Controller
         if (!$booking->save()) {
             return response()->json(array(
                 'success' => false,
-                'message' => 'Error saving booking'
+                'message' => __('general.errorSavingBooking')
             ));
         }
 
         return $this->makeCheckout($request, $booking);
-        
+
     }
 
     private function makeCheckout(Request $request, BookingModel $booking)
@@ -165,6 +165,7 @@ class BookingController extends Controller
 
         $user = UserModel::find($booking->id_user);
         $address_booking = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+
         $address_booking_data = array(
             'name'        => $user->firstname.' '.$user->lastname,
             'addrLine1'   => $address_booking->address,
@@ -250,7 +251,7 @@ class BookingController extends Controller
 
         return response()->json(array(
             'success' => false,
-            'message' => 'Error processing payment'
+            'message' => __('general.errorProcessingPayment')
         ));
     }
 }
