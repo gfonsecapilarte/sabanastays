@@ -73,8 +73,8 @@
                 </div>
             </form>
 
-            <a href="#thank-you" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a>
-            <a href="#personal-info" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
+            <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a>
+            <a href="#" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
         </div>
     </div>
     <div class="col-md-4">

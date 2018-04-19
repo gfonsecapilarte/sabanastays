@@ -2,7 +2,7 @@
 <h3>@lang('general.haveAccountSabanaStays')</h3>
 <div class="mt30"></div>
 
-<form id="sa-login" class="clearfix">
+<form id="sa-login-two" class="clearfix">
     @include('messages/success')
     @include('messages/error')
     <div class="row">

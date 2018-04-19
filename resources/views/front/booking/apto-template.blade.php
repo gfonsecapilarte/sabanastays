@@ -17,7 +17,7 @@
                 </div>
             </div>
             <a href="#" class="btn btn-dark sa-apto-link">@lang('general.viewDetails') <i class="fa fa-angle-double-right"></i></a>
-            <a href="#personal-info" class="btn btn-main pull-right btn-next-tab">@lang('general.bookApartment')</a>
+            <a href="#personal-info-form" class="btn btn-main pull-right btn-next-tab">@lang('general.bookApartment')</a>
         </div>
     </div>
 </div>

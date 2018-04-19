@@ -18,13 +18,9 @@
                 @include('front/booking/user-register')
             </div>
 
-            <div id="contAddressUser">
-                @include('front/booking/user-address')
-            </div>
-
             <hr class="mt50"/>
 
-            <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.next')</a>
+            <a href="#address-form" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.next')</a>
             <a href="#select-room" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
         </div>
     </div>

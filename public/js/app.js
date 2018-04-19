@@ -20478,161 +20478,323 @@ $(document).ready(function () {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__location_location_js__ = __webpack_require__(87);
+/**
+ * Module to change the differents steps
+ */
 
 
+/**
+ * Modules to call states and cities
+ */
+
+
+/**
+ * jquery Module to validate forms
+ */
 var validate = __webpack_require__(2);
 __webpack_require__(88);
 
 $(document).ready(function () {
-    var aptoSelected = false,
-        adressInfo = false,
-        paymentDone = false,
-        apartmentId = 0,
-        address = null,
-        secondAddressId = null;
-
-    /*
-     * Hidden forms if api token exists
+    /**
+     * Apartment object
      */
-    if (localStorage.getItem('api_token') != null) {
-        if ($('#contLoginUser').length > 0) {
-            $('#contLoginUser').addClass('hidden');
-            $('#contRegisterUser').addClass('hidden');
-        }
-    }
+    var apartment = {
+        id: null
 
-    /*
-     * Validate address form
-     */
-    if ($('#sa-address').length > 0) {
-        $('#sa-address').validate({
-            submitHandler: function submitHandler(form) {
-                saveAdress($('#sa-address')).then(function (reply) {
-                    if (reply.success) {
-                        adressInfo = true;
-                        address = reply.address;
-                        $('#sa-address').children('.alert-success').removeClass('hidden').children('span').text(addressSuccess);
-                        setTimeout(function () {
-                            paymentAddress();
-                            $('a[href="#payment"]').parents('li').trigger('click');
-                        }, 2000);
+        /**
+         * Address object
+         */
+    };var address = {
+        first: {
+            id: null,
+            done: false,
+            country: null,
+            state: null,
+            city: null,
+            address: '',
+            postalcode: '',
+            validate: function validate() {
+                $('#sa-address').validate({
+                    submitHandler: function submitHandler(form) {
+                        address.first.country = $('select[name="id_country"]', form).val();
+                        address.first.state = $('select[name="id_state"]', form).val();
+                        address.first.city = $('select[name="id_city"]', form).val();
+                        address.first.address = $('input[name="address"]', form).val();
+                        address.first.postalcode = $('input[name="postcode"]', form).val();
+                        address.first.done = true;
+                        address.second.form.fill();
                     }
                 });
-            },
-            invalidHandler: function invalidHandler(event, validator) {
-                //paymentDone = false;
             }
-        });
-    }
-
-    /*
-     * Validate form of payment
-     */
-    if ($('#sa-payment-form').length > 0) {
-        $('#sa-payment-form').validate({
-            rules: {
-                creditCard: {
-                    creditcard: true
+        },
+        second: {
+            id: null,
+            done: false,
+            country: null,
+            state: null,
+            city: null,
+            address: '',
+            postalcode: '',
+            different: false,
+            form: {
+                fill: function fill() {
+                    var form = $('#sa-payment-form');
+                    $('select[name="id_country"]', form).val(address.first.country).attr('readonly', true);
+                    $('select[name="id_state"]', form).val(address.first.state).attr('readonly', true);
+                    $('select[name="id_city"]', form).val(address.first.city).attr('readonly', true);
+                    $('input[name="address"]', form).val(address.first.address).attr('readonly', true);
+                    $('input[name="postcode"]', form).val(address.first.postalcode).attr('readonly', true);
+                    address.second.different = false;
                 },
-                cvv: {
-                    maxlength: 3,
-                    digits: true,
-                    minlength: 3
-                },
-                month: {
-                    maxlength: 2,
-                    digits: true
-                },
-                year: {
-                    maxlength: 4,
-                    digits: true,
-                    minlength: 4
+                clean: function clean() {
+                    var form = $('#sa-payment-form');
+                    $('select[name="id_country"]', form).val('').attr('readonly', false);
+                    $('select[name="id_state"]', form).val('').attr('readonly', false);
+                    $('select[name="id_city"]', form).val('').attr('readonly', false);
+                    $('input[name="address"]', form).val('').attr('readonly', false);
+                    $('input[name="postcode"]', form).val('').attr('readonly', false);
+                    address.second.different = true;
                 }
-            },
-            submitHandler: function submitHandler(form) {
-                if (!$('#sa-check-diff-address').is(':checked')) {
-                    secondAddressId = address.id_address;
-                    generataPaymentToken();
-                } else {
-                    saveAdress($('#sa-payment-form')).then(function (reply) {
-                        secondAddressId = reply.address.id_address;
-                        generataPaymentToken();
+            }
+        },
+        register: function register() {
+            $.ajax({
+                url: '/api/address/create',
+                type: 'POST',
+                data: form.serialize() + '&id_user=' + user.id + '&api_token=' + user.token,
+                success: function success(reply) {
+                    if (reply.success != null) {
+                        address.first.id = reply.id_address;
+                    }
+                }
+            });
+        }
+
+        /**
+         * User object
+         */
+    };var user = {
+        id: localStorage.getItem('id_user'),
+        token: localStorage.getItem('api_token'),
+        done: false,
+        checkSession: function checkSession() {
+            if (user.token != null) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+        forms: {
+            login: {
+                hide: function hide() {
+                    $('#contLoginUser').addClass('hidden');
+                },
+                validate: function validate() {
+                    $('#sa-login-two').validate({
+                        submitHandler: function submitHandler(form) {
+                            user.login();
+                        }
                     });
                 }
             },
-            invalidHandler: function invalidHandler(event, validator) {
-                paymentDone = false;
+            register: {
+                hide: function hide() {
+                    $('#contRegisterUser').addClass('hidden');
+                },
+                validate: function validate() {
+                    $('#sa-register-two').validate({
+                        submitHandler: function submitHandler(form) {
+                            user.done = true;
+                        }
+                    });
+                }
             }
-        });
+        },
+        login: function login() {
+            $.ajax({
+                url: '/api/user/login',
+                type: 'POST',
+                data: $('#sa-login-two').serialize(),
+                success: function success(reply) {
+                    if (reply.success == null) {
+                        localStorage.setItem('api_token', reply.api_token);
+                        localStorage.setItem('id_user', reply.id_user);
+                        user.done = true;
+                        Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($('a[href="#address-form"]'));
+                    }
+                }
+            });
+        },
+        register: function register() {
+            $.ajax({
+                url: '/api/user',
+                type: 'POST',
+                data: $('#sa-register-two').serialize(),
+                success: function success(reply) {
+                    if (reply.success != null) {
+                        localStorage.setItem('api_token', reply.api_token);
+                        localStorage.setItem('id_user', reply.id_user);
+                        address.register();
+                    }
+                }
+            });
+        }
+
+        /**
+         * Credit Card object
+         */
+    };TCO.loadPubKey('sandbox');
+    var card = {
+        creditCard: null,
+        cvv: null,
+        month: null,
+        year: null,
+        token: null,
+        done: false,
+        form: {
+            validate: function validate() {
+                $('#sa-payment-form').validate({
+                    rules: {
+                        creditCard: {
+                            creditcard: true
+                        },
+                        cvv: {
+                            maxlength: 3,
+                            digits: true,
+                            minlength: 3
+                        },
+                        month: {
+                            maxlength: 2,
+                            digits: true
+                        },
+                        year: {
+                            maxlength: 4,
+                            digits: true,
+                            minlength: 4
+                        }
+                    },
+                    submitHandler: function submitHandler(form) {
+                        card.creditCard = $('input[name="creditCard"]').val();
+                        card.cvv = $('input[name="cvv"]').val();
+                        card.month = $('input[name="month"]').val();
+                        card.year = $('input[name="year"]').val();
+                        card.done = true;
+                    }
+                });
+            }
+        },
+        checkout: {
+            args: {
+                // sellerId: sellerId,
+                // publishableKey: publishableKey,
+                // ccNo: card.creditCard,
+                // cvv: card.cvv,
+                // expMonth: card.month,
+                // expYear: card.year
+            },
+            token: function token() {
+                TCO.requestToken(function (response) {
+                    card.token = response.response.token.token;
+                    if (user.id == null) {
+                        user.register();
+                    }
+                }, function (error) {
+                    //console.log('ERROR', error);
+                    //$('#sa-payment-form').children('.alert-success').addClass('hidden');
+                    //$('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(paymentError);
+                }, card.checkout.args);
+            }
+
+            /*
+             * Validate all forms
+             */
+        } };if ($('#sa-address').length > 0) {
+        user.forms.login.validate();
+        user.forms.register.validate();
+        address.first.validate();
+        card.form.validate();
     }
 
     /*
      * When somebody select the first tab (1)
      */
-    $('.mg-booking-form > ul > li:nth-child(1)').click(function (e) {
-        e.preventDefault();
-        Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["a" /* saBookingStepOne */])();
-        $('a', this).tab('show');
-    });
+    // $('.mg-booking-form > ul > li:nth-child(1)').click(function(e){
+    //     e.preventDefault();
+    //     saBookingStepOne();
+    //     $('a',this).tab('show');
+    // });
 
-    /*
-     * When somebody select the second tab (2)
-     * If the apartment has not been selected this will return an error message
+    /**
+     * Click on the second tab (2)
+     * User information
      */
     $('.mg-booking-form > ul > li:nth-child(2)').click(function (e) {
         e.preventDefault();
-        if (!aptoSelected) {
-            alert('Tiene que seleccionar primero un apto');
-        } else {
+        if (apartment.id) {
             Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["c" /* saBookingStepTwo */])();
             $('a', this).tab('show');
+        } else {
+            alert('Tiene que seleccionar primero un apto');
         }
     });
 
-    /*
-     * When somebody select the third tab (3)
-     * If the apartment has not been selected this will return an error message
+    /**
+     * Click on the third tab (3)
+     * Address
      */
     $('.mg-booking-form > ul > li:nth-child(3)').click(function (e) {
         e.preventDefault();
-        if (!aptoSelected) {
-            alert("tiene que seleccionar primero un apto");
+        if (user.done || user.token) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["b" /* saBookingStepThree */])();
+            $('a', this).tab('show');
         } else {
-            if (localStorage.getItem('api_token') == null) {
-                alert('Tiene que diligenciar la información personal');
-            } else {
-                if (!adressInfo) {
-                    alert('Tiene que diligenciar la dirección');
-                } else {
-                    Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["b" /* saBookingStepThree */])();
-                    $('a', this).tab('show');
-                }
-            }
+            alert('Debel diligenciar la información del usuario');
         }
     });
 
-    /*
-     * Event over next button
-     * - if the event is triggered on a apartment button to choose it, it will go to the next step
+    /**
+     * Click on the fourth tab (4)
+     * Payment
+     */
+    $('.mg-booking-form > ul > li:nth-child(4)').click(function (e) {
+        e.preventDefault();
+        if (address.first.done) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["a" /* saBookingStepFour */])();
+            $('a', this).tab('show');
+        } else {
+            alert('Debe diligenciar la dirección');
+        }
+    });
+
+    /**
+     * Event on next button
+     * Steps:
+     * 1. Select apartment
+     * 2. Login or register
+     * 3. First address
+     * 4. Payment
      */
     $('.tab-content').on('click', '.btn-next-tab', function (e) {
         e.preventDefault();
-        if ($(this).attr('href') == '#personal-info') {
-            apartmentId = $(this).attr('id').split('_')[1];
-            aptoSelected = true;
+        var goTo = $(this).attr('href');
+        if (goTo == '#personal-info-form') {
+            apartment.id = $(this).attr('id').split('_')[1];
             Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
-        } else if ($(this).attr('href') == '#payment') {
-            if (localStorage.getItem('api_token') == null) {
-                alert('Tiene que diligenciar la información personal');
-            } else {
-                if (!adressInfo) {
-                    alert('Tiene que diligenciar la dirección');
-                } else {
-                    Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
-                }
+        } else if (goTo == '#address-form') {
+            $('#sa-register-two').submit();
+            if (user.done || user.token) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
             }
-        } else if ($(this).attr('href') == '#thank-you') {
+        } else if (goTo == '#payment-form') {
+            $('#sa-address').submit();
+            if (address.first.done) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["d" /* saNextStep */])($(this));
+            }
+        } else if (goTo == '#payment') {
             $('#sa-payment-form').submit();
+            if (card.done) {
+                card.checkout.token();
+            }
         }
     });
 
@@ -20641,72 +20803,11 @@ $(document).ready(function () {
      */
     $('#sa-check-diff-address').click(function () {
         if ($(this).is(':checked')) {
-            $('#sa-payment-form select[name="id_country"]').attr('readonly', false);
-            $('#sa-payment-form select[name="id_city"]').attr('readonly', false);
-            $('#sa-payment-form select[name="id_state"]').attr('readonly', false);
-            $('#sa-payment-form input[name="address"]').attr('readonly', false);
-            $('#sa-payment-form input[name="postcode"]').attr('readonly', false);
+            address.second.form.clean();
         } else {
-            $('#sa-payment-form select[name="id_country"]').attr('readonly', true);
-            $('#sa-payment-form select[name="id_city"]').attr('readonly', true);
-            $('#sa-payment-form select[name="id_state"]').attr('readonly', true);
-            $('#sa-payment-form input[name="address"]').attr('readonly', true);
-            $('#sa-payment-form input[name="postcode"]').attr('readonly', true);
-            paymentAddress();
+            address.second.form.fill();
         }
     });
-
-    /*
-     * Function to save the primary address
-     */
-    function saveAdress(form) {
-        var ajax = $.ajax({
-            url: '/api/address/create',
-            type: 'POST',
-            data: form.serialize() + '&id_user=' + localStorage.getItem('id_user') + '&api_token=' + localStorage.getItem('api_token')
-        });
-
-        return ajax;
-    }
-
-    /*
-     * Function to load de first address in form to pay
-     */
-    function paymentAddress() {
-        var form = $('#sa-payment-form');
-        $('select[name="id_country"]', form).val(address.id_country);
-        Object(__WEBPACK_IMPORTED_MODULE_1__location_location_js__["b" /* callStates */])().then(function () {
-            $('select[name="id_state"]', form).val(address.id_state);
-            Object(__WEBPACK_IMPORTED_MODULE_1__location_location_js__["a" /* callCities */])().then(function () {
-                $('select[name="id_city"]', form).val(address.id_city);
-                $('input[name="address"]', form).val(address.address);
-                $('input[name="postcode"]', form).val(address.postcode);
-            });
-        });
-    }
-
-    /*
-     * Generate token in 2checkout
-     */
-    TCO.loadPubKey('sandbox');
-    function generataPaymentToken() {
-        var args = {
-            sellerId: sellerId,
-            publishableKey: publishableKey,
-            ccNo: $('input[name="creditCard"]').val(),
-            cvv: $('input[name="cvv"]').val(),
-            expMonth: $('input[name="month"]').val(),
-            expYear: $('input[name="year"]').val()
-        };
-
-        TCO.requestToken(function (response) {
-            savePayment(response.response.token.token);
-        }, function (error) {
-            //console.log('ERROR', error);
-            $('#sa-payment-form').children('.alert-success').addClass('hidden');
-            $('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(paymentError);
-        }, args);
-    }
 
     /*
      * Do the payment
@@ -20775,9 +20876,10 @@ $(document).ready(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["a"] = saBookingStepOne;
+/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export saBookingStepOne */
 /* harmony export (immutable) */ __webpack_exports__["c"] = saBookingStepTwo;
 /* harmony export (immutable) */ __webpack_exports__["b"] = saBookingStepThree;
+/* harmony export (immutable) */ __webpack_exports__["a"] = saBookingStepFour;
 /* harmony export (immutable) */ __webpack_exports__["d"] = saNextStep;
 function saBookingStepOne() {
 	if ($('.mg-booking-form > ul > li:nth-child(1)').hasClass('mg-step-done')) {
@@ -20823,6 +20925,16 @@ function saBookingStepThree() {
 	}
 }
 
+function saBookingStepFour() {
+	$('.mg-booking-form > ul > li:nth-child(1)').addClass('mg-step-done');
+	$('.mg-booking-form > ul > li:nth-child(2)').addClass('mg-step-done');
+	$('.mg-booking-form > ul > li:nth-child(3)').addClass('mg-step-done');
+
+	if ($('.mg-booking-form > ul > li:nth-child(4)').hasClass('mg-step-done')) {
+		$('.mg-booking-form > ul > li:nth-child(4)').removeClass('mg-step-done');
+	}
+}
+
 function saNextStep(element) {
 	element.tab('show');
 
@@ -20841,8 +20953,8 @@ function saNextStep(element) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (immutable) */ __webpack_exports__["b"] = callStates;
-/* harmony export (immutable) */ __webpack_exports__["a"] = callCities;
+/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export callStates */
+/* unused harmony export callCities */
 /*
  * Call states
  */

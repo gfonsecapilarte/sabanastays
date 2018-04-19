@@ -23,10 +23,13 @@
                                 <a href="#select-room" aria-controls="select-room" role="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>@lang('general.selectApartment')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#personal-info" aria-controls="personal-info" role="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>@lang('general.yourInformation')</a>
+                                <a href="#personal-info-form" aria-controls="personal-info-form" role="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>@lang('general.yourInformation')</a>
                             </li>
                             <li role="presentation">
-                                <a href="#payment" aria-controls="payment" role="tab"><span class="mg-bs-tab-num">3</span>@lang('general.payInformation')</a>
+                                <a href="#address-form" aria-controls="address-form" role="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>@lang('general.address')</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#payment-form" aria-controls="payment-form" role="tab"><span class="mg-bs-tab-num">4</span>@lang('general.payInformation')</a>
                             </li>
                         </ul>
 
@@ -36,12 +39,17 @@
                                 @include('front/booking/select-room')
                             </div>
 
-                            <!-- Steps for the booking -->
-                            <div role="tabpanel" class="tab-pane fade" id="personal-info">
+                            <!-- Step for the personal information -->
+                            <div role="tabpanel" class="tab-pane fade" id="personal-info-form">
                                 @include('front/booking/personal-info')
                             </div>
 
-                            <div role="tabpanel" class="tab-pane fade" id="payment">
+                            <!-- Step for the address -->
+                            <div role="tabpanel" class="tab-pane fade" id="address-form">
+                                @include('front/booking/user-address')
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade" id="payment-form">
                                 @include('front/booking/payment')
                             </div>
                         </div>

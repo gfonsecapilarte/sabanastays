@@ -33,9 +33,10 @@
                 <input type="text" class="form-control" name="address" placeholder="@lang('general.address')" required data-msg="@lang('validations.required')">
             </div>
         </div>
-
-        <div class="col-md-12">
-            <input type="submit" class="btn btn-dark-main" value="@lang('general.registerAddress')">
-        </div>
     </div>
+
+    <hr class="mt50"/>
+    <a href="#payment-form" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.next')</a>
+    <a href="#" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
+
 </form>

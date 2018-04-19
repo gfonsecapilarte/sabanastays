@@ -2,7 +2,7 @@
 <h3>@lang('general.ifYouDontHaveAnAccount')</h3>
 <div class="mt50"></div>
 
-<form id="sa-register" class="clearfix register-form">
+<form id="sa-register-two" class="clearfix register-form">
     @include('messages/error')
     <div class="row">
         <div class="col-md-6">
@@ -36,9 +36,6 @@
             <div class="mg-contact-form-input">
                 <input type="password" class="form-control" name="password_confirm" placeholder="@lang('general.retypePassword')" required data-msg="@lang('validations.required')" data-msg-equalto="@lang('validations.equaltopassword')" tabindex="8">
             </div>
-        </div>
-        <div class="col-md-12">
-            <input type="submit" class="btn btn-dark-main" value="@lang('general.register')">
         </div>
     </div>
 </form>
