@@ -12,18 +12,9 @@ import "./backoffice/libraries/custom.js";
 import "./backoffice/libraries/jquery-sparkline/jquery.charts-sparkline.js";
 import "./backoffice/libraries/jquery-sparkline/jquery.sparkline.min.js";
 import "./backoffice/libraries/jQuery.style.switcher.js";
-
-//$(document).ready(function() {
-//    $.toast({
-//        heading: 'Welcome to Pixel admin',
-//        text: 'Use the predefined ones, or specify a custom position object.',
-//        position: 'top-right',
-//        loaderBg: '#ff6849',
-//        icon: 'info',
-//        hideAfter: 3500,
-//        stack: 6
-//    });
-//});
+//import "./backoffice/libraries/dropzone.js";
+window.Dropzone = require('./backoffice/libraries/dropzone.js');
 
 import "./backoffice/booking.js";
 import "./backoffice/apartment.js";
+import "./backoffice/apartment-form.js";

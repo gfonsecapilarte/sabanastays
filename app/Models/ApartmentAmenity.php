@@ -21,4 +21,39 @@ class ApartmentAmenity extends Model
     {
         return $this->hasOne(\App\Models\Amenity::class, 'id_amenity');
     }
+
+    public static function updateApartmentAmenity($id_apartment, $id_amenity, $checked)
+    {
+        if ($checked) {
+            self::enableAmenity($id_apartment, $id_amenity);
+        } else {
+            self::disableAmenity($id_apartment, $id_amenity);
+        }
+    }
+
+    private static function enableAmenity($id_apartment, $id_amenity)
+    {
+        $apartment_amenity = self::where(array(
+            array('id_apartment', '=', $id_apartment),
+            array('id_amenity', '=', $id_amenity),
+        ))->first();
+
+        if (empty($apartment_amenity)) {
+            $apartment_amenity->id_apartment = $id_apartment;
+            $apartment_amenity->id_amenity = $id_amenity;
+            $apartment_amenity->save();
+        }
+    }
+
+    private static function disableAmenity($id_apartment, $id_amenity)
+    {
+        $apartment_amenity = self::where(array(
+            array('id_apartment', '=', $id_apartment),
+            array('id_amenity', '=', $id_amenity),
+        ))->first();
+
+        if (!empty($apartment_amenity)) {
+            $apartment_amenity->delete();
+        }
+    }
 }

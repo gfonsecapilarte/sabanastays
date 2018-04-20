@@ -1,3 +1,4 @@
+<input type="hidden" id="txt-id_apartment" />
 <div class="row">
     <div class="col-xs-12 text-right">
         <span class="btn btn-primary save-apartment">
@@ -7,7 +8,7 @@
     </div>
 </div>
 <br />
-<div class="row">
+<div class="row" id="container-form-apartment">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">Information</div>
@@ -18,7 +19,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">{{ $language->name }}</div>
                             <div class="panel-body">
-                                <div role="form" class="form-horizontal" data-id_language="{{ $language->id_lang }}">
+                                <div role="form" class="form-horizontal form-information" data-id_language="{{ $language->id_lang }}">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Name</label>
                                         <div class="col-sm-9">
@@ -69,7 +70,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Queen Beds</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control txt-feature-queen_bends" placeholder="">
+                                            <input type="text" class="form-control txt-feature-queen_beds" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,7 +105,19 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">Amenities</div>
                             <div class="panel-body">
-                                <div class="list-amenities">
+                                <ul class="list-task list-amenities" data-role="tasklist">
+                                    @foreach ($amenities as $amenity)
+                                        <li class="list-group-item" data-role="task">
+                                            <div class="checkbox checkbox-info">
+                                                <input type="checkbox" value="{{ $amenity->id_amenity }}">
+                                                <label for="inputSchedule">
+                                                    <span>{{ $amenity->lang[0]->name }}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+<!--                                <div class="list-amenities">
                                     @foreach ($amenities as $amenity)
                                         <div class="checkbox">
                                             <label>
@@ -113,7 +126,7 @@
                                             </label>
                                         </div>
                                     @endforeach
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -133,7 +146,7 @@
                                                 </label>
                                             </div>
                                             @endforeach-->
-                                            <select class="form-control" name="lst-building">
+                                            <select class="form-control" id="lst-building" name="lst-building">
                                                 <option value="0"> - Choose building - </option>
                                                 @foreach ($buildings as $building)
                                                 <option value="{{ $building->id_building }}">{{ $building->lang[0]->name }}</option>
@@ -152,7 +165,7 @@
                                                 </label>
                                             </div>
                                             @endforeach-->
-                                            <select class="form-control" name="lst-apartment_type">
+                                            <select class="form-control" id="lst-apartment_type" name="lst-apartment_type">
                                                 <option value="0"> - Choose type - </option>
                                                 @foreach ($apartment_types as $apartment_type)
                                                 <option value="{{ $apartment_type->id_apartment_type }}">{{ $apartment_type->lang[0]->name }}</option>
@@ -163,7 +176,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Rate type</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="lst-rate">
+                                            <select class="form-control" id="lst-rate" name="lst-rate">
                                                 <option value=""> - Choose type - </option>
                                                 <option value="0.85">Low Season (0.85)</option>
                                                 <option value="1.15">High Season (1.15)</option>
@@ -197,6 +210,18 @@
                                             </div>-->
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Floor</label>
+                                        <div class="col-sm-8">
+                                            <input id="txt-floor" type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Apartment number</label>
+                                        <div class="col-sm-8">
+                                            <input id="txt-number" type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,7 +238,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">{{ $currency->name }}</div>
                             <div class="panel-body">
-                                <div role="form" class="form-horizontal" data-id_currency="{{ $currency->id_currency }}">
+                                <div role="form" class="form-horizontal form-pricing" data-id_currency="{{ $currency->id_currency }}">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Price</label>
                                         <div class="col-sm-8">
@@ -234,7 +259,18 @@
         <div class="panel panel-default">
             <div class="panel-heading">Media</div>
             <div class="panel-body">
-                Panel content
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <form action="{{ route('dashboard.media.create') }}" id="form_dropzone" class="dropzone">
+                                <input type="hidden" id="txt-id_type" />
+                                <div class="fallback">
+                                    <input id="fl-media" name="media" type="file" multiple />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

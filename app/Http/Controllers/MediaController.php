@@ -14,4 +14,12 @@ class MediaController extends Controller
         MediaModel::parseLang($media);
         return json_encode($media);
     }
+
+    public function create(Request $request)
+    {
+        echo "<pre>";
+        print_r($request->all());
+        echo "</pre>";
+        die();
+    }
 }

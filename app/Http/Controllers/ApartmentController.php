@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Apartment as ApartmentModel;
+use App\Models\Lang\Apartment as ApartmentLangModel;
 use App\Models\ApartmentType as ApartmentTypeModel;
+use App\Models\ApartmentAmenity as ApartmentAmenityModel;
 use App\Models\Amenity as AmenityModel;
 use App\Models\Booking as BookingModel;
 use App\Models\Building as BuildingModel;
@@ -13,6 +15,7 @@ use App\Models\State as StateModel;
 use App\Models\Country as CountryModel;
 use App\Models\Media as MediaModel;
 use App\Models\Rate as RateModel;
+use App\Models\Feature as FeatureModel;
 //use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
@@ -24,6 +27,78 @@ class ApartmentController extends Controller
         $types = json_decode($types_result);
         ApartmentTypeModel::parseLang($types);
         return response()->json($types);
+    }
+
+    public function saveApartment(Request $request)
+    {
+        $id_apartment = $request->input('id_apartment');
+        $response = false;
+        $data = $request->all();
+        if (empty($id_apartment)) {
+            $this->createApartment($data);
+        } else {
+            $this->updateApartment(ApartmentModel::find($id_apartment), $data);
+        }
+
+        return response()->json(array(
+            'success' => (bool)$response,
+            'apartment' => $response
+        ));
+    }
+
+    private function createApartment($data)
+    {
+        return $this->updateApartment(new ApartmentModel, $data);
+    }
+
+    private function updateApartment($apartment, $data)
+    {
+        //settings
+        $apartment->id_apartment_type = $data['settings']->id_apartment_type;
+        $apartment->id_building = $data['settings']->id_building;
+        $apartment->floor = $data['settings']->floor;
+        $apartment->number = $data['settings']->number;
+        //pricing
+        foreach ($data['pricing'] as $id_currency => $pricing) {
+            if (empty($pricing)) {
+                continue;
+            }
+            $apartment->id_currency = $id_currency;
+            $apartment->price = $pricing->value;
+            break;
+        }
+        $apartment->save();
+        //lang
+        foreach ($data['information'] as $id_language => $information) {
+            if (empty($information)) {
+                continue;
+            }
+            $apartment_lang = ApartmentLangModel::getObject($apartment->id_apartment, $id_language);
+            $apartment_lang->id_apartment = $apartment->id_apartment;
+            $apartment_lang->id_lang = $id_language;
+            $apartment_lang->name = $information->name;
+            $apartment_lang->description = $information->description;
+            $apartment_lang->short_description = $information->short_description;
+            $apartment_lang->save();
+        }
+        //features
+        foreach ($data['features'] as $row_feature) {
+            $feature = FeatureModel::getObject($apartment->id_apartment);
+            $feature->id_apartment = $apartment->id_apartment;
+            $feature->quest = $row_feature['quest'];
+            $feature->bedrooms = $row_feature['bedrooms'];
+            $feature->queen_beds = $row_feature['queen_beds'];
+            $feature->baths = $row_feature['baths'];
+            $feature->king_beds = $row_feature['king_beds'];
+            $feature->full_beds = $row_feature['full_beds'];
+            $feature->twin_beds = $row_feature['twin_beds'];
+            $feature->save();
+        }
+        //amenities
+        foreach ($data['amenities'] as $row_amenity) {
+            ApartmentAmenityModel::updateApartmentAmenity($apartment->id_apartment, $row_amenity->id_amenity, (bool)$row_amenity->checked);
+        }
+        //media
     }
 
     public function listApartments(Request $request)

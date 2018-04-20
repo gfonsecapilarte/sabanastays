@@ -45,6 +45,7 @@ Route::get('/apartments', 'ApartmentController@getApartments');
 Route::get('/apartment', 'ApartmentController@getApartment');
 Route::get('/apartment/types', 'ApartmentController@getTypes');
 Route::get('/apartment/list', 'ApartmentController@listApartments');
+Route::post('/apartment/save', 'ApartmentController@saveApartment');
 
 //bookings
 Route::post('/booking/create', 'BookingController@create');
@@ -65,6 +66,7 @@ Route::get('/module/contact', 'Module\ContactController@getModule');
 
 //media
 Route::get('/media', 'MediaController@getMedia');
+Route::post('/media/create', 'MediaController@create')->name('dashboard.media.create');
 
 //location
 Route::get('/location/countries', 'LocationController@getCountries');
