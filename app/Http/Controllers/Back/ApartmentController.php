@@ -41,6 +41,11 @@ class ApartmentController extends CoreController
             $data['apartment'] = ApartmentModel::find($id_apartment)->with(array('lang','amenities','type', 'building'));
         }
 
+        echo "<pre>";
+print_r($data['apartment']);
+echo "</pre>";
+die();
+
         return $this->display('backoffice/apartment/form', $data);
     }
 }

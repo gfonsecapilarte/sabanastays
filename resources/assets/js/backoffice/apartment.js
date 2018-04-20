@@ -57,9 +57,14 @@ var Apartment = {
         $('<td/>').text(apartment.number).appendTo($row);
         $('<td/>').text(apartment.currency.iso_code+apartment.currency.sign+apartment.price).appendTo($row);
         $('<td/>').appendTo($row).addClass('text-center').append(
-            $('<span/>').addClass('btn btn-default').append(
-                $('<i/>').addClass('fa fa-eye')
-            ).on('click', {apartment:apartment}, Apartment.onView)
+            $('<div/>').addClass('btn-group').attr('role','group').append(
+                $('<span/>').addClass('btn btn-default').append(
+                    $('<i/>').addClass('fa fa-eye')
+                ).on('click', {apartment:apartment}, Apartment.onView),
+                $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/apartment/edit?id_apartment='+apartment.id_apartment).append(
+                    $('<i/>').addClass('fa fa-pencil')
+                )
+            )
         );
 
         $row.appendTo($('#table-apartments tbody'));

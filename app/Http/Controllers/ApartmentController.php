@@ -108,7 +108,8 @@ class ApartmentController extends Controller
             $apartments = ApartmentModel::where('id_apartment', '=', $request->input('term'))
                 ->with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
         } else {
-            $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
+//            $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
+            $apartments = ApartmentModel::with(array('amenities'))->paginate($request->input('items_per_page', 15));
         }
 
 //        foreach ($apartments as &$apartment) {
