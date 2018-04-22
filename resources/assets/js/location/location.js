@@ -3,7 +3,8 @@
  */
 $('select[name="id_country"]').change(function(event) {
     //var id_country = $(this).val();
-    callStates();
+    var form = $(this).parent().parent().parent().parent('form');
+    callStates(form);
 });
 
 /*
@@ -11,13 +12,14 @@ $('select[name="id_country"]').change(function(event) {
  */
 $('select[name="id_state"]').change(function(event) {
     //var id_state = $(this).val();
-    callCities();
+    var form = $(this).parent().parent().parent().parent('form');
+    callCities(form);
 });
 
 /*
  * Function to call states
  */
-export function callStates(){
+export function callStates(form){
     var ajax = $.ajax({
         url: '/api/location/states',
         type: 'GET',
@@ -26,13 +28,13 @@ export function callStates(){
             $(states).each(function(index, el) {
                 options += '<option value='+el.id_state+'>'+el.name+'</option>';
             });
-            $('select[name="id_state"]').html(options);
+            $('select[name="id_state"]',form).html(options);
         }
     });
     return ajax;
 }
 
-export function callCities(){
+export function callCities(form){
     var ajax = $.ajax({
         url: '/api/location/cities',
         type: 'GET',
@@ -41,7 +43,7 @@ export function callCities(){
             $(cities).each(function(index, el) {
                 options += '<option value='+el.id_city+'>'+el.name+'</option>';
             });
-            $('select[name="id_city"]').html(options);
+            $('select[name="id_city"]',form).html(options);
         }
     });
     return ajax;

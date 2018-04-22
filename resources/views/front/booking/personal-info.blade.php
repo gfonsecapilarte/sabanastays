@@ -1,21 +1,16 @@
-<script>
-    var regisUserSuccMsg    = '{{ __('general.registeredUserSuccess') }}';
-    var loginSuccess        = '{{ __('general.loginSuccess') }}';
-    var addressSuccess      = '{{ __('general.addressSuccess') }}';
-    var currentPage         = 'booking';
-</script>
-
 <div class="row">
     <div class="col-md-8">
         <div class="mg-book-form-personal">
             <h2 class="mg-sec-left-title">@lang('general.weNeedYourInfoToBooking'):</h2>
 
-            <div id="contLoginUser">
-                @include('front/booking/login')
-            </div>
+            <div>
+                <div id="contLoginUser">
+                    @include('front/booking/login')
+                </div>
 
-            <div id="contRegisterUser">
-                @include('front/booking/user-register')
+                <div id="contRegisterUser">
+                    @include('front/booking/user-register')
+                </div>
             </div>
 
             <hr class="mt50"/>

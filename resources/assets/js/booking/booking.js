@@ -6,7 +6,8 @@ import {
     saBookingStepTwo,
     saBookingStepThree,
     saBookingStepFour,
-    saNextStep
+    saNextStep,
+    saPrevStep
 } from "./tabs.js";
 
 /**
@@ -16,6 +17,14 @@ import {
     callStates,
     callCities
 } from "../location/location.js";
+
+/**
+ * Modules to show error and success messages
+ */
+import {
+    errorMessage,
+    successMessage
+} from "../messages/messages.js";
 
 /**
  * jquery Module to validate forms
@@ -53,6 +62,28 @@ $(document).ready(function() {
                         address.first.postalcode  = $('input[name="postcode"]',form).val();
                         address.first.done        = true;
                         address.second.form.fill();
+                    },
+                    invalidHandler: function(event, validator) {
+                        address.first.done = false;
+                    }
+                });
+            },
+            register: function(){
+                $.ajax({
+                    url: '/api/address/create',
+                    type: 'POST',
+                    data: $('#sa-address').serialize()+'&id_user='+user.id+'&api_token='+user.token,
+                    success: function(reply){
+                        if(reply.success != null){
+                            address.first.id = reply.address.id_address;
+                            if(address.second.different){
+                                address.second.register();
+                            }
+                            else{
+                                address.second.id = reply.address.id_address;
+                                payment.pay();
+                            }
+                        }
                     }
                 });
             }
@@ -70,10 +101,16 @@ $(document).ready(function() {
                 fill: function(){
                     var form = $('#sa-payment-form');
                     $('select[name="id_country"]',form).val(address.first.country).attr('readonly',true);
-                    $('select[name="id_state"]',form).val(address.first.state).attr('readonly',true);
-                    $('select[name="id_city"]',form).val(address.first.city).attr('readonly',true);
                     $('input[name="address"]',form).val(address.first.address).attr('readonly',true);
                     $('input[name="postcode"]',form).val(address.first.postalcode).attr('readonly',true);
+
+                    callStates(form).then(function(states){
+                        $('select[name="id_state"]',form).val(address.first.state).attr('readonly',true);
+                        callCities(form).then(function(){
+                            $('select[name="id_city"]',form).val(address.first.city).attr('readonly',true);
+                        });
+                    });
+
                     address.second.different = false;
                 },
                 clean:function(){
@@ -85,19 +122,20 @@ $(document).ready(function() {
                     $('input[name="postcode"]',form).val('').attr('readonly',false);
                     address.second.different = true;
                 }
-            }
-        },
-        register: function(){
-            $.ajax({
-                url: '/api/address/create',
-                type: 'POST',
-                data: form.serialize()+'&id_user='+user.id+'&api_token='+user.token,
-                success: function(reply){
-                    if(reply.success != null){
-                        address.first.id = reply.id_address;
+            },
+            register: function(){
+                $.ajax({
+                    url: '/api/address/create',
+                    type: 'POST',
+                    data: $('#sa-payment-form').serialize()+'&id_user='+user.id+'&api_token='+user.token,
+                    success: function(reply){
+                        if(reply.success != null){
+                            address.second.id = reply.address.id_address;
+                            payment.pay();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -137,6 +175,9 @@ $(document).ready(function() {
                     $('#sa-register-two').validate({
                         submitHandler: function(form){
                             user.done = true;
+                        },
+                        invalidHandler: function(event, validator) {
+                            user.done = false;
                         }
                     });
                 }
@@ -151,8 +192,14 @@ $(document).ready(function() {
                     if(reply.success == null){
                         localStorage.setItem('api_token',reply.api_token);
                         localStorage.setItem('id_user',reply.id_user);
+                        user.id    = reply.id_user;
+                        user.token = reply.api_token;
                         user.done = true;
                         saNextStep($('a[href="#address-form"]'));
+                        $('.mg-book-form-personal > div').hide();
+                    }
+                    else if(reply.success == false){
+                        errorMessage($('.mg-booking-form'),reply.message);
                     }
                 }
             });
@@ -163,10 +210,16 @@ $(document).ready(function() {
                 type: 'POST',
                 data: $('#sa-register-two').serialize(),
                 success: function(reply){
-                    if(reply.success != null){
+                    if(reply.id_user != null){
                         localStorage.setItem('api_token',reply.api_token);
                         localStorage.setItem('id_user',reply.id_user);
-                        address.register();
+                        user.id    = reply.id_user;
+                        user.token = reply.api_token;
+                        address.first.register();
+                    }
+                    else{
+                        errorMessage($('.mg-booking-form'),reply.message);
+                        saNextStep($('a[href="#personal-info-form"]'));
                     }
                 }
             });
@@ -177,13 +230,11 @@ $(document).ready(function() {
      * Credit Card object
      */
     TCO.loadPubKey('sandbox');
-    var card = {
-        creditCard: null,
-        cvv: null,
-        month: null,
-        year: null,
+    var payment = {
         token: null,
         done: false,
+        attempt: 0,
+        booking: 0,
         form:{
             validate: function(){
                 $('#sa-payment-form').validate({
@@ -207,36 +258,93 @@ $(document).ready(function() {
                         }
                     },
                     submitHandler: function(form){
-                        card.creditCard = $('input[name="creditCard"]').val();
-                        card.cvv        = $('input[name="cvv"]').val();
-                        card.month      = $('input[name="month"]').val();
-                        card.year       = $('input[name="year"]').val();
-                        card.done       = true;
+                        payment.checkout.args.ccNo       = $('input[name="creditCard"]').val();
+                        payment.checkout.args.cvv        = $('input[name="cvv"]').val();
+                        payment.checkout.args.expMonth   = $('input[name="month"]').val();
+                        payment.checkout.args.expYear    = $('input[name="year"]').val();
+                        payment.done                     = true;
+
+                        if(payment.done){
+                            if(payment.attempt == 0){
+                                payment.checkout.token();
+                            }
+                            else{
+                                payment.pay();
+                            }
+
+                        }
                     }
                 });
             },
         },
         checkout:{
             args: {
-                // sellerId: sellerId,
-                // publishableKey: publishableKey,
-                // ccNo: card.creditCard,
-                // cvv: card.cvv,
-                // expMonth: card.month,
-                // expYear: card.year
+                sellerId: sellerId,
+                publishableKey: publishableKey,
+                ccNo: null,
+                cvv: null,
+                expMonth: null,
+                expYear: null
             },
             token:function(){
                 TCO.requestToken(function(response) {
-                    card.token = response.response.token.token;
+                    payment.token = response.response.token.token;
                     if(user.id == null){
                         user.register();
                     }
+                    else{
+                        address.first.register();
+                    }
                 },function(error) {
-                    //console.log('ERROR', error);
-                    //$('#sa-payment-form').children('.alert-success').addClass('hidden');
-                    //$('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(paymentError);
-                },card.checkout.args);
+                    console.log('ERROR', error);
+                },payment.checkout.args);
             }
+        },
+        pay: function(){
+            var currency = $.parseJSON(localStorage.getItem("currency"));
+            var data = {
+                id_user: user.id,
+                api_token: user.token,
+                id_apartment: apartment.id,
+                checkin: localStorage.getItem('checkin'),
+                checkout: localStorage.getItem('checkout'),
+                tco_token: payment.token,
+                currency_iso: currency.iso_code,
+                id_currency: currency.id_currency,
+                id_address_booking: address.first.id,
+                id_address_payment: address.second.id
+            }
+
+            if(payment.attempt > 0){
+                data.attempt    = payment.attempt + 1;
+                data.id_booking = payment.booking;
+            }
+
+            $.ajax({
+                url: '/api/booking/create',
+                type: 'POST',
+                data: data,
+                success: function(reply){
+                    console.log(reply);
+
+                    if(reply.success != null && reply.success == false){
+                        payment.attempt = reply.attempt;
+                        payment.booking = reply.id_booking;
+                        if(payment.attempt != null){
+                            errorMessage($('.mg-booking-form'),reply.message+'. '+attempt+' '+payment.attempt);
+                        }
+                        else{
+                            errorMessage($('.mg-booking-form'),reply.message);
+                        }
+                    }
+                    else{
+                        if(reply.booking.status == 'PAID'){
+                            successMessage($('.mg-booking-form'),reply.checkout.responseMsg);
+
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -248,18 +356,19 @@ $(document).ready(function() {
         user.forms.login.validate();
         user.forms.register.validate();
         address.first.validate();
-        card.form.validate();
+        payment.form.validate();
     }
 
 
     /*
-     * When somebody select the first tab (1)
+     * Click on the first tab (1)
+     * Apartment
      */
-    // $('.mg-booking-form > ul > li:nth-child(1)').click(function(e){
-    //     e.preventDefault();
-    //     saBookingStepOne();
-    //     $('a',this).tab('show');
-    // });
+    $('.mg-booking-form > ul > li:nth-child(1)').click(function(e){
+        e.preventDefault();
+        saBookingStepOne();
+        $('a',this).tab('show');
+    });
 
     /**
      * Click on the second tab (2)
@@ -270,9 +379,12 @@ $(document).ready(function() {
         if(apartment.id){
             saBookingStepTwo();
             $('a',this).tab('show');
+            if(user.token){
+                $('.mg-book-form-personal > div').hide();
+            }
         }
         else{
-            alert('Tiene que seleccionar primero un apto')
+            errorMessage($('.mg-booking-form'),apartmentWarning);
         }
     });
 
@@ -283,12 +395,18 @@ $(document).ready(function() {
      */
     $('.mg-booking-form > ul > li:nth-child(3)').click(function(e){
         e.preventDefault();
-        if(user.done || user.token){
-            saBookingStepThree();
-            $('a',this).tab('show');
+        if(apartment.id){
+            $('#sa-register-two').submit();
+            if(user.done || user.token){
+                saBookingStepThree();
+                $('a',this).tab('show');
+            }
+            else{
+                errorMessage($('.mg-booking-form'),infoUserWarning);
+            }
         }
         else{
-            alert('Debel diligenciar la información del usuario')
+            errorMessage($('.mg-booking-form'),apartmentWarning);
         }
     });
 
@@ -299,12 +417,24 @@ $(document).ready(function() {
      */
     $('.mg-booking-form > ul > li:nth-child(4)').click(function(e){
         e.preventDefault();
-        if(address.first.done){
-            saBookingStepFour();
-            $('a',this).tab('show');
+        if(apartment.id){
+            $('#sa-register-two').submit();
+            if(user.done || user.token){
+                $('#sa-address').submit();
+                if(address.first.done){
+                    saBookingStepFour();
+                    $('a',this).tab('show');
+                }
+                else{
+                    errorMessage($('.mg-booking-form'),adrressWarning);
+                }
+            }
+            else{
+                errorMessage($('.mg-booking-form'),infoUserWarning);
+            }
         }
         else{
-            alert('Debe diligenciar la dirección')
+            errorMessage($('.mg-booking-form'),apartmentWarning);
         }
     });
 
@@ -337,11 +467,16 @@ $(document).ready(function() {
         }
         else if(goTo == '#payment'){
             $('#sa-payment-form').submit();
-            if(card.done){
-                card.checkout.token();
-            }
         }
     });
+
+    /**
+     * Event on prev button
+     */
+    $('.tab-content').on('click','.btn-prev-tab',function (e) {
+		e.preventDefault();
+        saPrevStep($(this));
+	});
 
     /*
      * Check or not if the billing address
@@ -354,67 +489,4 @@ $(document).ready(function() {
             address.second.form.fill();
         }
     });
-
-    /*
-     * Do the payment
-     */
-    var attempt  = 0;
-    var bookinID = 0;
-    function savePayment(paymentToken){
-        var currency = $.parseJSON(localStorage.getItem("currency"));
-
-        if(attempt == 0){
-            var data = {
-                id_user: localStorage.getItem('id_user'),
-                api_token: localStorage.getItem('api_token'),
-                id_apartment: apartmentId,
-                checkin: localStorage.getItem('checkin'),
-                checkout: localStorage.getItem('checkout'),
-                tco_token: paymentToken,
-                currency_iso: currency.iso_code,
-                id_currency: currency.id_currency,
-                id_address_booking: address.id_address,
-                id_address_payment: secondAddressId
-            }
-        }
-        else{
-            var data = {
-                id_user: localStorage.getItem('id_user'),
-                api_token: localStorage.getItem('api_token'),
-                id_apartment: apartmentId,
-                checkin: localStorage.getItem('checkin'),
-                checkout: localStorage.getItem('checkout'),
-                tco_token: paymentToken,
-                currency_iso: currency.iso_code,
-                id_currency: currency.id_currency,
-                id_address_booking: address.id_address,
-                id_address_payment: secondAddressId,
-                attempt: attempt,
-                id_booking: bookinID
-            }
-        }
-
-        $.ajax({
-            url: '/api/booking/create',
-            type: 'POST',
-            data: data,
-            success: function(payment){
-                if(payment.success != null){
-                    if(!payment.success){
-                        $('#sa-payment-form').children('.alert-success').addClass('hidden');
-                        $('#sa-payment-form').children('.alert-danger').removeClass('hidden').children('span').text(payment.message);
-                        if(payment.attempt != null){
-                            attempt  = attempt + payment.attempt;
-                            bookinID = payment.id_booking;
-                            alert("Intento "+attempt);
-                        }
-                    }
-                }
-                else{
-                    console.log(payment);
-                }
-            }
-        });
-    }
-
 });

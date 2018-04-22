@@ -63,3 +63,15 @@ export function saNextStep(element){
 	$('.mg-booking-form > ul > li.active').removeClass('active');
 	$('a[href="'+element.attr('href')+'"]').parents('li').addClass('active');
 }
+
+export function saPrevStep(element){
+	element.tab('show');
+
+	$('html, body').animate({
+		scrollTop: $(".mg-booking-form").offset().top - 100
+	}, 300);
+
+	$('a[href="'+element.attr('href')+'"]').parents('li').trigger('click');
+	$('.mg-booking-form > ul > li.active').removeClass('active');
+	$('a[href="'+element.attr('href')+'"]').parents('li').addClass('active');
+}

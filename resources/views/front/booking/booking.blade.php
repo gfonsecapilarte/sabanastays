@@ -12,11 +12,21 @@
         @include('front/postheader')
     @stop
 
+    <script>
+        var apartmentWarning    = '{{ __('general.apartmentWarning') }}';
+        var infoUserWarning     = '{{ __('general.infoUserWarning') }}';
+        var adrressWarning      = '{{ __('general.adrressWarning') }}';
+        var attempt             = '{{ __('general.attempt') }}';
+    </script>
+
     <div class="mg-page">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="mg-booking-form">
+
+                        @include('messages/success')
+                        @include('messages/error')
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">

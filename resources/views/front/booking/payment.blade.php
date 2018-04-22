@@ -8,8 +8,6 @@
             </script>
 
             <form id='sa-payment-form'>
-                @include('messages/success')
-                @include('messages/error')
                 <h2 class="mg-sec-left-title">
                     <input name="second_address" type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
                 </h2>
@@ -74,7 +72,7 @@
             </form>
 
             <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a>
-            <a href="#" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
+            <a href="#address-form" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
         </div>
     </div>
     <div class="col-md-4">

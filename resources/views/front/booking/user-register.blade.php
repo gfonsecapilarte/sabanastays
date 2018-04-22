@@ -3,7 +3,6 @@
 <div class="mt50"></div>
 
 <form id="sa-register-two" class="clearfix register-form">
-    @include('messages/error')
     <div class="row">
         <div class="col-md-6">
             <div class="mg-contact-form-input">

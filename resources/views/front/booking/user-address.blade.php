@@ -2,8 +2,6 @@
 <h3>@lang('general.addressInformation')</h3>
 <div class="mt30"></div>
 <form id="sa-address" class="clearfix">
-    @include('messages/success')
-    @include('messages/error')
     <div class="row">
         <div class="col-md-6">
             <div class="mg-contact-form-input">
@@ -37,6 +35,6 @@
 
     <hr class="mt50"/>
     <a href="#payment-form" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.next')</a>
-    <a href="#" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
+    <a href="#personal-info-form" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
 
 </form>

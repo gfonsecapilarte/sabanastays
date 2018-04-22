@@ -90,5 +90,9 @@ return [
     'badRequest'                => 'Bad request',
     'aptoNotAvailable'          => 'Not available',
     'errorSavingBooking'        => 'Error saving booking',
-    'errorProcessingPayment'    => 'Error processing payment'
+    'errorProcessingPayment'    => 'Error processing payment',
+    'apartmentWarning'          => 'You must select an apartment with the button Reserve Apartment',
+    'infoUserWarning'           => 'You must fill in your personal information',
+    'adrressWarning'            => 'You must fill in the address information',
+    'attempt'                   => 'Attempt'
 ];

@@ -90,5 +90,9 @@ return [
     'badRequest'                => 'Solicitud incorrecta',
     'aptoNotAvailable'          => 'No está disponible',
     'errorSavingBooking'        => 'Error al guardar la reserva',
-    'errorProcessingPayment'    => 'Error procesando el pago'
+    'errorProcessingPayment'    => 'Error procesando el pago',
+    'apartmentWarning'          => 'Debe seleccionar un apartamento con el botón Reservar Apartamento',
+    'infoUserWarning'           => 'Debe diligenciar la información personal',
+    'adrressWarning'            => 'Debe diligenciar la información de dirección',
+    'attempt'                   => 'Intento'
 ];
