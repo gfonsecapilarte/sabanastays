@@ -5,7 +5,7 @@
 
             <div class="navbar-header">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset($header->media_logo[0]->path) }}" alt="LOGO SABANA STAYS">
+                    <img src="{{ asset($header->media_logo[0]->path) }}" alt="LOGO SABANA STAYS" height="78">
                 </a>
             </div>
 

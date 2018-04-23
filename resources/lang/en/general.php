@@ -95,5 +95,8 @@ return [
     'infoUserWarning'           => 'You must fill in your personal information',
     'adrressWarning'            => 'You must fill in the address information',
     'attempt'                   => 'Attempt',
-    'update'                    => 'Update'
+    'update'                    => 'Update',
+    'newsletters'               => 'Newsletters',
+    'socialMedia'               => 'Social Media',
+    'terms'                     => 'Terms'
 ];

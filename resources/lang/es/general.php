@@ -95,5 +95,8 @@ return [
     'infoUserWarning'           => 'Debe diligenciar la información personal',
     'adrressWarning'            => 'Debe diligenciar la información de dirección',
     'attempt'                   => 'Intento',
-    'update'                    => 'Actualizar'
+    'update'                    => 'Actualizar',
+    'newsletters'               => 'Newsletters',
+    'socialMedia'               => 'Redes Sociales',
+    'terms'                     => 'Términos'
 ];
