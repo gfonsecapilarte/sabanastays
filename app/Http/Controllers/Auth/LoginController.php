@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use \Curl\Curl;
+use Google_Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -53,31 +55,131 @@ class LoginController extends Controller
         Session::put('api_token', $api_token);
     }
 
-    private function socialLogin(Request $request)
-    {
-//        if (Auth::attempt(array('social_id' => $request->input('social_id')))) {
+    /*
+     * Login with Facebook
+     */
+    public function facebookLogin(Request $request){
+        $curl = new Curl();
+        $curl->get('https://graph.facebook.com/v2.8/oauth/access_token',array(
+            'grant_type'        => 'fb_exchange_token',
+            'client_id'         => env('FB_CLIENT_ID'),
+            'client_secret'     => env('FB_CLIENT_SECRET'),
+            'fb_exchange_token' => $request->input('fb_exchange_token')
+        ));
 
-        $user = User::where('social_id', '=', $request->input('social_id'))->first();
-        if (empty($user)) {
-            return false;
+        if($curl->error){
+            return array(
+                'success' => false,
+                'message' => 'Credentials failed'
+            );
         }
+        else{
+            $user = User::where('email', '=', $request->input('email'))->first();
+            if(empty($user)){
+                $create = User::create(array(
+                    'firstname' => $request->input('name'),
+                    'role'      => 'USER',
+                    'email'     => $request->input('email'),
+                    'password'  => bcrypt('123456')
+                ));
 
-        if (Auth::loginUsingId($user->id_user)) {
-            $this->updateToken();
-            //create session
-            Session::put('id_user', Auth::user()->id_user);
-//            Session::put('email', Auth::user()->email);
-            Session::put('social_id', Auth::user()->social_id);
-            Session::put('role', Auth::user()->role);
-            Session::put('firstname', Auth::user()->firstname);
-            Session::put('lastname', Auth::user()->lastname);
-            Session::put('session_id', Session::getId());
-            Session::save();
+                if ($create && Auth::attempt(array('email' => $request->input('email'), 'password' => '123456'))){
+                    $bytes      = openssl_random_pseudo_bytes(32);
+                    $api_token  = bin2hex($bytes);
 
-            return Session::all();
+                    $user = User::find(Auth::user()->id_user);
+                    $user->api_token = $api_token;
+                    $user->save();
+
+                    Session::put('id_user', Auth::user()->id_user);
+                    Session::put('email', Auth::user()->email);
+                    Session::put('role', Auth::user()->role);
+                    Session::put('firstname', Auth::user()->firstname);
+                    Session::put('lastname', Auth::user()->lastname);
+                    Session::put('session_id', Session::getId());
+                    Session::put('api_token', $api_token);
+                    Session::save();
+
+                    return Session::all();
+                }
+            }
+            else{
+                if (Auth::attempt(array('email' => $request->input('email'), 'password' => '123456'))) {
+                    $this->updateToken();
+                    Session::put('id_user', Auth::user()->id_user);
+                    Session::put('email', Auth::user()->email);
+                    Session::put('role', Auth::user()->role);
+                    Session::put('firstname', Auth::user()->firstname);
+                    Session::put('lastname', Auth::user()->lastname);
+                    Session::put('session_id', Session::getId());
+                    Session::save();
+
+                    return Session::all();
+                }
+            }
         }
+    }
 
-        return false;
+    /*
+     * Login with Google
+     */
+    public function googleLogin(Request $request){
+        $client = new Google_Client();
+        $ticket = $client->verifyIdToken($request->input('token'));
+        if($ticket){
+            $email = $ticket['email'];
+            $name  = $ticket['name'];
+
+            $user = User::where('email', '=', $email)->first();
+            if(empty($user)){
+                $create = User::create(array(
+                    'firstname' => $name,
+                    'role'      => 'USER',
+                    'email'     => $email,
+                    'password'  => bcrypt('123456')
+                ));
+
+                if ($create && Auth::attempt(array('email' => $email, 'password' => '123456'))){
+                    $bytes      = openssl_random_pseudo_bytes(32);
+                    $api_token  = bin2hex($bytes);
+
+                    $user = User::find(Auth::user()->id_user);
+                    $user->api_token = $api_token;
+                    $user->save();
+
+                    Session::put('id_user', Auth::user()->id_user);
+                    Session::put('email', Auth::user()->email);
+                    Session::put('role', Auth::user()->role);
+                    Session::put('firstname', Auth::user()->firstname);
+                    Session::put('lastname', Auth::user()->lastname);
+                    Session::put('session_id', Session::getId());
+                    Session::put('api_token', $api_token);
+                    Session::save();
+
+                    return Session::all();
+                }
+            }
+            else{
+                if (Auth::attempt(array('email' => $email, 'password' => '123456'))) {
+                    $this->updateToken();
+                    Session::put('id_user', Auth::user()->id_user);
+                    Session::put('email', Auth::user()->email);
+                    Session::put('role', Auth::user()->role);
+                    Session::put('firstname', Auth::user()->firstname);
+                    Session::put('lastname', Auth::user()->lastname);
+                    Session::put('session_id', Session::getId());
+                    Session::save();
+
+                    return Session::all();
+                }
+            }
+        }
+        else {
+            return array(
+                'success' => false,
+                'message' => 'Credentials failed'
+            );
+        }
     }
 
     /**
@@ -90,22 +192,6 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             return Session::all();
-        }
-
-        if ($request->has('social_id')) {
-            $login = $this->socialLogin($request);
-            if ($login !== false) {
-                return $login;
-            } else {
-                $create = RegisterController::createSocial($request);
-                if ($create === false) {
-                    return array(
-                        'success' => false,
-                        'message' => 'Cannot create account'
-                    );
-                }
-                return $this->socialLogin($request);
-            }
         }
 
         if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')))) {

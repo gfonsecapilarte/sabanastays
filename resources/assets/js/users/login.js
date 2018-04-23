@@ -1,6 +1,15 @@
 let validate = require('jquery-validation');
 import FBSDK from 'fb-sdk';
 
+/**
+ * Modules to show error and success messages
+ */
+import {
+    errorMessage,
+    successMessage
+} from "../messages/messages.js";
+
+
 /** Setup Facebook **/
 const Facebook = FBSDK({
     appId: '155464328481769',
@@ -10,7 +19,9 @@ const Facebook = FBSDK({
 
 $(document).ready(function() {
 
-    /** Validate form **/
+    /*
+     * Validate form
+     */
     if($('#sa-login').length){
         $('#sa-login').validate({
             submitHandler: function(form) {
@@ -19,15 +30,17 @@ $(document).ready(function() {
         });
     }
 
-    /** Function to login **/
+    /*
+     * Function to login
+     */
     function login(){
         $.ajax({
             url: '/api/user/login',
             type: 'POST',
             data: $('#sa-login').serialize(),
             success: function(reply){
-                if(!reply.success && reply.success != null){
-                    $('#sa-login .alert-danger').removeClass('hidden').children('span').text(reply.message);
+                if(reply.success != null && reply.success == false){
+                    errorMessage($('#sa-login'),reply.message);
                 }
                 else{
                     $('#sa-login .alert-danger').addClass('hidden');
@@ -35,49 +48,83 @@ $(document).ready(function() {
                     $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token',reply.api_token);
                     localStorage.setItem('id_user',reply.id_user);
-
-                    if(currentPage == 'booking'){
-                        setTimeout(function(){
-                            $('#contLoginUser').slideUp();
-                            $('#contRegisterUser').slideUp();
-                        },2000);
-                    }
-                    //location.href = profile_link;
+                    location.href = profile_link;
                 }
             }
         });
     }
 
-    /** Login with facebook **/
-    $('#btn-facebook-login').click(function(event){
+    /*
+     * Login with facebook
+     */
+    $('#btn-facebook-login-l, #btn-facebook-login-r').click(function(event){
+        event.preventDefault();
+        var data = {};
         Facebook.login(function(response) {
-            console.log(response);
-            Facebook.api('/me?fields=name,email', function(response) {
-                console.log(response);
-            });
+            if(response.status == 'connected'){
+                data.fb_exchange_token = response.authResponse.accessToken;
+                Facebook.api('/me?fields=name,email', function(response) {
+                    data.name   = response.name;
+                    data.email  = response.email;
+                    $.ajax({
+                        url: '/api/user/facebook/login',
+                        type: 'POST',
+                        data: data,
+                        success: function(reply){
+                            if(reply.success != null && reply.success == false){
+                                errorMessage($('#sa-login'),reply.message);
+                            }
+                            else{
+                                localStorage.setItem('api_token',reply.api_token);
+                                localStorage.setItem('id_user',reply.id_user);
+                                location.href = profile_link;
+                            }
+                        }
+                    });
+                });
+            }
         }, {scope: 'public_profile,email'});
     });
 
-    /** Setup and login with Google API **/
-    require( 'google-client-api' )().then( function( gapi ) {
+    /*
+     * Setup and login with Google API
+     */
+    if($('#sa-login').length){
+        require( 'google-client-api' )().then( function( gapi ) {
         var auth2 = null;
         gapi.load('auth2', function(){
             auth2 = gapi.auth2.init({
-                client_id: '89349671547-up4d307mi1qthqne01llcetm80v85hd0.apps.googleusercontent.com',
+                client_id: googleClientId,
                 cookiepolicy: 'single_host_origin',
             });
-            attachSignin(document.getElementById('btn-google-login'));
+            attachSignin(document.getElementById('btn-google-login-l'));
+            attachSignin(document.getElementById('btn-google-login-r'));
         });
 
         function attachSignin(element) {
             auth2.attachClickHandler(element,{},function(googleUser){
-                    console.log(googleUser.getBasicProfile().getName());
-                    console.log(googleUser.getBasicProfile().getEmail());
-                    console.log(googleUser.getBasicProfile().getId());
+                $.ajax({
+                    url: '/api/user/google/login',
+                    type: 'POST',
+                    data: {
+                        token:googleUser.getAuthResponse().id_token
+                    },
+                    success: function(reply){
+                        if(reply.success != null && reply.success == false){
+                            errorMessage($('#sa-login'),reply.message);
+                        }
+                        else{
+                            localStorage.setItem('api_token',reply.api_token);
+                            localStorage.setItem('id_user',reply.id_user);
+                            location.href = profile_link;
+                        }
+                    }
+                });
             },
             function(error) {
                 console.log(JSON.stringify(error, undefined, 2));
             });
         }
     });
+    }
 });

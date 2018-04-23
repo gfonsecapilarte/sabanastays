@@ -24,12 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/user', 'Auth\RegisterController@create');//Register
 Route::post('/user/login', 'Auth\LoginController@credentials');//Login
-//Route::post('/user', function ($request) {
-//    echo "<pre>";
-//    print_r($request);
-//    echo "</pre>";
-//    die();
-//});
+Route::post('/user/facebook/login', 'Auth\LoginController@facebookLogin');//Login with Facebook
+Route::post('/user/google/login', 'Auth\LoginController@googleLogin');//Login with Google
+Route::get('/user', 'UserController@user');
+Route::put('/user', 'UserController@update');
 
 //address
 Route::get('/addresses', 'AddressController@getAddresses');

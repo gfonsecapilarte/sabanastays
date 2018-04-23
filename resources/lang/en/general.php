@@ -94,5 +94,6 @@ return [
     'apartmentWarning'          => 'You must select an apartment with the button Reserve Apartment',
     'infoUserWarning'           => 'You must fill in your personal information',
     'adrressWarning'            => 'You must fill in the address information',
-    'attempt'                   => 'Attempt'
+    'attempt'                   => 'Attempt',
+    'update'                    => 'Update'
 ];

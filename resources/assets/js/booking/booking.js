@@ -229,8 +229,10 @@ $(document).ready(function() {
     /**
      * Credit Card object
      */
-    TCO.loadPubKey('sandbox');
-    var payment = {
+    var payment = {};
+    if($('#sa-address').length > 0){
+        TCO.loadPubKey('sandbox');
+        payment = {
         token: null,
         done: false,
         attempt: 0,
@@ -347,7 +349,7 @@ $(document).ready(function() {
             });
         }
     }
-
+    }
 
     /*
      * Validate all forms

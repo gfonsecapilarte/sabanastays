@@ -1,5 +1,13 @@
 let validate = require('jquery-validation');
 
+/**
+ * Modules to show error and success messages
+ */
+import {
+    errorMessage,
+    successMessage
+} from "../messages/messages.js";
+
 $(document).ready(function() {
     /** Validate form **/
     if($('#sa-register').length){
@@ -31,15 +39,13 @@ $(document).ready(function() {
             type: 'POST',
             data: $('#sa-register').serialize(),
             success: function(reply){
-                if(!reply.success && reply.success != null){
-                    $('#sa-register .alert-danger').removeClass('hidden').children('span').text(reply.message);
+                if(reply.success != null && reply.success == false){
+                    errorMessage($('#sa-login'),reply.message);
                 }
                 else{
-                    $('.alert-danger').addClass('hidden');
-                    $('#sa-register .alert-success').removeClass('hidden').children('span').text(regisUserSuccMsg);
                     localStorage.setItem('api_token',reply.api_token);
                     localStorage.setItem('id_user',reply.id_user);
-                    // location.href = profile_link;
+                    location.href = profile_link;
                 }
             }
         });

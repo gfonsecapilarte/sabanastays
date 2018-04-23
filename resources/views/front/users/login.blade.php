@@ -12,10 +12,8 @@
     @stop
 
     <script>
-        var profile_link        = '{{ route("profile") }}';
-        var regisUserSuccMsg    = '{{ __('general.registeredUserSuccess') }}';
-        var loginSuccess        = '{{ __('general.loginSuccess') }}';
-        var currentPage         = 'booking';
+        var profile_link    = '{{ route("profile") }}';
+        var googleClientId  = '{{ env('GOOGLE_CLIENT_ID') }}';
     </script>
 
     <div class="mg-page">
@@ -46,16 +44,16 @@
                                 <a href="#" id="forgot-password" class="pull-right">@lang('general.ForgotYourPassword')</a>
                             </div>
                         </div>
-
-                        <div class="row mt30">
-                            <div class="col-md-4">
-                                <button id="btn-facebook-login" class="btn social-button blue"><i class="fa fa-facebook"></i>@lang('general.loginWithFacebook')</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button id="btn-google-login" class="btn social-button red"><i class="fa fa-google-plus"></i>@lang('general.loginWithGoogle')</button>
-                            </div>
-                        </div>
                     </form>
+
+                    <div class="row mt30">
+                        <div class="col-md-4">
+                            <button id="btn-facebook-login-l" class="btn social-button blue"><i class="fa fa-facebook"></i>@lang('general.loginWithFacebook')</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button id="btn-google-login-l" class="btn social-button red "><i class="fa fa-google-plus"></i>@lang('general.loginWithGoogle')</button>
+                        </div>
+                    </div>
 
                     <hr class="mt50">
                     <h2 class="mg-sec-left-title mt30">@lang('general.ifYouDontHaveAnAccount')</h2>
@@ -101,6 +99,15 @@
                             </div>
                         </div>
                     </form>
+
+                    <div class="row mt30">
+                        <div class="col-md-4">
+                            <button id="btn-facebook-login-r" class="btn social-button blue"><i class="fa fa-facebook"></i>@lang('general.loginWithFacebook')</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button id="btn-google-login-r" class="btn social-button red"><i class="fa fa-google-plus"></i>@lang('general.loginWithGoogle')</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>

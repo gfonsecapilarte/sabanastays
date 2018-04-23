@@ -94,5 +94,6 @@ return [
     'apartmentWarning'          => 'Debe seleccionar un apartamento con el botón Reservar Apartamento',
     'infoUserWarning'           => 'Debe diligenciar la información personal',
     'adrressWarning'            => 'Debe diligenciar la información de dirección',
-    'attempt'                   => 'Intento'
+    'attempt'                   => 'Intento',
+    'update'                    => 'Actualizar'
 ];
