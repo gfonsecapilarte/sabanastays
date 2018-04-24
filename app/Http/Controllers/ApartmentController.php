@@ -63,22 +63,6 @@ class ApartmentController extends Controller
 
     private function updateApartment($apartment, $data)
     {
-
-        echo "<pre>";
-        var_dump(Storage::disk('public')->exists('ss5ade81bceebce.jpeg'));
-        echo "</pre>";
-        echo Storage::disk('public')->url('ss5ade81bceebce.jpeg');
-        die();
-
-echo storage_path('app/public').';;;';
-        echo Storage::disk('public')->url('ss5ade81bceebce.jpeg');
-        die();
-//        echo "<pre>";
-//print_r($data);
-////print_r($apartment);
-//echo "</pre>";
-//die();
-
         //settings
         $apartment->id_apartment_type = $data['settings']->id_apartment_type;
         $apartment->id_building = $data['settings']->id_building;
