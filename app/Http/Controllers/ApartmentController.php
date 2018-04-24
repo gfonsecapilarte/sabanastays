@@ -43,6 +43,7 @@ class ApartmentController extends Controller
         $data['settings'] = json_decode($data['settings']);
         $data['rate'] = json_decode($data['rate']);
         $data['pricing'] = json_decode($data['pricing']);
+        $data['remove_media'] = json_decode($data['remove_media']);
 
         if (empty($id_apartment)) {
             $response = $this->createApartment($data);
@@ -92,18 +93,16 @@ class ApartmentController extends Controller
             $apartment_lang->save();
         }
         //features
-//        foreach ($data['features'] as $row_feature) {
-            $feature = FeatureModel::getObject($apartment->id_apartment);
-            $feature->id_apartment = $apartment->id_apartment;
-            $feature->guests = $data['features']->guests;
-            $feature->bedrooms = $data['features']->bedrooms;
-            $feature->queen_beds = $data['features']->queen_beds;
-            $feature->baths = $data['features']->baths;
-            $feature->king_beds = $data['features']->king_beds;
-            $feature->full_beds = $data['features']->full_beds;
-            $feature->twin_beds = $data['features']->twin_beds;
-            $feature->save();
-//        }
+        $feature = FeatureModel::getObject($apartment->id_apartment);
+        $feature->id_apartment = $apartment->id_apartment;
+        $feature->guests = $data['features']->guests;
+        $feature->bedrooms = $data['features']->bedrooms;
+        $feature->queen_beds = $data['features']->queen_beds;
+        $feature->baths = $data['features']->baths;
+        $feature->king_beds = $data['features']->king_beds;
+        $feature->full_beds = $data['features']->full_beds;
+        $feature->twin_beds = $data['features']->twin_beds;
+        $feature->save();
         //rate
         RateModel::updateApartmentRate($apartment->id_apartment, $data['rate']);
         //amenities
@@ -111,21 +110,28 @@ class ApartmentController extends Controller
             ApartmentAmenityModel::updateApartmentAmenity($apartment->id_apartment, $row_amenity->id_amenity, (bool)$row_amenity->checked);
         }
         //media
-//        $apartment_dir = Storage::directories('/app/public');
-//        Storage::putFile('media', new File('/app/public/apartments'));
-//        $url = Storage::url('file.jpg');
-        foreach ($data['media'] as $file) {
-            $filename = uniqid('ss').'.'.$file->getClientOriginalExtension();
+        if (array_key_exists('media', $data) && is_array($data['media']) && !empty($data['media'])) {
+            foreach ($data['media'] as $file) {
+                $filename = uniqid('ss').'.'.$file->getClientOriginalExtension();
+                $file->move(storage_path('app/public/'), $filename);
 
-            $file->move(storage_path('app/public/'), $filename);
+                $media = new MediaModel();
+                $media->path = Storage::url($filename);
+                $media->media_type = 'IMAGE';
+                $media->id_type = $apartment->id_apartment;
+                $media->type = 'apartment';
+                $media->save();
+            }
+        }
 
-//            Storage::putFileAs($file, new File(storage_path('app/public/')), $filename);
-            $media = new MediaModel();
-            $media->path = Storage::url($filename);
-            $media->media_type = 'IMAGE';
-            $media->id_type = $apartment->id_apartment;
-            $media->type = 'apartment';
-            $media->save();
+        //remove media
+        if (is_array($data['remove_media']) && !empty($data['remove_media'])) {
+            foreach ($data['remove_media'] as $remove_file) {
+                $remove_media = MediaModel::find($remove_file->id_media);
+                $remove_filename = str_replace('/storage/', '', $remove_media->path);
+                Storage::disk('public')->delete($remove_filename);
+                $remove_media->delete();
+            }
         }
 
         //return
@@ -140,14 +146,7 @@ class ApartmentController extends Controller
                 ->with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
         } else {
             $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
-//            $apartments = ApartmentModel::with(array('amenities'))->paginate($request->input('items_per_page', 15));
         }
-
-//        foreach ($apartments as &$apartment) {
-//            $apartment = ApartmentModel::parseLang($apartment);
-//            $apartment->type = ApartmentModel::parseLang($apartment->type);
-//            $apartment->amenities = ApartmentModel::parseLang($apartment->amenities);
-//        }
         return response()->json(array(
             'success' => true,
             'apartments' => $apartments

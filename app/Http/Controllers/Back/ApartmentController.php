@@ -10,6 +10,7 @@ use App\Models\Amenity as AmenityModel;
 use App\Models\Building as BuildingModel;
 use App\Models\Language as LanguageModel;
 use App\Models\Currency as CurrencyModel;
+use App\Models\Media as MediaModel;
 
 class ApartmentController extends CoreController
 {
@@ -46,10 +47,11 @@ class ApartmentController extends CoreController
                 $apartment_amenities[] = $amenity->id_amenity;
             }
             $data['apartment']->amenities = $apartment_amenities;
+            $data['apartment']->media = json_decode(MediaModel::getMediaByType($id_apartment, MediaModel::APARTMENT));
         }
 
 //        echo "<pre>";
-//print_r($data['apartment']);
+//print_r($data['apartment']->media);
 ////print_r($data['languages']);
 //echo "</pre>";
 //die();
