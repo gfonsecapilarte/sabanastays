@@ -38,13 +38,21 @@ class ApartmentController extends CoreController
             'currencies' => json_decode(CurrencyModel::get())
         );
         if (!is_null($id_apartment)) {
-            $data['apartment'] = ApartmentModel::find($id_apartment)->with(array('lang','amenities','type', 'building'));
+            $data['apartment'] = json_decode(ApartmentModel::with(array('amenities', 'lang', 'rate', 'feature'))
+                ->where('id_apartment', '=', $id_apartment)->first());
+            ApartmentModel::parseLang($data['apartment']);
+            $apartment_amenities = array();
+            foreach ($data['apartment']->amenities as $amenity) {
+                $apartment_amenities[] = $amenity->id_amenity;
+            }
+            $data['apartment']->amenities = $apartment_amenities;
         }
 
-        echo "<pre>";
-print_r($data['apartment']);
-echo "</pre>";
-die();
+//        echo "<pre>";
+//print_r($data['apartment']);
+////print_r($data['languages']);
+//echo "</pre>";
+//die();
 
         return $this->display('backoffice/apartment/form', $data);
     }

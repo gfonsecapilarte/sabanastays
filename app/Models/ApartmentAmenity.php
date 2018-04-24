@@ -8,6 +8,7 @@ class ApartmentAmenity extends Model
 {
     protected $table = 'apartment_amenity';
     protected $primaryKey = 'id_apartment_amenity';
+    public $timestamps = false;
 
     public function lang()
     {
@@ -39,6 +40,7 @@ class ApartmentAmenity extends Model
         ))->first();
 
         if (empty($apartment_amenity)) {
+            $apartment_amenity = new ApartmentAmenity();
             $apartment_amenity->id_apartment = $id_apartment;
             $apartment_amenity->id_amenity = $id_amenity;
             $apartment_amenity->save();

@@ -8,6 +8,7 @@ class Media extends ModelCore
 {
     protected $table = 'media';
     protected $primaryKey = 'id_media';
+    public $timestamps = false;
 
     public static function getMediaByType($id_type, $type)
     {

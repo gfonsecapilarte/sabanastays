@@ -46,7 +46,6 @@ var Apartment = {
         $.each(response.data, Apartment.printRow);
     },
     printRow: function(i, apartment) {
-        console.log('>APARTMENT', apartment);
         var $row = $('<tr/>');
 
         $('<td/>').appendTo($row).append(

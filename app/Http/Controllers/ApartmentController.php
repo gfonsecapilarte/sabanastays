@@ -17,6 +17,8 @@ use App\Models\Media as MediaModel;
 use App\Models\Rate as RateModel;
 use App\Models\Feature as FeatureModel;
 //use Illuminate\Support\Facades\DB;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -34,15 +36,23 @@ class ApartmentController extends Controller
         $id_apartment = $request->input('id_apartment');
         $response = false;
         $data = $request->all();
+
+        $data['information'] = json_decode($data['information']);
+        $data['features'] = json_decode($data['features']);
+        $data['amenities'] = json_decode($data['amenities']);
+        $data['settings'] = json_decode($data['settings']);
+        $data['rate'] = json_decode($data['rate']);
+        $data['pricing'] = json_decode($data['pricing']);
+
         if (empty($id_apartment)) {
-            $this->createApartment($data);
+            $response = $this->createApartment($data);
         } else {
-            $this->updateApartment(ApartmentModel::find($id_apartment), $data);
+            $response = $this->updateApartment(ApartmentModel::find($id_apartment)->first(), $data);
         }
 
         return response()->json(array(
             'success' => (bool)$response,
-            'apartment' => $response
+            'id_apartment' => $response
         ));
     }
 
@@ -53,6 +63,22 @@ class ApartmentController extends Controller
 
     private function updateApartment($apartment, $data)
     {
+
+        echo "<pre>";
+        var_dump(Storage::disk('public')->exists('ss5ade81bceebce.jpeg'));
+        echo "</pre>";
+        echo Storage::disk('public')->url('ss5ade81bceebce.jpeg');
+        die();
+
+echo storage_path('app/public').';;;';
+        echo Storage::disk('public')->url('ss5ade81bceebce.jpeg');
+        die();
+//        echo "<pre>";
+//print_r($data);
+////print_r($apartment);
+//echo "</pre>";
+//die();
+
         //settings
         $apartment->id_apartment_type = $data['settings']->id_apartment_type;
         $apartment->id_building = $data['settings']->id_building;
@@ -64,7 +90,7 @@ class ApartmentController extends Controller
                 continue;
             }
             $apartment->id_currency = $id_currency;
-            $apartment->price = $pricing->value;
+            $apartment->price = (float)$pricing->value;
             break;
         }
         $apartment->save();
@@ -82,23 +108,44 @@ class ApartmentController extends Controller
             $apartment_lang->save();
         }
         //features
-        foreach ($data['features'] as $row_feature) {
+//        foreach ($data['features'] as $row_feature) {
             $feature = FeatureModel::getObject($apartment->id_apartment);
             $feature->id_apartment = $apartment->id_apartment;
-            $feature->quest = $row_feature['quest'];
-            $feature->bedrooms = $row_feature['bedrooms'];
-            $feature->queen_beds = $row_feature['queen_beds'];
-            $feature->baths = $row_feature['baths'];
-            $feature->king_beds = $row_feature['king_beds'];
-            $feature->full_beds = $row_feature['full_beds'];
-            $feature->twin_beds = $row_feature['twin_beds'];
+            $feature->guests = $data['features']->guests;
+            $feature->bedrooms = $data['features']->bedrooms;
+            $feature->queen_beds = $data['features']->queen_beds;
+            $feature->baths = $data['features']->baths;
+            $feature->king_beds = $data['features']->king_beds;
+            $feature->full_beds = $data['features']->full_beds;
+            $feature->twin_beds = $data['features']->twin_beds;
             $feature->save();
-        }
+//        }
+        //rate
+        RateModel::updateApartmentRate($apartment->id_apartment, $data['rate']);
         //amenities
         foreach ($data['amenities'] as $row_amenity) {
             ApartmentAmenityModel::updateApartmentAmenity($apartment->id_apartment, $row_amenity->id_amenity, (bool)$row_amenity->checked);
         }
         //media
+//        $apartment_dir = Storage::directories('/app/public');
+//        Storage::putFile('media', new File('/app/public/apartments'));
+//        $url = Storage::url('file.jpg');
+        foreach ($data['media'] as $file) {
+            $filename = uniqid('ss').'.'.$file->getClientOriginalExtension();
+
+            $file->move(storage_path('app/public/'), $filename);
+
+//            Storage::putFileAs($file, new File(storage_path('app/public/')), $filename);
+            $media = new MediaModel();
+            $media->path = Storage::url($filename);
+            $media->media_type = 'IMAGE';
+            $media->id_type = $apartment->id_apartment;
+            $media->type = 'apartment';
+            $media->save();
+        }
+
+        //return
+        return $apartment->id_apartment;
     }
 
     public function listApartments(Request $request)
@@ -108,8 +155,8 @@ class ApartmentController extends Controller
             $apartments = ApartmentModel::where('id_apartment', '=', $request->input('term'))
                 ->with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
         } else {
-//            $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
-            $apartments = ApartmentModel::with(array('amenities'))->paginate($request->input('items_per_page', 15));
+            $apartments = ApartmentModel::with(array('amenities', 'type', 'currency', 'lang', 'building'))->paginate($request->input('items_per_page', 15));
+//            $apartments = ApartmentModel::with(array('amenities'))->paginate($request->input('items_per_page', 15));
         }
 
 //        foreach ($apartments as &$apartment) {

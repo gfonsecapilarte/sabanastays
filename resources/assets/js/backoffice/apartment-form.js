@@ -81,7 +81,9 @@ var ApartmentForm = {
         $('.save-apartment').on('click', ApartmentForm.onSaveApartment);
     },
     clear: function() {
-
+        $('#lst-rate').val($('#lst-rate option[selected]').val());
+        $('#lst-apartment_type').val($('#lst-apartment_type option[selected]').val());
+        $('#lst-building').val($('#lst-building option[selected]').val());
     },
     getInformation() {
         var information = [];
@@ -97,7 +99,7 @@ var ApartmentForm = {
     },
     getFeatures: function() {
         return {
-            quest: $('.txt-feature-quest').val(),
+            guests: $('.txt-feature-guests').val(),
             bedrooms: $('.txt-feature-bedrooms').val(),
             queen_beds: $('.txt-feature-queen_beds').val(),
             baths: $('.txt-feature-baths').val(),
@@ -136,6 +138,9 @@ var ApartmentForm = {
 //        console.log('****',ApartmentForm.dZone.getQueuedFiles());
         return ApartmentForm.dZone.getAcceptedFiles();
     },
+    getRate: function() {
+        return $('#lst-rate').val();
+    },
     onSaveApartment: function(event) {
         $('.save-apartment').prop('disabled', true);
         var data = {
@@ -145,7 +150,8 @@ var ApartmentForm = {
             amenities: ApartmentForm.getAmenities(),
             settings: ApartmentForm.getSettings(),
             pricing: ApartmentForm.getPricing(),
-//            media: ApartmentForm.getMedia()
+            rate: ApartmentForm.getRate(),
+            media: ApartmentForm.getMedia()
         };
         ApartmentForm.saveApartment(data);
     },
@@ -157,6 +163,7 @@ var ApartmentForm = {
         form_data.append('features', JSON.stringify(data.features));
         form_data.append('amenities', JSON.stringify(data.amenities));
         form_data.append('settings', JSON.stringify(data.settings));
+        form_data.append('rate', JSON.stringify(data.rate));
         form_data.append('pricing', JSON.stringify(data.pricing));
         $.each(data.media, function(i, media) {
             if (typeof media.dataURL !== typeof undefined) {
@@ -173,7 +180,9 @@ var ApartmentForm = {
             processData: false,
             contentType: false,
             success: function (response) {
-                console.log('result', response);
+                if (response.success) {
+                    $('#txt-id_apartment').val(response.id_apartment);
+                }
             }
         });
     }

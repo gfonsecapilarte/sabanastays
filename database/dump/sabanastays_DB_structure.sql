@@ -197,6 +197,8 @@ CREATE TABLE `apartment` (
   `floor` int(11) NOT NULL,
   `number` varchar(45) NOT NULL,
   `price` float NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_apartment`),
   KEY `fk_apartments_buildings1_idx` (`id_building`),
   KEY `fk_apartments_apartmentType1_idx` (`id_apartment_type`),
@@ -364,7 +366,7 @@ CREATE TABLE `contact_module_lang` (
 DROP TABLE IF EXISTS `feature`;
 
 CREATE TABLE `feature` (
-  `id_feature` int(11) unsigned NOT NULL,
+  `id_feature` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `guests` int(11) DEFAULT NULL,
   `bedrooms` int(11) DEFAULT NULL,
   `queen_beds` int(11) DEFAULT NULL,

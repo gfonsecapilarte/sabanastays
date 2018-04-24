@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Amenity extends Model
 {
     protected $table = 'amenity_lang';
+    public $timestamps = false;
 }

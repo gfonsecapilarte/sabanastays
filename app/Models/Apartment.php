@@ -31,4 +31,14 @@ class Apartment extends ModelCore
     {
         return $this->belongsTo(\App\Models\Building::class, 'id_building')->with(array('city', 'lang'));
     }
+
+    public function rate()
+    {
+        return $this->belongsTo(\App\Models\Rate::class, 'id_apartment');
+    }
+
+    public function feature()
+    {
+        return $this->hasOne(\App\Models\Feature::class, 'id_apartment');
+    }
 }
