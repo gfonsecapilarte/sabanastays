@@ -41,7 +41,7 @@ return [
     'telephone'                 => 'Teléfono',
     'retypePassword'            => 'Repita la Contraseña',
     'yourBookingDetails'        => 'Detalles de la Reservación',
-    'nights'                    => '{1} :value Noche| :value Noches',
+    'nights'                    => 'Noches',
     'total'                     => 'Total',
     'isYourBillingAddressDiff'  => '¿Su dirección de facturación es diferente?',
     'CreditCardInfo'            => 'Información de tarjeta de crédito',
@@ -98,5 +98,6 @@ return [
     'update'                    => 'Actualizar',
     'newsletters'               => 'Newsletters',
     'socialMedia'               => 'Redes Sociales',
-    'terms'                     => 'Términos'
+    'terms'                     => 'Términos',
+    'signOut'                   => 'Salir'
 ];

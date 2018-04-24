@@ -1,5 +1,10 @@
-let date = require('date-and-time');
-date.locale(locale.toLowerCase());
+/**
+ * Module to convert dates to human format
+ */
+import {
+    converDate,
+    calculateNights
+} from "../dates/dates.js";
 
 $(document).ready(function(){
     /*
@@ -93,14 +98,8 @@ $(document).ready(function(){
         var template = $('#apto-template');
 
         /* print dates */
-        var _checkIn = checkIn.split('-'),
-            _checkIn = new Date(_checkIn[0],_checkIn[1]-1,_checkIn[2]);
-
-        var _checkOut = checkOut.split('-'),
-            _checkOut = new Date(_checkOut[0],_checkOut[1]-1,_checkOut[2]);
-
-        $('#sa-check-in').text(date.format(_checkIn, 'MMMM DD YYYY'));
-        $('#sa-check-out').text(date.format(_checkOut, 'MMMM DD YYYY'));
+        $('#sa-check-in').text(converDate(checkIn));
+        $('#sa-check-out').text(converDate(checkOut));
 
         $(data.apartments).each(function(index, el){
             var lang = el.lang[''+locale+''];
@@ -109,7 +108,7 @@ $(document).ready(function(){
                 $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);
-                $('#apto-template .sa-apto-price span').text('$'+el.price);
+                $('#apto-template .sa-apto-price .price').text(el.price);
 
                 if(locale == 'EN'){
                     $('#apto-template .sa-apto-link').attr('href', '/en/apartment/'+el.id_apartment);
@@ -129,6 +128,13 @@ $(document).ready(function(){
 
                 $('#apto-template .mg-room-fecilities .col-sm-12').html(amenHtml);
                 $('#list-found-aptos').append('<div class="mg-avl-room">'+template.html()+'</div>');
+
+                _apartments.push({
+                    id: el.id_apartment,
+                    name: lang.name,
+                    price: el.price,
+                    image: el.thumbnail.path
+                });
             }
         });
 
@@ -168,7 +174,7 @@ $(document).ready(function(){
     function drawPaginator(pages){
         if(currentPage == 1){
             var html = '<li><a href="#prev" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
-            for(i=0;i<pages;i++){
+            for(var i=0;i<pages;i++){
                 var page    = i+1;
                 var active  = (i == 0) ? 'sa-active' : '';
                 html += '<li class="'+active+'"><a href="#'+page+'">'+page+'</a></li>';

@@ -19,7 +19,7 @@ import "./script.js";
 /*
  * Plugin to load Google maps
  */
-loadGoogleMapsApi({key: "AIzaSyBTvRrf5kiEA8BTtPwhR9PDb5zeVNPPIyQ"}).then(function (googleMaps) {
+loadGoogleMapsApi({key: google_key}).then(function (googleMaps) {
     if($("#mg-map").length > 0){
         var map = new googleMaps.Map(document.querySelector("#mg-map"), {
             center: {

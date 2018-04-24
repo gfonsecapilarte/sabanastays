@@ -65,5 +65,9 @@ $(document).ready(function() {
         }
     }
 
-
+    if(localStorage.getItem('api_token')){
+        $('#login-menu-item').hide();
+        $('#user-menu-item').removeClass('hidden');
+        $('#user-menu-item .name').text(localStorage.getItem('user_name'));
+    }
 });

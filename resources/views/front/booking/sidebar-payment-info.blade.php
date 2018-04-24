@@ -3,25 +3,26 @@
     <div class="mg-widget-cart">
         <div class="mg-cart-room">
             <img src="../images/room-1.png" alt="Delux Room" class="img-responsive">
-            <h3>Junior Suite</h3>
+            <h3 class="apartment-title">Junior Suite</h3>
         </div>
         <div class="mg-widget-cart-row">
-            <strong>$189.99 /@lang('general.night')</strong>
+            <strong><span class="currency-sign"></span><span class="apartment-price"></span> /@lang('general.night')</strong>
         </div>
         <div class="mg-widget-cart-row">
             <strong>@lang('general.checkIn'):</strong>
-            <span>02 Mar, 2018</span>
+            <span class="apartment-checkin"></span>
         </div>
         <div class="mg-widget-cart-row">
             <strong>@lang('general.checkOut'):</strong>
-            <span>06 Mar, 2018</span>
+            <span class="apartment-checkout"></span>
         </div>
         <div class="mg-widget-cart-row">
-            <strong>{{trans_choice('general.nights', 4, ['value' => 4])}}</strong>
+            <strong class="apartment-night hidden"><span class="nights"></span> @lang('general.night')</strong>
+            <strong class="apartment-nights hidden"><span class="nights"></span> @lang('general.nights')</strong>
         </div>
         <div class="mg-cart-total">
             <strong>@lang('general.total'):</strong>
-            <span>$759.96</span>
+            <span class="currency-sign"></span><span class="apartment-total"></span>
         </div>
     </div>
 </aside>

@@ -15,7 +15,8 @@
 
         @if (!empty($locale))
             <script>
-                var locale = '{{ strtoupper($locale) }}';
+                var locale     = '{{ strtoupper($locale) }}';
+                var google_key = '{{ env('GOOGLE_KEY') }}';
             </script>
         @endif
 

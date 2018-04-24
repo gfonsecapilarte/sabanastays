@@ -41,7 +41,7 @@ return [
     'telephone'                 => 'Telephone',
     'retypePassword'            => 'Retype Password',
     'yourBookingDetails'        => 'Your Booking Details',
-    'nights'                    => '{1} :value Night| :value Nights',
+    'nights'                    => 'Nights',
     'total'                     => 'Total',
     'isYourBillingAddressDiff'  => 'Is your billing address different?',
     'CreditCardInfo'            => 'Credit Card Info',
@@ -98,5 +98,6 @@ return [
     'update'                    => 'Update',
     'newsletters'               => 'Newsletters',
     'socialMedia'               => 'Social Media',
-    'terms'                     => 'Terms'
+    'terms'                     => 'Terms',
+    'signOut'                   => 'Sign Out'
 ];

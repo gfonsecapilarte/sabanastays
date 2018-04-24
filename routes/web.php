@@ -39,7 +39,7 @@ function(){
 	Route::get(LaravelLocalization::transRoute('routes.myProfile'),'Front\UserController@loadProfilePage')->name('profile');
 
 	/** Load my bookings **/
-	Route::get(LaravelLocalization::transRoute('routes.myBookings'),'Front\BookingController@loadMyBookingPage');
+	Route::get(LaravelLocalization::transRoute('routes.myBookings'),'Front\BookingController@loadMyBookingPage')->name('bookings');
 
 	/** Load Privacy Policy  page **/
 	Route::get(LaravelLocalization::transRoute('routes.privacyPolicy'),'Front\PrivacyPolicyController@loadPage')->name('privacyPolicy');

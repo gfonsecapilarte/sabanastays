@@ -22,7 +22,7 @@
                 <div class="col-md-12 mg-available-rooms">
                     <h3 class="mg-avl-room-title font-white">
                         {{ $apartment->lang->name }}
-                        <span>${{ $apartment->price }}<sup></sup>/Night</span>
+                        <span><span class="currency-sign"></span>{{ $apartment->price }}<sup></sup>/Night</span>
                     </h3>
                 </div>
                 <div class="col-md-12">

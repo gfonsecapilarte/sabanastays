@@ -17,6 +17,7 @@
         var infoUserWarning     = '{{ __('general.infoUserWarning') }}';
         var adrressWarning      = '{{ __('general.adrressWarning') }}';
         var attempt             = '{{ __('general.attempt') }}';
+        var _apartments         = [];
     </script>
 
     <div class="mg-page">

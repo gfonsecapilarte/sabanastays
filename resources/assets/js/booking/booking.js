@@ -27,6 +27,14 @@ import {
 } from "../messages/messages.js";
 
 /**
+ * Module to convert dates to human format
+ */
+import {
+    converDate,
+    calculateNights
+} from "../dates/dates.js";
+
+/**
  * jquery Module to validate forms
  */
 let validate = require('jquery-validation');
@@ -383,6 +391,8 @@ $(document).ready(function() {
             $('a',this).tab('show');
             if(user.token){
                 $('.mg-book-form-personal > div').hide();
+                /** Draw values in sidebar **/
+                showSidebarData();
             }
         }
         else{
@@ -491,4 +501,28 @@ $(document).ready(function() {
             address.second.form.fill();
         }
     });
+
+    /*
+     * Function to load data on sidebar
+     */
+    function showSidebarData(){
+        var sidebarData = _apartments.find(x => x.id == apartment.id);
+        var checkIn  = localStorage.getItem('checkin');
+        var checkOut = localStorage.getItem('checkout');
+        var nights   = calculateNights(checkIn,checkOut);
+
+        $('#mg-room-cart .apartment-title').text(sidebarData.title);
+        $('#mg-room-cart .apartment-price').text(sidebarData.price);
+        $('#mg-room-cart .apartment-checkin').text(converDate(checkIn));
+        $('#mg-room-cart .apartment-checkout').text(converDate(checkOut));
+
+        if(nights == 1){
+            $('#mg-room-cart .apartment-night').removeClass('hidden').children('.nights').text(nights);
+        }
+        else{
+            $('#mg-room-cart .apartment-nights').removeClass('hidden').children('.nights').text(nights);
+        }
+
+        $('#mg-room-cart .apartment-total').text(sidebarData.price * nights);
+    }
 });

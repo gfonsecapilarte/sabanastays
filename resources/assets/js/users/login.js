@@ -48,6 +48,7 @@ $(document).ready(function() {
                     $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token',reply.api_token);
                     localStorage.setItem('id_user',reply.id_user);
+                    localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
                     location.href = profile_link;
                 }
             }
@@ -77,6 +78,7 @@ $(document).ready(function() {
                             else{
                                 localStorage.setItem('api_token',reply.api_token);
                                 localStorage.setItem('id_user',reply.id_user);
+                                localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
                                 location.href = profile_link;
                             }
                         }
@@ -116,6 +118,7 @@ $(document).ready(function() {
                         else{
                             localStorage.setItem('api_token',reply.api_token);
                             localStorage.setItem('id_user',reply.id_user);
+                            localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
                             location.href = profile_link;
                         }
                     }
