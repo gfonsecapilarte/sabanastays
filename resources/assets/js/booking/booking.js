@@ -192,14 +192,17 @@ $(document).ready(function() {
             }
         },
         login: function(){
+            $('#loader').show();
             $.ajax({
                 url: '/api/user/login',
                 type: 'POST',
                 data: $('#sa-login-two').serialize(),
                 success: function(reply){
+                    $('#loader').hide();
                     if(reply.success == null){
                         localStorage.setItem('api_token',reply.api_token);
                         localStorage.setItem('id_user',reply.id_user);
+                        localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
                         user.id    = reply.id_user;
                         user.token = reply.api_token;
                         user.done = true;
@@ -221,6 +224,7 @@ $(document).ready(function() {
                     if(reply.id_user != null){
                         localStorage.setItem('api_token',reply.api_token);
                         localStorage.setItem('id_user',reply.id_user);
+                        localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
                         user.id    = reply.id_user;
                         user.token = reply.api_token;
                         address.first.register();
@@ -268,6 +272,7 @@ $(document).ready(function() {
                         }
                     },
                     submitHandler: function(form){
+                        $('#loader').show();
                         payment.checkout.args.ccNo       = $('input[name="creditCard"]').val();
                         payment.checkout.args.cvv        = $('input[name="cvv"]').val();
                         payment.checkout.args.expMonth   = $('input[name="month"]').val();
@@ -335,7 +340,7 @@ $(document).ready(function() {
                 type: 'POST',
                 data: data,
                 success: function(reply){
-                    console.log(reply);
+                    $('#loader').hide();
 
                     if(reply.success != null && reply.success == false){
                         payment.attempt = reply.attempt;

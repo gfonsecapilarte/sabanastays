@@ -78,11 +78,13 @@ $(document).ready(function(){
      * Function to get apartments
      */
     function getAptos(){
+        $('#loader').show();
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
             data: {checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 5}
         }).done(function(data){
+            $('#loader').hide();
             $('#list-found-aptos').html('');
             totalPages = data.pagination.pages;
             drawAptos(data);

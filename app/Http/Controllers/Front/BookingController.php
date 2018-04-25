@@ -29,12 +29,12 @@ class BookingController{
     /*
      * Method to load the my booking page
      */
-    public function loadMyBookingPage(){
+    public function loadMyBookingsPage(){
         /** Get header and logo images **/
         $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
         $header = $header->getData();
 
-        return view('front/booking/my-bookings',[
+        return view('front/booking/my-bookings/my-bookings',[
 			'locale' 	=> LaravelLocalization::getCurrentLocale(),
             'header'    => $header
 		]);

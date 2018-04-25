@@ -99,5 +99,6 @@ return [
     'newsletters'               => 'Newsletters',
     'socialMedia'               => 'Redes Sociales',
     'terms'                     => 'Términos',
-    'signOut'                   => 'Salir'
+    'signOut'                   => 'Salir',
+    'incompleted'               => 'INCOMPLETO'    
 ];

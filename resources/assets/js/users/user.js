@@ -10,8 +10,17 @@ $(document).ready(function() {
     if($('#user-detail-form').length){
 
         /*
+         * Datepicker for birthdate field
+         */
+        $('input[name="birthdate"]').datepicker({
+            autoClose: true,
+            format: 'yyyy-mm-dd'
+        });
+
+        /*
          * Get user details
          */
+        $('#loader').show();
         $.ajax({
             url: '/api/user/',
             type: 'GET',
@@ -20,6 +29,8 @@ $(document).ready(function() {
                 api_token: localStorage.getItem('api_token')
             },
             success: function(reply){
+                $('#loader').hide();
+                $('.mg-sec-left-title').text(reply.firstname+' '+reply.lastname);
                 $('input[name="firstname"]').val(reply.firstname);
                 $('input[name="lastname"]').val(reply.lastname);
                 $('input[name="birthdate"]').val(reply.birthdate);
@@ -41,6 +52,7 @@ $(document).ready(function() {
          * Function to update users
          */
         function updateUser(form){
+            $('#loader').show();
             $.ajax({
                 url: '/api/user/',
                 type: 'PUT',
@@ -54,6 +66,7 @@ $(document).ready(function() {
                     email: $('input[name="email"]').val(),
                 },
                 success: function(reply){
+                    $('#loader').hide();
                     if(reply.success != null && reply.success == false){
                         errorMessage($('#user-detail-form'),reply.message);
                     }

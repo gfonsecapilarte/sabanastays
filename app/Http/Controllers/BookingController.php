@@ -38,6 +38,28 @@ class BookingController extends Controller
         ));
     }
 
+    /*
+     * Get list of bookings by a gave Status
+     */
+    public function getBookinsByStatus(Request $request){
+        $this->checkSession($request);
+        if ($request->has('status')){
+            $bookings = BookingModel::where('status', $request->input('status'))
+                ->where('id_user',$request->input('id_user'))
+                ->with(array('payment'))->get();
+
+            return response()->json(array(
+                'success' => true,
+                'bookings' => $bookings
+            ));
+        }
+
+        return response()->json(array(
+            'success'   => false,
+            'message'   => 'You should give a status'
+        ));
+    }
+
     public function cancelBooking(Request $request)
     {
         if (!$request->has('id_booking')) {

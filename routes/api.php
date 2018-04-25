@@ -49,6 +49,7 @@ Route::post('/apartment/save', 'ApartmentController@saveApartment');
 Route::post('/booking/create', 'BookingController@create');
 Route::post('/booking/cancel', 'BookingController@cancelBooking');
 Route::get('/booking/list', 'BookingController@getBookings');
+Route::get('/bookings', 'BookingController@getBookinsByStatus');
 
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');

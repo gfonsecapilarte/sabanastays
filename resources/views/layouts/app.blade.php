@@ -9,6 +9,10 @@
     </head>
     <body class="@yield('bodyClass')">
 
+        <div id="loader">
+            <div></div>
+        </div>
+
         @yield('header')
         @yield('postheader')
         @yield('content')
