@@ -34,9 +34,7 @@ class ModulesSeeder extends Seeder
 
     private static function insertHomeModule()
     {
-        $id = DB::table('home_module')->insertGetId(array(
-            'id_media' => null
-        ));
+        $id = DB::table('home_module')->insertGetId(array());
         //langs
         DB::table('home_module_lang')->insert(array(
             array('id_home_module' => $id, 'id_lang' => 1, 'title' => 'Inicio', 'description' => 'Descripción de la página'),

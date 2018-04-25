@@ -18,3 +18,4 @@ window.Dropzone = require('./backoffice/libraries/dropzone.js');
 import "./backoffice/booking.js";
 import "./backoffice/apartment.js";
 import "./backoffice/apartment-form.js";
+import "./backoffice/web.js";

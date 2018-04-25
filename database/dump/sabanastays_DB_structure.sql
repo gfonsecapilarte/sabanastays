@@ -389,7 +389,6 @@ DROP TABLE IF EXISTS `home_module`;
 
 CREATE TABLE `home_module` (
   `id_home_module` int(11) NOT NULL AUTO_INCREMENT,
-  `id_media` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_home_module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
