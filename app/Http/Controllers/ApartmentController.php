@@ -125,7 +125,7 @@ class ApartmentController extends Controller
         }
 
         //remove media
-        if (is_array($data['remove_media']) && !empty($data['remove_media'])) {
+        if (array_key_exists('remove_media', $data) && is_array($data['remove_media']) && !empty($data['remove_media'])) {
             foreach ($data['remove_media'] as $remove_file) {
                 $remove_media = MediaModel::find($remove_file->id_media);
                 $remove_filename = str_replace('/storage/', '', $remove_media->path);

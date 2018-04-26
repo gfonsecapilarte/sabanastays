@@ -1,22 +1,25 @@
 var Web = {
+    dz: [],
     init: function() {
         if (typeof $('#container-web')[0] === typeof undefined) {
             return;
         }
-        Web.initDropzone('header_logo');
-        Web.initDropzone('header_background');
-        Web.initDropzone('home_media');
-        $('.about_media').each(function(i, elem) {
-            Web.initDropzone($(elem).data('id'));
-        });
-        $('.testimonial_media').each(function(i, elem) {
-            Web.initDropzone($(elem).data('id'));
-        });
+//        Web.Header.init();
+        Web.Home.init();
+//        Web.initDropzone('header_background');
+////        Web.initDropzone('home_media');
+//        $('.about_media').each(function(i, elem) {
+//            Web.initDropzone($(elem).data('id'));
+//        });
+//        $('.testimonial_media').each(function(i, elem) {
+//            Web.initDropzone($(elem).data('id'));
+//        });
     },
     initDropzone: function(form) {
         window.Dropzone.autoDiscover = false;
         window.Dropzone.autoProcessQueue = false;
-        Web.dZone = new window.Dropzone("#form-"+form,{
+//        Web.dZone = new window.Dropzone("#form-"+form,{
+        Web.dz[form] = new window.Dropzone("#form-"+form,{
             addRemoveLinks: true,
             autoProcessQueue:false,
             url: "/api/uploads",
@@ -37,6 +40,72 @@ var Web = {
 //        });
 
     },
+    Header: {
+        form: 'home_media',
+        init: function() {
+            Web.Header.initDropzone();
+        },
+        initDropzone: function() {
+            Web.initDropzone('header_logo');
+        }
+    },
+    Home: {
+        form: 'home_media',
+        init: function() {
+            Web.Home.initDropzone();
+            Web.Home.createEvents();
+        },
+        initDropzone: function() {
+            Web.initDropzone(Web.Home.form);
+        },
+        createEvents: function() {
+            $('.save-home-module').on('click', Web.Home.onSave);
+        },
+        onSave: function(event) {
+            var information = [];
+            $('#row-home-module .form-information').each(function(i, form) {
+                var id_language = $(form).data('id_language');
+                information[id_language] = {
+                    title: $(form).find('.txt-name').val(),
+                    description: $(form).find('.txt-description').val(),
+                };
+            });
+
+            var data = {
+                id_home_module: $('#row-home-module').data('id-home-module'),
+                information: information,
+                media: Web.dz[Web.Home.form].getAcceptedFiles()
+            };
+            Web.Home.saveHomeModule(data);
+        },
+        saveHomeModule: function(data) {
+            var form_data = new FormData();
+            form_data.append('id_home_module', data.id_home_module);
+            form_data.append('information', JSON.stringify(data.information));
+            $.each(data.media, function(i, media) {
+                if (typeof media.dataURL !== typeof undefined) {
+                    form_data.append('media[]', media);
+                }
+            });
+
+            console.log('data', data, form_data);
+
+            $.ajax({
+                url: '/api/module/home/save',
+                type: 'POST',
+                data: form_data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#row-home-module').data('id-home-module', response.id_home_module);
+                    }
+                }
+            });
+        }
+    }
 };
 
 $(function() {

@@ -8,4 +8,5 @@ class Home extends ModelCore
 {
     protected $table = 'home_module';
     protected $primaryKey = 'id_home_module';
+    public $timestamps = false;
 }

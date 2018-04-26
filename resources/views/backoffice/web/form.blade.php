@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="row-home-module">
+    <div class="row" id="row-home-module" data-id-home-module="@isset($home_module){{ $home_module->id_home_module }}@endisset">
         <div class="col-xs-12">
             <div class="white-box">
                 <h2>Home Module</h2>
@@ -47,13 +47,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Title</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-name" placeholder="Site title" value="@isset($header_module){{ $header_module->lang[$language->iso]->title }}@endisset">
+                                            <input type="text" class="form-control txt-name" placeholder="Site title" value="@isset($home_module){{ $home_module->lang[$language->iso]->title }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control txt-description" placeholder="Site description">@isset($header_module){{ $header_module->lang[$language->iso]->description }}@endisset</textarea>
+                                            <textarea class="form-control txt-description" placeholder="Site description">@isset($home_module){{ $home_module->lang[$language->iso]->description }}@endisset</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +64,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <h3>Media slider</h3>
+                        <h3>
+                            Media slider
+                        </h3>
+                        <small>Recomended size: 1900x900</small>
                         <form action="{{ route('dashboard.media.create') }}" id="form-home_media" class="dropzone">
                             <div class="fallback">
                                 <input id="fl-home_media" name="home_media" type="file" />
@@ -98,19 +101,19 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Title</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-name" placeholder="Title" value="@isset($header_about_module){{ $header_about_module->lang[$language->iso]->title }}@endisset">
+                                            <input type="text" class="form-control txt-name" placeholder="Title" value="@isset($home_about_module){{ $home_about_module->lang[$language->iso]->title }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control txt-description" placeholder="Description">@isset($header_about_module){{ $header_about_module->lang[$language->iso]->description }}@endisset</textarea>
+                                            <textarea class="form-control txt-description" placeholder="Description">@isset($home_about_module){{ $home_about_module->lang[$language->iso]->description }}@endisset</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Video URL</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control txt-video_url" placeholder="Video URL">@isset($header_about_module){{ $header_about_module->lang[$language->iso]->description }}@endisset</textarea>
+                                            <input type="text" class="form-control txt-name" placeholder="Title" value="@isset($home_about_module){{ $home_about_module->lang[$language->iso]->video_url }}@endisset">
                                         </div>
                                     </div>
                                 </div>
@@ -270,49 +273,51 @@
     <div class="row" id="row-testimonial-module">
         <div class="col-xs-12">
             <div class="white-box">
-                <h2>Testimonial Todule</h2>
+                <h2>Testimonial Module</h2>
                 <div class="row">
-                    @for ($i = 1; $i <= 3; $i++)
-                        <div class="col-xs-12 col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Testimonial #{{ $i }}</div>
-                                <div class="panel-body">
-                                    <div role="form" class="form-horizontal form-information" data-id_testimonial="{{ $i }}">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control txt-name" placeholder="Name" value="@isset($testimonial_module){{ $testimonial_module[$i]->name }}@endisset">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Company</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control txt-company" placeholder="Company" value="@isset($testimonial_module){{ $testimonial_module[$i]->company }}@endisset">
-                                            </div>
-                                        </div>
-                                        @foreach ($languages as $language)
+                    @isset ($testimonial_module)
+                        @foreach ($testimonial_module as $testimonial)
+                            <div class="col-xs-12 col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Testimonial #{{ $loop->iteration }}</div>
+                                    <div class="panel-body">
+                                        <div role="form" class="form-horizontal form-information" data-id_testimonial="{{ $testimonial->id_testimonial_module }}">
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">{{ $language->name }}</label>
+                                                <label class="col-sm-3 control-label">Name</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control txt-text" placeholder="Text">@isset($testimonial_module){{ $testimonial_module[$i]->lang[$language->id_lang]->text }}@endisset</textarea>
+                                                    <input type="text" class="form-control txt-name" placeholder="Name" value="{{ $testimonial->name }}">
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <h3>Media</h3>
-                                            <form action="{{ route('dashboard.media.create') }}" data-id="testimonial_media_{{ $i }}" id="form-testimonial_media_{{ $i }}" class="dropzone testimonial_media">
-                                                <div class="fallback">
-                                                    <input id="fl-testimonial_media_" name="testimonial_media_" type="file" />
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Company</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control txt-company" placeholder="Company" value="{{ $testimonial->company }}">
                                                 </div>
-                                            </form>
+                                            </div>
+                                            @foreach ($languages as $language)
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">{{ $language->name }}</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea class="form-control txt-text" placeholder="Text">{{ $testimonial->lang[$language->iso]->text }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h3>Media</h3>
+                                                <form action="{{ route('dashboard.media.create') }}" data-id="testimonial_media_{{ $testimonial->id_testimonial_module }}" id="form-testimonial_media_{{ $testimonial->id_testimonial_module }}" class="dropzone testimonial_media">
+                                                    <div class="fallback">
+                                                        <input id="fl-testimonial_media_" name="testimonial_media_" type="file" />
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endfor
+                        @endforeach
+                    @endisset
                 </div>
                 <br />
                 <div class="row">

@@ -22,6 +22,8 @@ class ModulesSeeder extends Seeder
         self::insertAboutModule();
         //contact
         self::insertContactModule();
+        //contact
+        self::insertTestimonialModule();
     }
 
     private static function insertHeaderModule()
@@ -89,5 +91,22 @@ class ModulesSeeder extends Seeder
                 'email' => 'reservations@sabanastays.com'
             ),
         ));
+    }
+
+    private static function insertTestimonialModule()
+    {
+        for ($i = 0; $i < 3; $i++) {
+            $id = DB::table('testimonial_module')->insertGetId(array(
+                'name' => 'John DOE',
+                'company' => 'My Company',
+                'id_media' => null
+            ));
+            //langs
+            $description = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.';
+            DB::table('testimonial_module_lang')->insert(array(
+                array('id_testimonial_module' => $id, 'id_lang' => 1, 'text' => $description),
+                array('id_testimonial_module' => $id, 'id_lang' => 2, 'text' => $description),
+            ));
+        }
     }
 }

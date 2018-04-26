@@ -55,8 +55,9 @@ Route::get('/bookings', 'BookingController@getBookinsByStatus');
 Route::get('/amenities', 'AmenityController@getAmenities');
 
 //modules
-Route::get('/module/about', 'Module\AboutController@getModule');
 Route::get('/module/home', 'Module\HomeController@getModule');
+Route::post('/module/home/save', 'Module\HomeController@saveModule');
+Route::get('/module/about', 'Module\AboutController@getModule');
 Route::get('/module/home/about', 'Module\HomeAboutController@getModule');
 Route::get('/module/header', 'Module\HeaderController@getModule');
 //Route::get('/module/footer', 'Module\FooterController@getFooter');
