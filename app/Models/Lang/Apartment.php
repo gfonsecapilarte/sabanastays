@@ -50,4 +50,8 @@ class Apartment extends Model
         }
         return parent::save($options);
     }
+
+    public function language(){
+        return $this->belongsTo(\App\Models\Language::class, 'id_lang');
+    }
 }

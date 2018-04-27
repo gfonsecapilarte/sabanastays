@@ -70,9 +70,9 @@ return [
     'myBookings'                => 'Mis Reservas',
     'upComing'                  => 'Próximas',
     'completed'                 => 'Completadas',
-    'cancelled'                 => 'Canceladas',
+    'cancelled'                 => 'Cancelado',
     'bookingId'                 => 'ID de Reserva',
-    'paid'                      => 'PAGO',
+    'paid'                      => 'pago',
     'bookingConditions'         => 'Condiciones de la Reserva',
     'viewDetails'               => 'Ver Detalles',
     'comeBack'                  => 'Regresar',
@@ -100,5 +100,7 @@ return [
     'socialMedia'               => 'Redes Sociales',
     'terms'                     => 'Términos',
     'signOut'                   => 'Salir',
-    'incompleted'               => 'INCOMPLETO'    
+    'incompleted'               => 'incompleto',
+    'reserved'                  => 'reservado',
+    'unavailable'               => 'No disponible'
 ];

@@ -77,4 +77,9 @@ class Booking extends Model
     {
         return $this->belongsTo(\App\User::class, 'id_user');
     }
+
+    public function apartment()
+    {
+        return $this->hasOne(\App\Models\Apartment::class, 'id_apartment','id_apartment')->with('lang.language','building','amenities','type');
+    }
 }

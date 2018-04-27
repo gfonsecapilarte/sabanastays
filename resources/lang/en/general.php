@@ -72,7 +72,7 @@ return [
     'completed'                 => 'Completed',
     'cancelled'                 => 'Cancelled',
     'bookingId'                 => 'Booking ID',
-    'paid'                      => 'PAID',
+    'paid'                      => 'paid',
     'bookingConditions'         => 'Booking Conditions',
     'viewDetails'               => 'View Details',
     'comeBack'                  => 'Come Back',
@@ -100,5 +100,7 @@ return [
     'socialMedia'               => 'Social Media',
     'terms'                     => 'Terms',
     'signOut'                   => 'Sign Out',
-    'incompleted'               => 'INCOMPLETED'
+    'incompleted'               => 'incompleted',
+    'reserved'                  => 'reserved',
+    'unavailable'               => 'unavailable'
 ];

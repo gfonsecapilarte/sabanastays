@@ -15754,8 +15754,8 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(55);
-__webpack_require__(91);
-module.exports = __webpack_require__(92);
+__webpack_require__(92);
+module.exports = __webpack_require__(93);
 
 
 /***/ }),
@@ -15795,6 +15795,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -15862,6 +15864,7 @@ loadGoogleMapsApi({ key: google_key }).then(function (googleMaps) {
 /*
  * Module to booking functions
  */
+
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -22466,12 +22469,82 @@ return $;
 
 /***/ }),
 /* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+
+    if ($('#booking-template').length) {
+        getBookingsList('paid');
+    }
+
+    /*
+     * Get a list of payment acording a gave status like parameter
+     */
+    function getBookingsList(status) {
+        $.ajax({
+            url: '/api/bookings',
+            type: 'GET',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token'),
+                status: status
+            },
+            success: function success(reply) {
+                //console.log(reply.bookings);
+                drawBookings(reply.bookings);
+                //console.log(reply);
+                //$('#'+status).html('<pre>'+reply+'</pre>');
+                // if(reply.success != null){
+                //     address.first.id = reply.address.id_address;
+                //     if(address.second.different){
+                //         address.second.register();
+                //     }
+                //     else{
+                //         address.second.id = reply.address.id_address;
+                //         payment.pay();
+                //     }
+                // }
+            }
+        });
+    }
+
+    /*
+     * Function to draw bookings
+     */
+    function drawBookings(bookings) {
+        var template = $('#booking-template');
+        $(bookings).each(function (index, booking) {
+            booking.apartment.building.lang.map(function (b) {
+                if (b.language.iso == locale) {
+                    $('#booking-template .sa-building-name').text(b.name);
+                }
+            });
+
+            booking.apartment.type.lang.map(function (type) {
+                if (type.language.iso == locale) {
+                    $('#booking-template .sa-apartment-type').text(type.name);
+                }
+            });
+
+            $('#booking-template .sa-booking-reference span').text(booking.reference);
+            $('#booking-template .sa-booking-price').text(booking.payment.amount);
+
+            //console.log(building);
+        });
+
+        $('#upcoming .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 92 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
