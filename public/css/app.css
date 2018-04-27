@@ -7781,11 +7781,6 @@ body.login .register-form > .row input[type='submit'] {
   float: right !important;
 }
 
-.mg-available-rooms .mg-room-fecilities ul li {
-  float: left;
-  width: 50%;
-}
-
 /*
  * Apto detail page styles
  */

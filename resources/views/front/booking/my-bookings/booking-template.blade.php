@@ -1,17 +1,24 @@
-<div class="mg-avl-room hidden">
+<div id="booking-template" class="mg-avl-room hidden">
     <div class="row">
         <div class="col-sm-5">
             <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive"></a>
         </div>
         <div class="col-sm-7">
-            <h3 class="mg-avl-room-title"><a href="#">Torre Rohrmoser</a></h3>
+            <h3 class="mg-avl-room-title sa-building-name"><a href="#">Torre Rohrmoser</a></h3>
             <div class="row mg-room-fecilities">
                 <div class="col-sm-6">
                     <ul>
-                        <li>@lang('general.bookingId'): 4421577545</li>
-                        <li>@lang('general.paid'): <span>$249.99</span></li>
+                        <li class="sa-booking-reference">
+                        @lang('general.bookingId'):
+                        <span>4421577545</span></li>
+                        <li>@lang('general.paid'):
+                            <span>
+                                <span class="currency-sign"></span>
+                                <span class="sa-booking-price">249.99</span>
+                            </span>
+                            </li>
                     </ul>
-                    <h3 class="mg-avl-room-title">Junior Suite</h3>
+                    <h3 class="mg-avl-room-title sa-apartment-type">Junior Suite</h3>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">

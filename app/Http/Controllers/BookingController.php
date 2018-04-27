@@ -46,7 +46,8 @@ class BookingController extends Controller
         if ($request->has('status')){
             $bookings = BookingModel::where('status', $request->input('status'))
                 ->where('id_user',$request->input('id_user'))
-                ->with(array('payment'))->get();
+                ->with(array('payment','apartment'))
+                ->get();
 
             return response()->json(array(
                 'success' => true,

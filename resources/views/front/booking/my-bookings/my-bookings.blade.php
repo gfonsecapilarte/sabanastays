@@ -18,23 +18,43 @@
                 <div class="mg-tab-top-nav">
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#paid" aria-controls="home12" role="tab" data-toggle="tab">
-                                <i class="fa fa-check"></i> @lang('general.paid')
+                            <a href="#upcoming" aria-controls="home12" role="tab" data-toggle="tab">
+                                <i class="fa fa-spinner"></i> @lang('general.upComing')
                             </a>
                         </li>
                         <li role="presentation">
-                            <a href="#profile12" aria-controls="profile12" role="tab" data-toggle="tab">
-                                <i class="fa fa-spinner"></i> @lang('general.incompleted')
+                            <a href="#completed" aria-controls="profile12" role="tab" data-toggle="tab">
+                                <i class="fa fa-calendar-check-o"></i> @lang('general.completed')
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#cancelled" aria-controls="profile12" role="tab" data-toggle="tab">
+                                <i class="fa fa-calendar-times-o"></i> @lang('general.cancelled')
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
 
-                        <!-- PAID APARTMENTS -->
-                        <div role="tabpanel" class="tab-pane fade in active" id="paid">
+                        <!-- UPCOMING BOOKINGS -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="upcoming">
                             <div class="mg-available-rooms">
                                 <div class="mg-avl-rooms">
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- COMPLETED BOOKINGS -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="completed">
+                            <div class="mg-available-rooms">
+                                <div class="mg-avl-rooms">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CANCELLED BOOKINGS -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="cancelled">
+                            <div class="mg-available-rooms">
+                                <div class="mg-avl-rooms">
                                 </div>
                             </div>
                         </div>
@@ -45,6 +65,6 @@
         </div>
     </div>
 
-    @include('front/booking/my-bookings/apto-template')
+    @include('front/booking/my-bookings/booking-template')
 
 @endsection

@@ -15795,6 +15795,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -15862,6 +15864,7 @@ loadGoogleMapsApi({ key: google_key }).then(function (googleMaps) {
 /*
  * Module to booking functions
  */
+
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -19485,9 +19488,6 @@ $(document).ready(function () {
                 if (reply.success != null && reply.success == false) {
                     Object(__WEBPACK_IMPORTED_MODULE_1__messages_messages_js__["a" /* errorMessage */])($('#sa-login'), reply.message);
                 } else {
-                    $('#sa-login .alert-danger').addClass('hidden');
-                    $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
-                    $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
                     localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
@@ -22475,6 +22475,204 @@ return $;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+
+    if ($('#booking-template').length) {
+        getBookingsList('paid');
+    }
+
+    /*
+     * Get a list of payment acording a gave status like parameter
+     */
+    function getBookingsList(status) {
+        $.ajax({
+            url: '/api/bookings',
+            type: 'GET',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token'),
+                status: status
+            },
+            success: function success(reply) {
+                //console.log(reply.bookings);
+                drawBookings(reply.bookings);
+                //console.log(reply);
+                //$('#'+status).html('<pre>'+reply+'</pre>');
+                // if(reply.success != null){
+                //     address.first.id = reply.address.id_address;
+                //     if(address.second.different){
+                //         address.second.register();
+                //     }
+                //     else{
+                //         address.second.id = reply.address.id_address;
+                //         payment.pay();
+                //     }
+                // }
+            }
+        });
+    }
+
+    /*
+     * Function to draw bookings
+     */
+    function drawBookings(bookings) {
+        var template = $('#booking-template');
+        $(bookings).each(function (index, booking) {
+            booking.apartment.building.lang.map(function (b) {
+                if (b.language.iso == locale) {
+                    $('#booking-template .sa-building-name').text(b.name);
+                }
+            });
+
+            booking.apartment.type.lang.map(function (type) {
+                if (type.language.iso == locale) {
+                    $('#booking-template .sa-apartment-type').text(type.name);
+                }
+            });
+
+            $('#booking-template .sa-booking-reference span').text(booking.reference);
+            $('#booking-template .sa-booking-price').text(booking.payment.amount);
+
+            //console.log(building);
+        });
+
+        $('#upcoming .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);
