@@ -8,4 +8,5 @@ class Header extends ModelCore
 {
     protected $table = 'header_module';
     protected $primaryKey = 'id_header_module';
+    public $timestamps = false;
 }

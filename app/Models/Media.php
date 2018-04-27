@@ -29,8 +29,12 @@ class Media extends ModelCore
         return self::where('id_type', '=', $id_type)->where('type', '=', $type)->with('lang');
     }
 
-    public static function getMediaById($id_media)
+    public static function getMediaById($id_media, $first = false)
     {
-        return self::where('id_media', '=', $id_media)->with('lang')->get();
+        $media = self::where('id_media', '=', $id_media)->with('lang');
+        if ($first) {
+            return $media->first();
+        }
+        return $media->get();
     }
 }

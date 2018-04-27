@@ -13,6 +13,7 @@ import "./backoffice/libraries/jquery-sparkline/jquery.charts-sparkline.js";
 import "./backoffice/libraries/jquery-sparkline/jquery.sparkline.min.js";
 import "./backoffice/libraries/jQuery.style.switcher.js";
 //import "./backoffice/libraries/dropzone.js";
+import "./backoffice/libraries/jquery.growl.js";
 window.Dropzone = require('./backoffice/libraries/dropzone.js');
 
 import "./backoffice/booking.js";

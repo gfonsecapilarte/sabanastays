@@ -32,24 +32,20 @@ class WebController extends CoreController
             'about_module' => self::getAboutModuleData(),
             'testimonial_module' => self::getTestimonialModuleData(),
         );
-//        echo "<pre>";
-//print_r($data);
-//echo "</pre>";
-//die();
         return $this->display('backoffice/web/form', $data);
     }
 
-    private static function getMedia($id_media)
+    private static function getMedia($id_media, $first = false)
     {
-        return json_decode(MediaModel::getMediaById($id_media));
+        return json_decode(MediaModel::getMediaById($id_media, $first));
     }
 
     private static function getHeaderModuleData()
     {
         $result = HeaderModel::first();
         $module = json_decode($result);
-        $module->media_background = self::getMedia($module->id_media_background)[0];
-        $module->media_logo = self::getMedia($module->id_media_logo)[0];
+        $module->media_background = self::getMedia($module->id_media_background, true);
+        $module->media_logo = self::getMedia($module->id_media_logo, true);
         return $module;
     }
 

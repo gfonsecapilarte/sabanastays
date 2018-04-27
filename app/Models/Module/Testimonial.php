@@ -8,4 +8,5 @@ class Testimonial extends ModelCore
 {
     protected $table = 'testimonial_module';
     protected $primaryKey = 'id_testimonial_module';
+    public $timestamps = false;
 }

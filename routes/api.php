@@ -57,12 +57,17 @@ Route::get('/amenities', 'AmenityController@getAmenities');
 //modules
 Route::get('/module/home', 'Module\HomeController@getModule');
 Route::post('/module/home/save', 'Module\HomeController@saveModule');
-Route::get('/module/about', 'Module\AboutController@getModule');
-Route::get('/module/home/about', 'Module\HomeAboutController@getModule');
 Route::get('/module/header', 'Module\HeaderController@getModule');
-//Route::get('/module/footer', 'Module\FooterController@getFooter');
-Route::get('/module/testimonial', 'Module\TestimonialController@getModule');
+Route::post('/module/header/save', 'Module\HeaderController@saveModule');
+Route::get('/module/home/about', 'Module\HomeAboutController@getModule');
+Route::post('/module/home/about/save', 'Module\HomeAboutController@saveModule');
 Route::get('/module/contact', 'Module\ContactController@getModule');
+Route::post('/module/contact/save', 'Module\ContactController@saveModule');
+Route::get('/module/about', 'Module\AboutController@getModule');
+Route::post('/module/about/save', 'Module\AboutController@saveModule');
+Route::get('/module/testimonial', 'Module\TestimonialController@getModule');
+Route::post('/module/testimonial/save', 'Module\TestimonialController@saveModule');
+//Route::get('/module/footer', 'Module\FooterController@getFooter');
 
 //media
 Route::get('/media', 'MediaController@getMedia');

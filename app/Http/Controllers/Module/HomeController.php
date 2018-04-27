@@ -54,29 +54,24 @@ class HomeController extends Controller
             foreach ($data['media'] as $file) {
                 $filename = uniqid('h').'.'.$file->getClientOriginalExtension();
                 $file->move(storage_path('app/public/'), $filename);
-                $media = MediaModel::getFirstMediaByType($module->id_home_module, 'home_module');
-                
-                if (empty($media)) {
-                    $media = new MediaModel();
-                    $media->id_type = $module->id_home_module;
-                    $media->type = 'home_module';
-                } else {
-                    //remove old file
-                    $remove_old_media = str_replace('/storage/', '', $media->path);
-                    Storage::disk('public')->delete($remove_old_media);
-                }
+                $media = new MediaModel();
+                $media->id_type = $module->id_home_module;
+                $media->type = 'home_module';
                 $media->path = Storage::url($filename);
                 $media->media_type = 'IMAGE';
                 $media->save();
             }
         }
         //remove media
-        if (array_key_exists('remove_media', $data) && is_array($data['remove_media']) && !empty($data['remove_media'])) {
-            foreach ($data['remove_media'] as $remove_file) {
-                $remove_media = MediaModel::find($remove_file->id_media);
-                $remove_filename = str_replace('/storage/', '', $remove_media->path);
-                Storage::disk('public')->delete($remove_filename);
-                $remove_media->delete();
+        if (array_key_exists('remove_media', $data)) {
+            $data_remove_media = json_decode($data['remove_media']);
+            if (is_array($data_remove_media) && !empty($data_remove_media)) {
+                foreach ($data_remove_media as $remove_file) {
+                    $remove_media = MediaModel::find($remove_file->id_media);
+                    $remove_filename = str_replace('/storage/', '', $remove_media->path);
+                    Storage::disk('public')->delete($remove_filename);
+                    $remove_media->delete();
+                }
             }
         }
 

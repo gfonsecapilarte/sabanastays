@@ -1,5 +1,5 @@
 <div id="container-web">
-    <div class="row" id="row-header-module">
+    <div class="row" id="row-header-module" data-id-header-module="@isset($header_module){{ $header_module->id_header_module }}@endisset">
         <div class="col-md-6">
             <div class="white-box">
                 <h2>Header Module</h2>
@@ -19,6 +19,14 @@
                                 <input id="fl-media_background" name="media_background" type="file" />
                             </div>
                         </form>
+                    </div>
+                    <div class="remove_media hidden">
+                        @if (!is_null($header_module->media_background))
+                        <input type="hidden" class="media-header_module" data-form="header_background" data-id_media="{{ $header_module->media_background->id_media }}" data-path="{{ $header_module->media_background->path }}"/>
+                        @endif
+                        @if (!is_null($header_module->media_logo))
+                        <input type="hidden" class="media-header_module" data-form="header_logo" data-id_media="{{ $header_module->media_logo->id_media }}" data-path="{{ $header_module->media_logo->path }}"/>
+                        @endif
                     </div>
                 </div>
                 <br />
@@ -73,6 +81,11 @@
                                 <input id="fl-home_media" name="home_media" type="file" />
                             </div>
                         </form>
+                        <div class="remove_media hidden">
+                            @foreach ($home_module->sliders as $slider)
+                            <input type="hidden" class="media-home_module" data-id_media="{{ $slider->id_media }}" data-path="{{ $slider->path }}"/>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <br />
@@ -87,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="row-home_about-module">
+    <div class="row" id="row-home_about-module" data-id-home_about-module="@isset($home_about_module){{ $home_about_module->id_home_about_module }}@endisset">
         <div class="col-xs-12">
             <div class="white-box">
                 <h2>Home About Module</h2>
@@ -113,7 +126,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Video URL</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-name" placeholder="Title" value="@isset($home_about_module){{ $home_about_module->lang[$language->iso]->video_url }}@endisset">
+                                            <input type="text" class="form-control txt-video_url" placeholder="Title" value="@isset($home_about_module){{ $home_about_module->lang[$language->iso]->video_url }}@endisset">
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +147,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="row-contact-module">
+    <div class="row" id="row-contact-module" data-id-contact-module="@isset($contact_module){{ $contact_module->id_contact_module }}@endisset">
         <div class="col-xs-12">
             <div class="white-box">
                 <h2>Contact Us Module</h2>
@@ -144,7 +157,7 @@
                         <h3>Location</h3>
                     </div>
                     <div class="col-xs-6">
-                        <div role="form" class="form-horizontal form-information" data-id_language="{{ $language->id_lang }}">
+                        <div role="form" class="form-horizontal form-location" data-id_language="{{ $language->id_lang }}">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Latitude</label>
                                 <div class="col-sm-9">
@@ -219,7 +232,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="row-about-module">
+    <div class="row" id="row-about-module" data-id-about-module="@isset($about_module){{ $about_module->id_about_module }}@endisset">
         <div class="col-xs-12">
             <div class="white-box">
                 <h2>About Us Module</h2>
@@ -246,11 +259,20 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <h3>Media</h3>
-                                        <form action="{{ route('dashboard.media.create') }}" data-id="about_media_{{ $language->id_lang }}" id="form-about_media_{{ $language->id_lang }}" class="dropzone about_media">
+                                        <form action="{{ route('dashboard.media.create') }}" data-id="about_media_{{ $language->id_lang }}"
+                                              id="form-about_media_{{ $language->id_lang }}" data-id_lang="{{ $language->id_lang }}" class="dropzone about_media">
                                             <div class="fallback">
-                                                <input id="fl-about_media" name="about_media" type="file" />
+                                                <input id="fl-about_media_{{ $language->id_lang }}" name="about_media_{{ $language->id_lang }}" type="file" />
                                             </div>
                                         </form>
+
+                                        <div class="remove_media hidden">
+                                            @if (isset($about_module) && !is_null($about_module->lang[$language->iso]->media))
+                                                <input type="hidden" class="media-about_module media-about_module_{{ $language->id_lang }}"
+                                                       data-id_media="{{ $about_module->lang[$language->iso]->media[0]->id_media }}"
+                                                       data-path="{{ $about_module->lang[$language->iso]->media[0]->path }}"/>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -298,7 +320,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">{{ $language->name }}</label>
                                                     <div class="col-sm-9">
-                                                        <textarea class="form-control txt-text" placeholder="Text">{{ $testimonial->lang[$language->iso]->text }}</textarea>
+                                                        <textarea data-id_language="{{ $language->id_lang }}" class="form-control txt-text" placeholder="Text">{{ $testimonial->lang[$language->iso]->text }}</textarea>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -306,11 +328,21 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <h3>Media</h3>
-                                                <form action="{{ route('dashboard.media.create') }}" data-id="testimonial_media_{{ $testimonial->id_testimonial_module }}" id="form-testimonial_media_{{ $testimonial->id_testimonial_module }}" class="dropzone testimonial_media">
+                                                <form action="{{ route('dashboard.media.create') }}"
+                                                      data-id="testimonial_media_{{ $testimonial->id_testimonial_module }}"
+                                                      id="form-testimonial_media_{{ $testimonial->id_testimonial_module }}"
+                                                      class="dropzone testimonial_media">
                                                     <div class="fallback">
                                                         <input id="fl-testimonial_media_" name="testimonial_media_" type="file" />
                                                     </div>
                                                 </form>
+                                                <div class="remove_media hidden">
+                                                    @if (!is_null($testimonial->media))
+                                                        <input type="hidden" class="media-testimonial_module testimonial_media_{{ $testimonial->id_testimonial_module }}"
+                                                               data-id_media="{{ $testimonial->media[0]->id_media }}"
+                                                               data-path="{{ $testimonial->media[0]->path }}"/>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
