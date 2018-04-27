@@ -19488,9 +19488,6 @@ $(document).ready(function () {
                 if (reply.success != null && reply.success == false) {
                     Object(__WEBPACK_IMPORTED_MODULE_1__messages_messages_js__["a" /* errorMessage */])($('#sa-login'), reply.message);
                 } else {
-                    $('#sa-login .alert-danger').addClass('hidden');
-                    $('#sa-login input[type="email"], #sa-login input[type="password"]').val('');
-                    $('#sa-login .alert-success').removeClass('hidden').children('span').text(loginSuccess);
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
                     localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
