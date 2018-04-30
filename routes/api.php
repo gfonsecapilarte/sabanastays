@@ -45,6 +45,12 @@ Route::get('/apartment/types', 'ApartmentController@getTypes');
 Route::get('/apartment/list', 'ApartmentController@listApartments');
 Route::post('/apartment/save', 'ApartmentController@saveApartment');
 
+//users
+//Route::get('/users', 'ApartmentController@getUsers');
+//Route::get('/user', 'ApartmentController@getUser');
+Route::get('/user/list', 'UserController@listUsers');
+Route::post('/user/save', 'UserController@saveUser');
+
 //bookings
 Route::post('/booking/create', 'BookingController@create');
 Route::post('/booking/cancel', 'BookingController@cancelBooking');

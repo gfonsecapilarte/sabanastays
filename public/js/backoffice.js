@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 93);
+/******/ 	return __webpack_require__(__webpack_require__.s = 94);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9529,6 +9529,83 @@ return jQuery;
 /***/ }),
 
 /***/ 100:
+/***/ (function(module, exports) {
+
+!function (t) {
+  "use strict";
+
+  function e(t) {
+    return null !== t && t === t.window;
+  }function n(t) {
+    return e(t) ? t : 9 === t.nodeType && t.defaultView;
+  }function a(t) {
+    var e,
+        a,
+        i = { top: 0, left: 0 },
+        o = t && t.ownerDocument;return e = o.documentElement, "undefined" != typeof t.getBoundingClientRect && (i = t.getBoundingClientRect()), a = n(o), { top: i.top + a.pageYOffset - e.clientTop, left: i.left + a.pageXOffset - e.clientLeft };
+  }function i(t) {
+    var e = "";for (var n in t) {
+      t.hasOwnProperty(n) && (e += n + ":" + t[n] + ";");
+    }return e;
+  }function o(t) {
+    if (d.allowEvent(t) === !1) return null;for (var e = null, n = t.target || t.srcElement; null !== n.parentElement;) {
+      if (!(n instanceof SVGElement || -1 === n.className.indexOf("waves-effect"))) {
+        e = n;break;
+      }if (n.classList.contains("waves-effect")) {
+        e = n;break;
+      }n = n.parentElement;
+    }return e;
+  }function r(e) {
+    var n = o(e);null !== n && (c.show(e, n), "ontouchstart" in t && (n.addEventListener("touchend", c.hide, !1), n.addEventListener("touchcancel", c.hide, !1)), n.addEventListener("mouseup", c.hide, !1), n.addEventListener("mouseleave", c.hide, !1));
+  }var s = s || {},
+      u = document.querySelectorAll.bind(document),
+      c = { duration: 750, show: function show(t, e) {
+      if (2 === t.button) return !1;var n = e || this,
+          o = document.createElement("div");o.className = "waves-ripple", n.appendChild(o);var r = a(n),
+          s = t.pageY - r.top,
+          u = t.pageX - r.left,
+          d = "scale(" + n.clientWidth / 100 * 10 + ")";"touches" in t && (s = t.touches[0].pageY - r.top, u = t.touches[0].pageX - r.left), o.setAttribute("data-hold", Date.now()), o.setAttribute("data-scale", d), o.setAttribute("data-x", u), o.setAttribute("data-y", s);var l = { top: s + "px", left: u + "px" };o.className = o.className + " waves-notransition", o.setAttribute("style", i(l)), o.className = o.className.replace("waves-notransition", ""), l["-webkit-transform"] = d, l["-moz-transform"] = d, l["-ms-transform"] = d, l["-o-transform"] = d, l.transform = d, l.opacity = "1", l["-webkit-transition-duration"] = c.duration + "ms", l["-moz-transition-duration"] = c.duration + "ms", l["-o-transition-duration"] = c.duration + "ms", l["transition-duration"] = c.duration + "ms", l["-webkit-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["-moz-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["-o-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", o.setAttribute("style", i(l));
+    }, hide: function hide(t) {
+      d.touchup(t);var e = this,
+          n = (1.4 * e.clientWidth, null),
+          a = e.getElementsByClassName("waves-ripple");if (!(a.length > 0)) return !1;n = a[a.length - 1];var o = n.getAttribute("data-x"),
+          r = n.getAttribute("data-y"),
+          s = n.getAttribute("data-scale"),
+          u = Date.now() - Number(n.getAttribute("data-hold")),
+          l = 350 - u;0 > l && (l = 0), setTimeout(function () {
+        var t = { top: r + "px", left: o + "px", opacity: "0", "-webkit-transition-duration": c.duration + "ms", "-moz-transition-duration": c.duration + "ms", "-o-transition-duration": c.duration + "ms", "transition-duration": c.duration + "ms", "-webkit-transform": s, "-moz-transform": s, "-ms-transform": s, "-o-transform": s, transform: s };n.setAttribute("style", i(t)), setTimeout(function () {
+          try {
+            e.removeChild(n);
+          } catch (t) {
+            return !1;
+          }
+        }, c.duration);
+      }, l);
+    }, wrapInput: function wrapInput(t) {
+      for (var e = 0; e < t.length; e++) {
+        var n = t[e];if ("input" === n.tagName.toLowerCase()) {
+          var a = n.parentNode;if ("i" === a.tagName.toLowerCase() && -1 !== a.className.indexOf("waves-effect")) continue;var i = document.createElement("i");i.className = n.className + " waves-input-wrapper";var o = n.getAttribute("style");o || (o = ""), i.setAttribute("style", o), n.className = "waves-button-input", n.removeAttribute("style"), a.replaceChild(i, n), i.appendChild(n);
+        }
+      }
+    } },
+      d = { touches: 0, allowEvent: function allowEvent(t) {
+      var e = !0;return "touchstart" === t.type ? d.touches += 1 : "touchend" === t.type || "touchcancel" === t.type ? setTimeout(function () {
+        d.touches > 0 && (d.touches -= 1);
+      }, 500) : "mousedown" === t.type && d.touches > 0 && (e = !1), e;
+    }, touchup: function touchup(t) {
+      d.allowEvent(t);
+    } };s.displayEffect = function (e) {
+    e = e || {}, "duration" in e && (c.duration = e.duration), c.wrapInput(u(".waves-effect")), "ontouchstart" in t && document.body.addEventListener("touchstart", r, !1), document.body.addEventListener("mousedown", r, !1);
+  }, s.attach = function (e) {
+    "input" === e.tagName.toLowerCase() && (c.wrapInput([e]), e = e.parentElement), "ontouchstart" in t && e.addEventListener("touchstart", r, !1), e.addEventListener("mousedown", r, !1);
+  }, t.Waves = s, document.addEventListener("DOMContentLoaded", function () {
+    s.displayEffect();
+  }, !1);
+}(window);
+
+/***/ }),
+
+/***/ 101:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/*!
@@ -10182,7 +10259,7 @@ https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
 
 /***/ }),
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {!function(t){"use strict";t.fn.counterUp=function(a){var e,n=t.extend({time:400,delay:10,formatter:!1,callback:function(){}},a);return this.each(function(){var a=t(this),u={time:t(this).data("counterup-time")||n.time,delay:t(this).data("counterup-delay")||n.delay},r=function(){var t=[],r=u.time/u.delay,o=a.text(),c=/[0-9]+,[0-9]+/.test(o);o=o.replace(/,/g,"");var i=(o.split(".")[1]||[]).length,l=/[0-9]+:[0-9]+:[0-9]+/.test(o);if(l){var s=o.split(":"),d=1;for(e=0;s.length>0;)e+=d*parseInt(s.pop(),10),d*=60}for(var f=r;f>=1;f--){var p=parseFloat(o/r*f).toFixed(i);if(l){p=parseInt(e/r*f);var m=parseInt(p/3600)%24,h=parseInt(p/60)%60,v=parseInt(p%60,10);p=(10>m?"0"+m:m)+":"+(10>h?"0"+h:h)+":"+(10>v?"0"+v:v)}if(c)for(;/(\d+)(\d{3})/.test(p.toString());)p=p.toString().replace(/(\d+)(\d{3})/,"$1,$2");n.formatter&&(p=n.formatter.call(this,p)),t.unshift(p)}a.data("counterup-nums",t),a.text("0");var y=function(){return a.data("counterup-nums")?(a.html(a.data("counterup-nums").shift()),void(a.data("counterup-nums").length?setTimeout(a.data("counterup-func"),u.delay):(a.data("counterup-nums",null),a.data("counterup-func",null),n.callback.call(this)))):void n.callback.call(this)};a.data("counterup-func",y),setTimeout(a.data("counterup-func"),u.delay)};a.waypoint(function(t){r(),this.destroy()},{offset:"100%"})})}}(jQuery);
@@ -10190,7 +10267,7 @@ https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($, jQuery) {$(document).ready(function () {
@@ -10395,7 +10472,7 @@ $(".navbar-toggle").click(function () {
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
@@ -10632,7 +10709,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -11439,7 +11516,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {// Theme color settings
@@ -11492,7 +11569,290 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 106:
+/***/ 107:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {// Generated by CoffeeScript 1.10.0
+
+/*
+jQuery Growl
+Copyright 2015 Kevin Sylvestre
+1.3.2
+ */
+
+(function () {
+  "use strict";
+
+  var $,
+      Animation,
+      Growl,
+      bind = function bind(fn, me) {
+    return function () {
+      return fn.apply(me, arguments);
+    };
+  };
+
+  $ = jQuery;
+
+  Animation = function () {
+    function Animation() {}
+
+    Animation.transitions = {
+      "webkitTransition": "webkitTransitionEnd",
+      "mozTransition": "mozTransitionEnd",
+      "oTransition": "oTransitionEnd",
+      "transition": "transitionend"
+    };
+
+    Animation.transition = function ($el) {
+      var el, ref, result, type;
+      el = $el[0];
+      ref = this.transitions;
+      for (type in ref) {
+        result = ref[type];
+        if (el.style[type] != null) {
+          return result;
+        }
+      }
+    };
+
+    return Animation;
+  }();
+
+  Growl = function () {
+    Growl.settings = {
+      namespace: 'growl',
+      duration: 3200,
+      close: "&#215;",
+      location: "default",
+      style: "default",
+      size: "medium",
+      delayOnHover: true
+    };
+
+    Growl.growl = function (settings) {
+      if (settings == null) {
+        settings = {};
+      }
+      this.initialize();
+      return new Growl(settings);
+    };
+
+    Growl.initialize = function () {
+      return $("body:not(:has(#growls))").append('<div id="growls" />');
+    };
+
+    function Growl(settings) {
+      if (settings == null) {
+        settings = {};
+      }
+      this.container = bind(this.container, this);
+      this.content = bind(this.content, this);
+      this.html = bind(this.html, this);
+      this.$growl = bind(this.$growl, this);
+      this.$growls = bind(this.$growls, this);
+      this.animate = bind(this.animate, this);
+      this.remove = bind(this.remove, this);
+      this.dismiss = bind(this.dismiss, this);
+      this.present = bind(this.present, this);
+      this.waitAndDismiss = bind(this.waitAndDismiss, this);
+      this.cycle = bind(this.cycle, this);
+      this.close = bind(this.close, this);
+      this.click = bind(this.click, this);
+      this.mouseLeave = bind(this.mouseLeave, this);
+      this.mouseEnter = bind(this.mouseEnter, this);
+      this.unbind = bind(this.unbind, this);
+      this.bind = bind(this.bind, this);
+      this.render = bind(this.render, this);
+      this.settings = $.extend({}, Growl.settings, settings);
+      this.$growls().attr('class', this.settings.location);
+      this.render();
+    }
+
+    Growl.prototype.render = function () {
+      var $growl;
+      $growl = this.$growl();
+      this.$growls().append($growl);
+      if (this.settings.fixed) {
+        this.present();
+      } else {
+        this.cycle();
+      }
+    };
+
+    Growl.prototype.bind = function ($growl) {
+      if ($growl == null) {
+        $growl = this.$growl();
+      }
+      $growl.on("click", this.click);
+      if (this.settings.delayOnHover) {
+        $growl.on("mouseenter", this.mouseEnter);
+        $growl.on("mouseleave", this.mouseLeave);
+      }
+      return $growl.on("contextmenu", this.close).find("." + this.settings.namespace + "-close").on("click", this.close);
+    };
+
+    Growl.prototype.unbind = function ($growl) {
+      if ($growl == null) {
+        $growl = this.$growl();
+      }
+      $growl.off("click", this.click);
+      if (this.settings.delayOnHover) {
+        $growl.off("mouseenter", this.mouseEnter);
+        $growl.off("mouseleave", this.mouseLeave);
+      }
+      return $growl.off("contextmenu", this.close).find("." + this.settings.namespace + "-close").off("click", this.close);
+    };
+
+    Growl.prototype.mouseEnter = function (event) {
+      var $growl;
+      $growl = this.$growl();
+      return $growl.stop(true, true);
+    };
+
+    Growl.prototype.mouseLeave = function (event) {
+      return this.waitAndDismiss();
+    };
+
+    Growl.prototype.click = function (event) {
+      if (this.settings.url != null) {
+        event.preventDefault();
+        event.stopPropagation();
+        return window.open(this.settings.url);
+      }
+    };
+
+    Growl.prototype.close = function (event) {
+      var $growl;
+      event.preventDefault();
+      event.stopPropagation();
+      $growl = this.$growl();
+      return $growl.stop().queue(this.dismiss).queue(this.remove);
+    };
+
+    Growl.prototype.cycle = function () {
+      var $growl;
+      $growl = this.$growl();
+      return $growl.queue(this.present).queue(this.waitAndDismiss());
+    };
+
+    Growl.prototype.waitAndDismiss = function () {
+      var $growl;
+      $growl = this.$growl();
+      return $growl.delay(this.settings.duration).queue(this.dismiss).queue(this.remove);
+    };
+
+    Growl.prototype.present = function (callback) {
+      var $growl;
+      $growl = this.$growl();
+      this.bind($growl);
+      return this.animate($growl, this.settings.namespace + "-incoming", 'out', callback);
+    };
+
+    Growl.prototype.dismiss = function (callback) {
+      var $growl;
+      $growl = this.$growl();
+      this.unbind($growl);
+      return this.animate($growl, this.settings.namespace + "-outgoing", 'in', callback);
+    };
+
+    Growl.prototype.remove = function (callback) {
+      this.$growl().remove();
+      return typeof callback === "function" ? callback() : void 0;
+    };
+
+    Growl.prototype.animate = function ($element, name, direction, callback) {
+      var transition;
+      if (direction == null) {
+        direction = 'in';
+      }
+      transition = Animation.transition($element);
+      $element[direction === 'in' ? 'removeClass' : 'addClass'](name);
+      $element.offset().position;
+      $element[direction === 'in' ? 'addClass' : 'removeClass'](name);
+      if (callback == null) {
+        return;
+      }
+      if (transition != null) {
+        $element.one(transition, callback);
+      } else {
+        callback();
+      }
+    };
+
+    Growl.prototype.$growls = function () {
+      return this.$_growls != null ? this.$_growls : this.$_growls = $('#growls');
+    };
+
+    Growl.prototype.$growl = function () {
+      return this.$_growl != null ? this.$_growl : this.$_growl = $(this.html());
+    };
+
+    Growl.prototype.html = function () {
+      return this.container(this.content());
+    };
+
+    Growl.prototype.content = function () {
+      return "<div class='" + this.settings.namespace + "-close'>" + this.settings.close + "</div>\n<div class='" + this.settings.namespace + "-title'>" + this.settings.title + "</div>\n<div class='" + this.settings.namespace + "-message'>" + this.settings.message + "</div>";
+    };
+
+    Growl.prototype.container = function (content) {
+      return "<div class='" + this.settings.namespace + " " + this.settings.namespace + "-" + this.settings.style + " " + this.settings.namespace + "-" + this.settings.size + "'>\n  " + content + "\n</div>";
+    };
+
+    return Growl;
+  }();
+
+  this.Growl = Growl;
+
+  $.growl = function (options) {
+    if (options == null) {
+      options = {};
+    }
+    return Growl.growl(options);
+  };
+
+  $.growl.error = function (options) {
+    var settings;
+    if (options == null) {
+      options = {};
+    }
+    settings = {
+      title: "Error!",
+      style: "error"
+    };
+    return $.growl($.extend(settings, options));
+  };
+
+  $.growl.notice = function (options) {
+    var settings;
+    if (options == null) {
+      options = {};
+    }
+    settings = {
+      title: "Notice!",
+      style: "notice"
+    };
+    return $.growl($.extend(settings, options));
+  };
+
+  $.growl.warning = function (options) {
+    var settings;
+    if (options == null) {
+      options = {};
+    }
+    settings = {
+      title: "Warning!",
+      style: "warning"
+    };
+    return $.growl($.extend(settings, options));
+  };
+}).call(this);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 108:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15025,11 +15385,11 @@ function __guardMethod__(obj, methodName, transform) {
     return undefined;
   }
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(107)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(109)(module)))
 
 /***/ }),
 
-/***/ 107:
+/***/ 109:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -15055,296 +15415,6 @@ module.exports = function(module) {
 	return module;
 };
 
-
-/***/ }),
-
-/***/ 108:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var Booking = {
-    init: function init() {
-        if (_typeof($('#container-bookings')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
-            return;
-        }
-        Booking.clear();
-        Booking.createEvents();
-        Booking.getBookings();
-    },
-    createEvents: function createEvents() {
-        $('.app-search-list').on('click', 'a', Booking.onSearch);
-        $('.app-search-list').on('keyup', 'input', Booking.onSearch);
-    },
-    clear: function clear() {
-        $('#table-bookings tbody').empty();
-    },
-    getBookings: function getBookings(params) {
-        var data = $.extend(params, { page: 1 });
-        $.ajax({
-            url: '/api/booking/list',
-            type: 'GET',
-            cache: false,
-            dataType: 'json',
-            data: data,
-            //            data: {
-            //                page: data.page
-            //            },
-            success: function success(response) {
-                console.log('>>', response);
-                if (response.success) {
-                    Booking.showResults(response.bookings);
-                } else {
-                    alert(response.message);
-                }
-            }
-        });
-    },
-    onSearch: function onSearch(event) {
-        event.preventDefault();
-        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
-            Booking.getBookings({ term: $('.app-search-list input').val() });
-        }
-    },
-    showResults: function showResults(response) {
-        console.log('bookings', response);
-        Booking.clear();
-        $.each(response.data, Booking.printRow);
-    },
-    printRow: function printRow(i, booking) {
-        var $row = $('<tr/>');
-
-        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('Ref: ' + booking.reference).on('click', { booking: booking }, Booking.onView));
-        $('<td/>').text(booking.user.firstname + ' ' + booking.user.lastname).appendTo($row);
-        $('<td/>').appendTo($row).append($('<span/>').addClass('text-muted').append($('<i/>').addClass('fa fa-clock-o'), ' ', booking.booking_date_start));
-        if (booking.payment === null) {
-            $('<td/>').text('$' + booking.total_payment).appendTo($row);
-        } else {
-            $('<td/>').text(booking.payment.currency.iso_code + booking.payment.currency.sign + booking.payment.amount).appendTo($row);
-        }
-        $('<td/>').appendTo($row).append($('<div/>').addClass('label label-table ' + Booking.getStatusLabel(booking.status)).text(Booking.getStatus(booking.status)));
-        $('<td/>').appendTo($row).addClass('text-center').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { booking: booking }, Booking.onView));
-
-        $row.appendTo($('#table-bookings tbody'));
-    },
-    getStatusLabel: function getStatusLabel(status) {
-        var label = 'label-default';
-        switch (status) {
-            case 'RESERVED':
-                label = 'label-info';
-                break;
-            case 'PAID':
-                label = 'label-success';
-                break;
-            case 'CANCELLED':
-                label = 'label-warning';
-                break;
-            case 'UNAVAILABLE':
-            case 'INCOMPLETED':
-            default:
-                label = 'label-default';
-                break;
-        }
-
-        return label;
-    },
-    onView: function onView(event) {
-        console.log('booking detail', event.data.booking);
-        var $modal = Booking.buildModal(event.data.booking);
-        $modal.modal('show');
-    },
-    buildModal: function buildModal(booking) {
-        var id = 'booking-modal-' + booking.id_booking;
-        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
-            return $('#' + id);
-        }
-        var $modal = $('<div/>');
-        $modal.attr('id', id).addClass('modal fade booking-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('Booking #' + booking.reference)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Booking'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Checkin'), $('<span/>').addClass('col-xs-8').text(booking.booking_date_start)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Checkout'), $('<span/>').addClass('col-xs-8').text(booking.booking_date_end)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(booking.user.firstname + ' ' + booking.user.lastname)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Email'), $('<span/>').addClass('col-xs-8').text(booking.user.email))), $('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Payment'), $('<hr/>'), booking.payment === null ? 'No payment recorded' : [$('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Total'), $('<span/>').addClass('col-xs-8').text(booking.payment.currency.sign + booking.payment.amount)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Status'), $('<span/>').addClass('col-xs-8').text(Booking.getStatus(booking.status))), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Method'), $('<span/>').addClass('col-xs-8').text(booking.payment.payment_method)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Trans. ID'), $('<span/>').addClass('col-xs-8').text(booking.payment.transaction_id))]))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close'), booking.status === 'CANCELLED' ? null : $('<button/>').attr('type', 'button').addClass('btn btn-warning').text('Cancel booking').on('click', { $modal: $modal, booking: booking }, Booking.onCancelBooking))))).appendTo($('body'));
-        return $modal;
-    },
-    onCancelBooking: function onCancelBooking(event) {
-        if (!confirm('Sure cancel booking')) {
-            return false;
-        }
-        Booking.cancelBooking(event.data.booking, event.data.$modal);
-    },
-    cancelBooking: function cancelBooking(booking, $modal) {
-        if (booking.status === 'CANCELLED') {
-            return;
-        }
-        $.ajax({
-            url: '/api/booking/cancel',
-            type: 'POST',
-            cache: false,
-            dataType: 'json',
-            data: {
-                id_booking: booking.id_booking
-            },
-            success: function success(response) {
-                if (response.success) {
-                    $modal.modal('hide');
-                    alert('Booking cancelled');
-                    $('body').find('.booking-modal').remove();
-                    Booking.getBookings();
-                } else {
-                    alert(response.message);
-                }
-            }
-        });
-    },
-    getStatus: function getStatus(status) {
-        var label = ' - ';
-        switch (status) {
-            case 'RESERVED':
-                label = 'Reserved';
-                break;
-            case 'PAID':
-                label = 'Paid';
-                break;
-            case 'CANCELLED':
-                label = 'Cancelled';
-                break;
-            case 'UNAVAILABLE':
-                label = 'Unavailable';
-                break;
-            case 'INCOMPLETED':
-                label = 'Incompleted';
-                break;
-            default:
-                label = ' Not found ';
-                break;
-        }
-
-        return label;
-    }
-};
-
-$(function () {
-    Booking.init();
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 109:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var Apartment = {
-    init: function init() {
-        if (_typeof($('#container-apartments')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
-            return;
-        }
-        Apartment.clear();
-        Apartment.createEvents();
-        Apartment.getApartments();
-    },
-    createEvents: function createEvents() {
-        $('.app-search-list').on('click', 'a', Apartment.onSearch);
-        $('.app-search-list').on('keyup', 'input', Apartment.onSearch);
-    },
-    clear: function clear() {
-        $('#table-apartments tbody').empty();
-    },
-    getApartments: function getApartments(params) {
-        var data = $.extend(params, { page: 1 });
-        $.ajax({
-            url: '/api/apartment/list',
-            type: 'GET',
-            cache: false,
-            dataType: 'json',
-            data: data,
-            success: function success(response) {
-                if (response.success) {
-                    Apartment.showResults(response.apartments);
-                } else {
-                    alert(response.message);
-                }
-            }
-        });
-    },
-    onSearch: function onSearch(event) {
-        event.preventDefault();
-        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
-            if ($('.app-search-list input').val() === '') {
-                Apartment.getApartments();
-            } else {
-                Apartment.getApartments({ term: $('.app-search-list input').val() });
-            }
-        }
-    },
-    showResults: function showResults(response) {
-        Apartment.clear();
-        $.each(response.data, Apartment.printRow);
-    },
-    printRow: function printRow(i, apartment) {
-        var $row = $('<tr/>');
-
-        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + apartment.id_apartment).on('click', { apartment: apartment }, Apartment.onView));
-        $('<td/>').text(apartment.lang[0].name).appendTo($row);
-        $('<td/>').text(apartment.type.lang[0].name).appendTo($row);
-        $('<td/>').text(apartment.number).appendTo($row);
-        $('<td/>').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price).appendTo($row);
-        $('<td/>').appendTo($row).addClass('text-center').append($('<div/>').addClass('btn-group').attr('role', 'group').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { apartment: apartment }, Apartment.onView), $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/apartment/edit?id_apartment=' + apartment.id_apartment).append($('<i/>').addClass('fa fa-pencil'))));
-
-        $row.appendTo($('#table-apartments tbody'));
-    },
-    onView: function onView(event) {
-        var $modal = Apartment.buildModal(event.data.apartment);
-        $modal.modal('show');
-    },
-    buildModal: function buildModal(apartment) {
-        var id = 'apartment-modal-' + apartment.id_apartment;
-        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
-            return $('#' + id);
-        }
-        var $modal = $('<div/>');
-        $modal.attr('id', id).addClass('modal fade apartment-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('Apartment #' + apartment.id_apartment)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Information'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(apartment.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Price'), $('<span/>').addClass('col-xs-8').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('City'), $('<span/>').addClass('col-xs-8').text(apartment.building.city.name + ' (' + apartment.building.postal_code + ')')), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Building'), $('<span/>').addClass('col-xs-8').text(apartment.building.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Address'), $('<span/>').addClass('col-xs-8').text(apartment.building.address)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Type'), $('<span/>').addClass('col-xs-8').text(apartment.type.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Floor'), $('<span/>').addClass('col-xs-8').text(apartment.floor)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Number'), $('<span/>').addClass('col-xs-8').text(apartment.number))), $('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Amenities'), $('<hr/>'), Apartment.getAmenitiesList(apartment.amenities)))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close')
-        //                        $('<button/>').attr('type','button').addClass('btn btn-warning').text('Delete apartment').on('click', {$modal:$modal,apartment:apartment}, Apartment.onDeleteApartment)
-        )))).appendTo($('body'));
-        return $modal;
-    },
-    getAmenitiesList: function getAmenitiesList(amenities) {
-        var $amenities = [];
-        $.each(amenities, function (i, amenity) {
-            $amenities.push($('<div/>').append($('<i/>').addClass('fa ' + amenity.icon.icon), ' ', $('<span/>').text(amenity.lang.name)));
-        });
-        return $amenities;
-    },
-    onDeleteApartment: function onDeleteApartment(event) {
-        if (!confirm('Sure delete apartment')) {
-            return false;
-        }
-        Apartment.deleteApartment(event.data.apartment, event.data.$modal);
-    },
-    deleteApartment: function deleteApartment(apartment, $modal) {
-        $.ajax({
-            url: '/api/apartment/remove',
-            type: 'POST',
-            cache: false,
-            dataType: 'json',
-            data: {
-                id_apartment: apartment.id_apartment
-            },
-            success: function success(response) {
-                if (response.success) {
-                    $modal.modal('hide');
-                    alert('Apartment deleted');
-                    $('body').find('.apartment-modal').remove();
-                    Apartment.getApartments();
-                } else {
-                    alert(response.message);
-                }
-            }
-        });
-    }
-};
-
-$(function () {
-    Apartment.init();
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
@@ -15573,6 +15643,296 @@ $(function () {
 
 /* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var Booking = {
+    init: function init() {
+        if (_typeof($('#container-bookings')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+        Booking.clear();
+        Booking.createEvents();
+        Booking.getBookings();
+    },
+    createEvents: function createEvents() {
+        $('.app-search-list').on('click', 'a', Booking.onSearch);
+        $('.app-search-list').on('keyup', 'input', Booking.onSearch);
+    },
+    clear: function clear() {
+        $('#table-bookings tbody').empty();
+    },
+    getBookings: function getBookings(params) {
+        var data = $.extend(params, { page: 1 });
+        $.ajax({
+            url: '/api/booking/list',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            data: data,
+            //            data: {
+            //                page: data.page
+            //            },
+            success: function success(response) {
+                console.log('>>', response);
+                if (response.success) {
+                    Booking.showResults(response.bookings);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    onSearch: function onSearch(event) {
+        event.preventDefault();
+        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
+            Booking.getBookings({ term: $('.app-search-list input').val() });
+        }
+    },
+    showResults: function showResults(response) {
+        console.log('bookings', response);
+        Booking.clear();
+        $.each(response.data, Booking.printRow);
+    },
+    printRow: function printRow(i, booking) {
+        var $row = $('<tr/>');
+
+        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('Ref: ' + booking.reference).on('click', { booking: booking }, Booking.onView));
+        $('<td/>').text(booking.user.firstname + ' ' + booking.user.lastname).appendTo($row);
+        $('<td/>').appendTo($row).append($('<span/>').addClass('text-muted').append($('<i/>').addClass('fa fa-clock-o'), ' ', booking.booking_date_start));
+        if (booking.payment === null) {
+            $('<td/>').text('$' + booking.total_payment).appendTo($row);
+        } else {
+            $('<td/>').text(booking.payment.currency.iso_code + booking.payment.currency.sign + booking.payment.amount).appendTo($row);
+        }
+        $('<td/>').appendTo($row).append($('<div/>').addClass('label label-table ' + Booking.getStatusLabel(booking.status)).text(Booking.getStatus(booking.status)));
+        $('<td/>').appendTo($row).addClass('text-center').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { booking: booking }, Booking.onView));
+
+        $row.appendTo($('#table-bookings tbody'));
+    },
+    getStatusLabel: function getStatusLabel(status) {
+        var label = 'label-default';
+        switch (status) {
+            case 'RESERVED':
+                label = 'label-info';
+                break;
+            case 'PAID':
+                label = 'label-success';
+                break;
+            case 'CANCELLED':
+                label = 'label-warning';
+                break;
+            case 'UNAVAILABLE':
+            case 'INCOMPLETED':
+            default:
+                label = 'label-default';
+                break;
+        }
+
+        return label;
+    },
+    onView: function onView(event) {
+        console.log('booking detail', event.data.booking);
+        var $modal = Booking.buildModal(event.data.booking);
+        $modal.modal('show');
+    },
+    buildModal: function buildModal(booking) {
+        var id = 'booking-modal-' + booking.id_booking;
+        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
+            return $('#' + id);
+        }
+        var $modal = $('<div/>');
+        $modal.attr('id', id).addClass('modal fade booking-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('Booking #' + booking.reference)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Booking'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Checkin'), $('<span/>').addClass('col-xs-8').text(booking.booking_date_start)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Checkout'), $('<span/>').addClass('col-xs-8').text(booking.booking_date_end)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(booking.user.firstname + ' ' + booking.user.lastname)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Email'), $('<span/>').addClass('col-xs-8').text(booking.user.email))), $('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Payment'), $('<hr/>'), booking.payment === null ? 'No payment recorded' : [$('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Total'), $('<span/>').addClass('col-xs-8').text(booking.payment.currency.sign + booking.payment.amount)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Status'), $('<span/>').addClass('col-xs-8').text(Booking.getStatus(booking.status))), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Method'), $('<span/>').addClass('col-xs-8').text(booking.payment.payment_method)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Trans. ID'), $('<span/>').addClass('col-xs-8').text(booking.payment.transaction_id))]))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close'), booking.status === 'CANCELLED' ? null : $('<button/>').attr('type', 'button').addClass('btn btn-warning').text('Cancel booking').on('click', { $modal: $modal, booking: booking }, Booking.onCancelBooking))))).appendTo($('body'));
+        return $modal;
+    },
+    onCancelBooking: function onCancelBooking(event) {
+        if (!confirm('Sure cancel booking')) {
+            return false;
+        }
+        Booking.cancelBooking(event.data.booking, event.data.$modal);
+    },
+    cancelBooking: function cancelBooking(booking, $modal) {
+        if (booking.status === 'CANCELLED') {
+            return;
+        }
+        $.ajax({
+            url: '/api/booking/cancel',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+                id_booking: booking.id_booking
+            },
+            success: function success(response) {
+                if (response.success) {
+                    $modal.modal('hide');
+                    alert('Booking cancelled');
+                    $('body').find('.booking-modal').remove();
+                    Booking.getBookings();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    getStatus: function getStatus(status) {
+        var label = ' - ';
+        switch (status) {
+            case 'RESERVED':
+                label = 'Reserved';
+                break;
+            case 'PAID':
+                label = 'Paid';
+                break;
+            case 'CANCELLED':
+                label = 'Cancelled';
+                break;
+            case 'UNAVAILABLE':
+                label = 'Unavailable';
+                break;
+            case 'INCOMPLETED':
+                label = 'Incompleted';
+                break;
+            default:
+                label = ' Not found ';
+                break;
+        }
+
+        return label;
+    }
+};
+
+$(function () {
+    Booking.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 111:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var Apartment = {
+    init: function init() {
+        if (_typeof($('#container-apartments')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+        Apartment.clear();
+        Apartment.createEvents();
+        Apartment.getApartments();
+    },
+    createEvents: function createEvents() {
+        $('.app-search-list').on('click', 'a', Apartment.onSearch);
+        $('.app-search-list').on('keyup', 'input', Apartment.onSearch);
+    },
+    clear: function clear() {
+        $('#table-apartments tbody').empty();
+    },
+    getApartments: function getApartments(params) {
+        var data = $.extend(params, { page: 1 });
+        $.ajax({
+            url: '/api/apartment/list',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            data: data,
+            success: function success(response) {
+                if (response.success) {
+                    Apartment.showResults(response.apartments);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    onSearch: function onSearch(event) {
+        event.preventDefault();
+        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
+            if ($('.app-search-list input').val() === '') {
+                Apartment.getApartments();
+            } else {
+                Apartment.getApartments({ term: $('.app-search-list input').val() });
+            }
+        }
+    },
+    showResults: function showResults(response) {
+        Apartment.clear();
+        $.each(response.data, Apartment.printRow);
+    },
+    printRow: function printRow(i, apartment) {
+        var $row = $('<tr/>');
+
+        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + apartment.id_apartment).on('click', { apartment: apartment }, Apartment.onView));
+        $('<td/>').text(apartment.lang[0].name).appendTo($row);
+        $('<td/>').text(apartment.type.lang[0].name).appendTo($row);
+        $('<td/>').text(apartment.number).appendTo($row);
+        $('<td/>').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price).appendTo($row);
+        $('<td/>').appendTo($row).addClass('text-center').append($('<div/>').addClass('btn-group').attr('role', 'group').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { apartment: apartment }, Apartment.onView), $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/apartment/edit?id_apartment=' + apartment.id_apartment).append($('<i/>').addClass('fa fa-pencil'))));
+
+        $row.appendTo($('#table-apartments tbody'));
+    },
+    onView: function onView(event) {
+        var $modal = Apartment.buildModal(event.data.apartment);
+        $modal.modal('show');
+    },
+    buildModal: function buildModal(apartment) {
+        var id = 'apartment-modal-' + apartment.id_apartment;
+        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
+            return $('#' + id);
+        }
+        var $modal = $('<div/>');
+        $modal.attr('id', id).addClass('modal fade apartment-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('Apartment #' + apartment.id_apartment)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Information'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(apartment.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Price'), $('<span/>').addClass('col-xs-8').text(apartment.currency.iso_code + apartment.currency.sign + apartment.price)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('City'), $('<span/>').addClass('col-xs-8').text(apartment.building.city.name + ' (' + apartment.building.postal_code + ')')), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Building'), $('<span/>').addClass('col-xs-8').text(apartment.building.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Address'), $('<span/>').addClass('col-xs-8').text(apartment.building.address)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Type'), $('<span/>').addClass('col-xs-8').text(apartment.type.lang[0].name)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Floor'), $('<span/>').addClass('col-xs-8').text(apartment.floor)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Number'), $('<span/>').addClass('col-xs-8').text(apartment.number))), $('<div/>').addClass('col-xs-12 col-md-6').append($('<h2/>').text('Amenities'), $('<hr/>'), Apartment.getAmenitiesList(apartment.amenities)))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close')
+        //                        $('<button/>').attr('type','button').addClass('btn btn-warning').text('Delete apartment').on('click', {$modal:$modal,apartment:apartment}, Apartment.onDeleteApartment)
+        )))).appendTo($('body'));
+        return $modal;
+    },
+    getAmenitiesList: function getAmenitiesList(amenities) {
+        var $amenities = [];
+        $.each(amenities, function (i, amenity) {
+            $amenities.push($('<div/>').append($('<i/>').addClass('fa ' + amenity.icon.icon), ' ', $('<span/>').text(amenity.lang.name)));
+        });
+        return $amenities;
+    },
+    onDeleteApartment: function onDeleteApartment(event) {
+        if (!confirm('Sure delete apartment')) {
+            return false;
+        }
+        Apartment.deleteApartment(event.data.apartment, event.data.$modal);
+    },
+    deleteApartment: function deleteApartment(apartment, $modal) {
+        $.ajax({
+            url: '/api/apartment/remove',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+                id_apartment: apartment.id_apartment
+            },
+            success: function success(response) {
+                if (response.success) {
+                    $modal.modal('hide');
+                    alert('Apartment deleted');
+                    $('body').find('.apartment-modal').remove();
+                    Apartment.getApartments();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    }
+};
+
+$(function () {
+    Apartment.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 112:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var ApartmentForm = {
     dZone: null,
     removeMedia: [],
@@ -15726,7 +16086,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 111:
+/***/ 113:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -17838,285 +18198,154 @@ $(function () {
 
 /***/ }),
 
-/***/ 220:
+/***/ 223:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jQuery) {// Generated by CoffeeScript 1.10.0
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/*
-jQuery Growl
-Copyright 2015 Kevin Sylvestre
-1.3.2
- */
-
-(function () {
-  "use strict";
-
-  var $,
-      Animation,
-      Growl,
-      bind = function bind(fn, me) {
-    return function () {
-      return fn.apply(me, arguments);
-    };
-  };
-
-  $ = jQuery;
-
-  Animation = function () {
-    function Animation() {}
-
-    Animation.transitions = {
-      "webkitTransition": "webkitTransitionEnd",
-      "mozTransition": "mozTransitionEnd",
-      "oTransition": "oTransitionEnd",
-      "transition": "transitionend"
-    };
-
-    Animation.transition = function ($el) {
-      var el, ref, result, type;
-      el = $el[0];
-      ref = this.transitions;
-      for (type in ref) {
-        result = ref[type];
-        if (el.style[type] != null) {
-          return result;
+var Users = {
+    init: function init() {
+        if (_typeof($('#container-users')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
         }
-      }
-    };
-
-    return Animation;
-  }();
-
-  Growl = function () {
-    Growl.settings = {
-      namespace: 'growl',
-      duration: 3200,
-      close: "&#215;",
-      location: "default",
-      style: "default",
-      size: "medium",
-      delayOnHover: true
-    };
-
-    Growl.growl = function (settings) {
-      if (settings == null) {
-        settings = {};
-      }
-      this.initialize();
-      return new Growl(settings);
-    };
-
-    Growl.initialize = function () {
-      return $("body:not(:has(#growls))").append('<div id="growls" />');
-    };
-
-    function Growl(settings) {
-      if (settings == null) {
-        settings = {};
-      }
-      this.container = bind(this.container, this);
-      this.content = bind(this.content, this);
-      this.html = bind(this.html, this);
-      this.$growl = bind(this.$growl, this);
-      this.$growls = bind(this.$growls, this);
-      this.animate = bind(this.animate, this);
-      this.remove = bind(this.remove, this);
-      this.dismiss = bind(this.dismiss, this);
-      this.present = bind(this.present, this);
-      this.waitAndDismiss = bind(this.waitAndDismiss, this);
-      this.cycle = bind(this.cycle, this);
-      this.close = bind(this.close, this);
-      this.click = bind(this.click, this);
-      this.mouseLeave = bind(this.mouseLeave, this);
-      this.mouseEnter = bind(this.mouseEnter, this);
-      this.unbind = bind(this.unbind, this);
-      this.bind = bind(this.bind, this);
-      this.render = bind(this.render, this);
-      this.settings = $.extend({}, Growl.settings, settings);
-      this.$growls().attr('class', this.settings.location);
-      this.render();
-    }
-
-    Growl.prototype.render = function () {
-      var $growl;
-      $growl = this.$growl();
-      this.$growls().append($growl);
-      if (this.settings.fixed) {
-        this.present();
-      } else {
-        this.cycle();
-      }
-    };
-
-    Growl.prototype.bind = function ($growl) {
-      if ($growl == null) {
-        $growl = this.$growl();
-      }
-      $growl.on("click", this.click);
-      if (this.settings.delayOnHover) {
-        $growl.on("mouseenter", this.mouseEnter);
-        $growl.on("mouseleave", this.mouseLeave);
-      }
-      return $growl.on("contextmenu", this.close).find("." + this.settings.namespace + "-close").on("click", this.close);
-    };
-
-    Growl.prototype.unbind = function ($growl) {
-      if ($growl == null) {
-        $growl = this.$growl();
-      }
-      $growl.off("click", this.click);
-      if (this.settings.delayOnHover) {
-        $growl.off("mouseenter", this.mouseEnter);
-        $growl.off("mouseleave", this.mouseLeave);
-      }
-      return $growl.off("contextmenu", this.close).find("." + this.settings.namespace + "-close").off("click", this.close);
-    };
-
-    Growl.prototype.mouseEnter = function (event) {
-      var $growl;
-      $growl = this.$growl();
-      return $growl.stop(true, true);
-    };
-
-    Growl.prototype.mouseLeave = function (event) {
-      return this.waitAndDismiss();
-    };
-
-    Growl.prototype.click = function (event) {
-      if (this.settings.url != null) {
+        Users.clear();
+        Users.createEvents();
+        Users.getUsers();
+    },
+    createEvents: function createEvents() {
+        $('.app-search-list').on('click', 'a', Users.onSearch);
+        $('.app-search-list').on('keyup', 'input', Users.onSearch);
+    },
+    clear: function clear() {
+        $('#table-users tbody').empty();
+    },
+    getUsers: function getUsers(params) {
+        var data = $.extend(params, { page: 1 });
+        $.ajax({
+            url: '/api/user/list',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            data: data,
+            success: function success(response) {
+                console.log('>>', response);
+                if (response.success) {
+                    Users.showResults(response.users);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    onSearch: function onSearch(event) {
         event.preventDefault();
-        event.stopPropagation();
-        return window.open(this.settings.url);
-      }
-    };
+        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
+            if ($('.app-search-list input').val() === '') {
+                Users.getUsers();
+            } else {
+                Users.getUsers({ term: $('.app-search-list input').val() });
+            }
+        }
+    },
+    showResults: function showResults(response) {
+        Users.clear();
+        $.each(response.data, Users.printRow);
+    },
+    printRow: function printRow(i, user) {
+        var $row = $('<tr/>');
 
-    Growl.prototype.close = function (event) {
-      var $growl;
-      event.preventDefault();
-      event.stopPropagation();
-      $growl = this.$growl();
-      return $growl.stop().queue(this.dismiss).queue(this.remove);
-    };
+        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + user.id_user).on('click', { user: user }, Users.onView));
+        $('<td/>').text(user.firstname + ' ' + user.lastname).appendTo($row);
+        $('<td/>').text(user.email).appendTo($row);
+        $('<td/>').text(user.role).appendTo($row);
+        $('<td/>').appendTo($row).addClass('text-center').append($('<div/>').addClass('btn-group').attr('role', 'group').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { user: user }, Users.onView), $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/user/edit?id_user=' + user.id_user).append($('<i/>').addClass('fa fa-pencil'))));
 
-    Growl.prototype.cycle = function () {
-      var $growl;
-      $growl = this.$growl();
-      return $growl.queue(this.present).queue(this.waitAndDismiss());
-    };
-
-    Growl.prototype.waitAndDismiss = function () {
-      var $growl;
-      $growl = this.$growl();
-      return $growl.delay(this.settings.duration).queue(this.dismiss).queue(this.remove);
-    };
-
-    Growl.prototype.present = function (callback) {
-      var $growl;
-      $growl = this.$growl();
-      this.bind($growl);
-      return this.animate($growl, this.settings.namespace + "-incoming", 'out', callback);
-    };
-
-    Growl.prototype.dismiss = function (callback) {
-      var $growl;
-      $growl = this.$growl();
-      this.unbind($growl);
-      return this.animate($growl, this.settings.namespace + "-outgoing", 'in', callback);
-    };
-
-    Growl.prototype.remove = function (callback) {
-      this.$growl().remove();
-      return typeof callback === "function" ? callback() : void 0;
-    };
-
-    Growl.prototype.animate = function ($element, name, direction, callback) {
-      var transition;
-      if (direction == null) {
-        direction = 'in';
-      }
-      transition = Animation.transition($element);
-      $element[direction === 'in' ? 'removeClass' : 'addClass'](name);
-      $element.offset().position;
-      $element[direction === 'in' ? 'addClass' : 'removeClass'](name);
-      if (callback == null) {
-        return;
-      }
-      if (transition != null) {
-        $element.one(transition, callback);
-      } else {
-        callback();
-      }
-    };
-
-    Growl.prototype.$growls = function () {
-      return this.$_growls != null ? this.$_growls : this.$_growls = $('#growls');
-    };
-
-    Growl.prototype.$growl = function () {
-      return this.$_growl != null ? this.$_growl : this.$_growl = $(this.html());
-    };
-
-    Growl.prototype.html = function () {
-      return this.container(this.content());
-    };
-
-    Growl.prototype.content = function () {
-      return "<div class='" + this.settings.namespace + "-close'>" + this.settings.close + "</div>\n<div class='" + this.settings.namespace + "-title'>" + this.settings.title + "</div>\n<div class='" + this.settings.namespace + "-message'>" + this.settings.message + "</div>";
-    };
-
-    Growl.prototype.container = function (content) {
-      return "<div class='" + this.settings.namespace + " " + this.settings.namespace + "-" + this.settings.style + " " + this.settings.namespace + "-" + this.settings.size + "'>\n  " + content + "\n</div>";
-    };
-
-    return Growl;
-  }();
-
-  this.Growl = Growl;
-
-  $.growl = function (options) {
-    if (options == null) {
-      options = {};
+        $row.appendTo($('#table-users tbody'));
+    },
+    onView: function onView(event) {
+        var $modal = Users.buildModal(event.data.user);
+        $modal.modal('show');
+    },
+    buildModal: function buildModal(user) {
+        var id = 'user-modal-' + user.id_user;
+        if (_typeof($('#' + id)[0]) !== ( true ? 'undefined' : _typeof(undefined))) {
+            return $('#' + id);
+        }
+        var $modal = $('<div/>');
+        $modal.attr('id', id).addClass('modal fade user-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('User #' + user.id_user)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12').append($('<h2/>').text('Information'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(user.firstname + ' ' + user.lastname)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('E-Mail'), $('<span/>').addClass('col-xs-8').text(user.email)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Since'), $('<span/>').addClass('col-xs-8').text(user.since)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Role'), $('<span/>').addClass('col-xs-8').text(user.role)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Last login'), $('<span/>').addClass('col-xs-8').text(user.last_login))))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close'))))).appendTo($('body'));
+        return $modal;
     }
-    return Growl.growl(options);
-  };
+};
 
-  $.growl.error = function (options) {
-    var settings;
-    if (options == null) {
-      options = {};
-    }
-    settings = {
-      title: "Error!",
-      style: "error"
-    };
-    return $.growl($.extend(settings, options));
-  };
+$(function () {
+    Users.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
-  $.growl.notice = function (options) {
-    var settings;
-    if (options == null) {
-      options = {};
-    }
-    settings = {
-      title: "Notice!",
-      style: "notice"
-    };
-    return $.growl($.extend(settings, options));
-  };
+/***/ }),
 
-  $.growl.warning = function (options) {
-    var settings;
-    if (options == null) {
-      options = {};
+/***/ 224:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var UserForm = {
+    init: function init() {
+        if (_typeof($('#container-form-user')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+        UserForm.createEvents();
+    },
+    createEvents: function createEvents() {
+        $('.save-user').on('click', UserForm.onSaveUser);
+    },
+    getInformation: function getInformation() {
+        return {
+            firstname: $('.form-information').find('.txt-firstname').val(),
+            lastname: $('.form-information').find('.txt-lastname').val(),
+            phone: $('.form-information').find('.txt-phone').val(),
+            birthdate: $('.form-information').find('.txt-birthdate').val(),
+            gender: $('.form-information').find('.lst-gender').val(),
+            role: $('.form-information').find('.lst-role').val()
+        };
+    },
+
+    onSaveUser: function onSaveUser(event) {
+        $('.save-user').prop('disabled', true);
+        var data = {
+            id_user: $('#txt-id_user').val(),
+            information: UserForm.getInformation()
+        };
+        UserForm.saveUser(data);
+    },
+    saveUser: function saveUser(data) {
+        var form_data = new FormData();
+        form_data.append('id_user', data.id_user);
+        form_data.append('information', JSON.stringify(data.information));
+
+        $.ajax({
+            url: '/api/user/save',
+            type: 'POST',
+            data: form_data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function success(response) {
+                if (response.success) {
+                    $('#txt-id_user').val(response.id_user);
+                    $.growl.notice({ title: "Success", message: "User has saved successful" });
+                } else {
+                    $.growl.error({ title: "Error", message: "An error while try save the user" });
+                }
+            }
+        });
     }
-    settings = {
-      title: "Warning!",
-      style: "warning"
-    };
-    return $.growl($.extend(settings, options));
-  };
-}).call(this);
+};
+
+$(function () {
+    UserForm.init();
+});
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -18442,53 +18671,57 @@ __webpack_require__(18)
 
 /***/ }),
 
-/***/ 93:
+/***/ 94:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(94);
+module.exports = __webpack_require__(95);
 
 
 /***/ }),
 
-/***/ 94:
+/***/ 95:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_metismenu__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_metismenu__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_metismenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_metismenu__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery_toast_plugin__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery_toast_plugin__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery_toast_plugin___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery_toast_plugin__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_morris_data_morris_min_js__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_morris_data_morris_min_js__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_morris_data_morris_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_morris_data_morris_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__backoffice_libraries_jquery_slimscroll_js__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__backoffice_libraries_jquery_slimscroll_js__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__backoffice_libraries_jquery_slimscroll_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__backoffice_libraries_jquery_slimscroll_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__backoffice_libraries_waves_js__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__backoffice_libraries_waves_js__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__backoffice_libraries_waves_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__backoffice_libraries_waves_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_waypoints_lib_jquery_waypoints__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_waypoints_lib_jquery_waypoints__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_waypoints_lib_jquery_waypoints___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_waypoints_lib_jquery_waypoints__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery_counterup_jquery_counterup_min_js__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery_counterup_jquery_counterup_min_js__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery_counterup_jquery_counterup_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jquery_counterup_jquery_counterup_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__backoffice_libraries_custom_js__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__backoffice_libraries_custom_js__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__backoffice_libraries_custom_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__backoffice_libraries_custom_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__backoffice_libraries_jquery_sparkline_jquery_charts_sparkline_js__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__backoffice_libraries_jquery_sparkline_jquery_charts_sparkline_js__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__backoffice_libraries_jquery_sparkline_jquery_charts_sparkline_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__backoffice_libraries_jquery_sparkline_jquery_charts_sparkline_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__backoffice_libraries_jquery_sparkline_jquery_sparkline_min_js__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__backoffice_libraries_jquery_sparkline_jquery_sparkline_min_js__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__backoffice_libraries_jquery_sparkline_jquery_sparkline_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__backoffice_libraries_jquery_sparkline_jquery_sparkline_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__backoffice_libraries_jQuery_style_switcher_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backoffice_libraries_jquery_growl_js__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backoffice_libraries_jquery_growl_js__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backoffice_libraries_jquery_growl_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__backoffice_libraries_jquery_growl_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__backoffice_booking_js__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__backoffice_booking_js__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__backoffice_booking_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__backoffice_booking_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__backoffice_apartment_js__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__backoffice_apartment_js__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__backoffice_apartment_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__backoffice_apartment_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__backoffice_apartment_form_js__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__backoffice_apartment_form_js__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__backoffice_apartment_form_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__backoffice_apartment_form_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__backoffice_web_js__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__backoffice_web_js__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__backoffice_web_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__backoffice_web_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__backoffice_user_js__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__backoffice_user_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__backoffice_user_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__backoffice_user_form_js__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__backoffice_user_form_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__backoffice_user_form_js__);
 
 
 
@@ -18505,7 +18738,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 //import "./backoffice/libraries/dropzone.js";
 
-window.Dropzone = __webpack_require__(106);
+window.Dropzone = __webpack_require__(108);
+
+
 
 
 
@@ -18514,7 +18749,7 @@ window.Dropzone = __webpack_require__(106);
 
 /***/ }),
 
-/***/ 95:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*
@@ -18641,7 +18876,7 @@ window.Dropzone = __webpack_require__(106);
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {"function"!=typeof Object.create&&(Object.create=function(t){function o(){}return o.prototype=t,new o}),function(t,o,i,s){"use strict";var n={_positionClasses:["bottom-left","bottom-right","top-right","top-left","bottom-center","top-center","mid-center"],_defaultIcons:["success","error","info","warning"],init:function(o,i){this.prepareOptions(o,t.toast.options),this.process()},prepareOptions:function(o,i){var s={};"string"==typeof o||o instanceof Array?s.text=o:s=o,this.options=t.extend({},i,s)},process:function(){this.setup(),this.addToDom(),this.position(),this.bindToast(),this.animate()},setup:function(){var o="";if(this._toastEl=this._toastEl||t("<div></div>",{"class":"jq-toast-single"}),o+='<span class="jq-toast-loader"></span>',this.options.allowToastClose&&(o+='<span class="close-jq-toast-single">&times;</span>'),this.options.text instanceof Array){this.options.heading&&(o+='<h2 class="jq-toast-heading">'+this.options.heading+"</h2>"),o+='<ul class="jq-toast-ul">';for(var i=0;i<this.options.text.length;i++)o+='<li class="jq-toast-li" id="jq-toast-item-'+i+'">'+this.options.text[i]+"</li>";o+="</ul>"}else this.options.heading&&(o+='<h2 class="jq-toast-heading">'+this.options.heading+"</h2>"),o+=this.options.text;this._toastEl.html(o),this.options.bgColor!==!1&&this._toastEl.css("background-color",this.options.bgColor),this.options.textColor!==!1&&this._toastEl.css("color",this.options.textColor),this.options.textAlign&&this._toastEl.css("text-align",this.options.textAlign),this.options.icon!==!1&&(this._toastEl.addClass("jq-has-icon"),-1!==t.inArray(this.options.icon,this._defaultIcons)&&this._toastEl.addClass("jq-icon-"+this.options.icon)),this.options["class"]!==!1&&this._toastEl.addClass(this.options["class"])},position:function(){"string"==typeof this.options.position&&-1!==t.inArray(this.options.position,this._positionClasses)?"bottom-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,bottom:20}):"top-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,top:20}):"mid-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,top:t(o).outerHeight()/2-this._container.outerHeight()/2}):this._container.addClass(this.options.position):"object"==typeof this.options.position?this._container.css({top:this.options.position.top?this.options.position.top:"auto",bottom:this.options.position.bottom?this.options.position.bottom:"auto",left:this.options.position.left?this.options.position.left:"auto",right:this.options.position.right?this.options.position.right:"auto"}):this._container.addClass("bottom-left")},bindToast:function(){var t=this;this._toastEl.on("afterShown",function(){t.processLoader()}),this._toastEl.find(".close-jq-toast-single").on("click",function(o){o.preventDefault(),"fade"===t.options.showHideTransition?(t._toastEl.trigger("beforeHide"),t._toastEl.fadeOut(function(){t._toastEl.trigger("afterHidden")})):"slide"===t.options.showHideTransition?(t._toastEl.trigger("beforeHide"),t._toastEl.slideUp(function(){t._toastEl.trigger("afterHidden")})):(t._toastEl.trigger("beforeHide"),t._toastEl.hide(function(){t._toastEl.trigger("afterHidden")}))}),"function"==typeof this.options.beforeShow&&this._toastEl.on("beforeShow",function(){t.options.beforeShow()}),"function"==typeof this.options.afterShown&&this._toastEl.on("afterShown",function(){t.options.afterShown()}),"function"==typeof this.options.beforeHide&&this._toastEl.on("beforeHide",function(){t.options.beforeHide()}),"function"==typeof this.options.afterHidden&&this._toastEl.on("afterHidden",function(){t.options.afterHidden()})},addToDom:function(){var o=t(".jq-toast-wrap");if(0===o.length?(o=t("<div></div>",{"class":"jq-toast-wrap"}),t("body").append(o)):(!this.options.stack||isNaN(parseInt(this.options.stack,10)))&&o.empty(),o.find(".jq-toast-single:hidden").remove(),o.append(this._toastEl),this.options.stack&&!isNaN(parseInt(this.options.stack),10)){var i=o.find(".jq-toast-single").length,s=i-this.options.stack;s>0&&t(".jq-toast-wrap").find(".jq-toast-single").slice(0,s).remove()}this._container=o},canAutoHide:function(){return this.options.hideAfter!==!1&&!isNaN(parseInt(this.options.hideAfter,10))},processLoader:function(){if(!this.canAutoHide()||this.options.loader===!1)return!1;var t=this._toastEl.find(".jq-toast-loader"),o=(this.options.hideAfter-400)/1e3+"s",i=this.options.loaderBg,s=t.attr("style")||"";s=s.substring(0,s.indexOf("-webkit-transition")),s+="-webkit-transition: width "+o+" ease-in;                       -o-transition: width "+o+" ease-in;                       transition: width "+o+" ease-in;                       background-color: "+i+";",t.attr("style",s).addClass("jq-toast-loaded")},animate:function(){var t=this;if(this._toastEl.hide(),this._toastEl.trigger("beforeShow"),"fade"===this.options.showHideTransition.toLowerCase()?this._toastEl.fadeIn(function(){t._toastEl.trigger("afterShown")}):"slide"===this.options.showHideTransition.toLowerCase()?this._toastEl.slideDown(function(){t._toastEl.trigger("afterShown")}):this._toastEl.show(function(){t._toastEl.trigger("afterShown")}),this.canAutoHide()){var t=this;o.setTimeout(function(){"fade"===t.options.showHideTransition.toLowerCase()?(t._toastEl.trigger("beforeHide"),t._toastEl.fadeOut(function(){t._toastEl.trigger("afterHidden")})):"slide"===t.options.showHideTransition.toLowerCase()?(t._toastEl.trigger("beforeHide"),t._toastEl.slideUp(function(){t._toastEl.trigger("afterHidden")})):(t._toastEl.trigger("beforeHide"),t._toastEl.hide(function(){t._toastEl.trigger("afterHidden")}))},this.options.hideAfter)}},reset:function(o){"all"===o?t(".jq-toast-wrap").remove():this._toastEl.remove()},update:function(t){this.prepareOptions(t,this.options),this.setup(),this.bindToast()}};t.toast=function(t){var o=Object.create(n);return o.init(t,this),{reset:function(t){o.reset(t)},update:function(t){o.update(t)}}},t.toast.options={text:"",heading:"",showHideTransition:"fade",allowToastClose:!0,hideAfter:3e3,loader:!0,loaderBg:"#9EC600",stack:5,position:"bottom-left",bgColor:!1,textColor:!1,textAlign:"left",icon:!1,beforeShow:function(){},afterShown:function(){},beforeHide:function(){},afterHidden:function(){}}}(jQuery,window,document);
@@ -18649,7 +18884,7 @@ window.Dropzone = __webpack_require__(106);
 
 /***/ }),
 
-/***/ 97:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* @license
@@ -18663,7 +18898,7 @@ Licensed under the BSD-2-Clause License.
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {!function (e) {
@@ -18746,83 +18981,6 @@ Licensed under the BSD-2-Clause License.
     } }), e.fn.extend({ slimscroll: e.fn.slimScroll });
 }(jQuery);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports) {
-
-!function (t) {
-  "use strict";
-
-  function e(t) {
-    return null !== t && t === t.window;
-  }function n(t) {
-    return e(t) ? t : 9 === t.nodeType && t.defaultView;
-  }function a(t) {
-    var e,
-        a,
-        i = { top: 0, left: 0 },
-        o = t && t.ownerDocument;return e = o.documentElement, "undefined" != typeof t.getBoundingClientRect && (i = t.getBoundingClientRect()), a = n(o), { top: i.top + a.pageYOffset - e.clientTop, left: i.left + a.pageXOffset - e.clientLeft };
-  }function i(t) {
-    var e = "";for (var n in t) {
-      t.hasOwnProperty(n) && (e += n + ":" + t[n] + ";");
-    }return e;
-  }function o(t) {
-    if (d.allowEvent(t) === !1) return null;for (var e = null, n = t.target || t.srcElement; null !== n.parentElement;) {
-      if (!(n instanceof SVGElement || -1 === n.className.indexOf("waves-effect"))) {
-        e = n;break;
-      }if (n.classList.contains("waves-effect")) {
-        e = n;break;
-      }n = n.parentElement;
-    }return e;
-  }function r(e) {
-    var n = o(e);null !== n && (c.show(e, n), "ontouchstart" in t && (n.addEventListener("touchend", c.hide, !1), n.addEventListener("touchcancel", c.hide, !1)), n.addEventListener("mouseup", c.hide, !1), n.addEventListener("mouseleave", c.hide, !1));
-  }var s = s || {},
-      u = document.querySelectorAll.bind(document),
-      c = { duration: 750, show: function show(t, e) {
-      if (2 === t.button) return !1;var n = e || this,
-          o = document.createElement("div");o.className = "waves-ripple", n.appendChild(o);var r = a(n),
-          s = t.pageY - r.top,
-          u = t.pageX - r.left,
-          d = "scale(" + n.clientWidth / 100 * 10 + ")";"touches" in t && (s = t.touches[0].pageY - r.top, u = t.touches[0].pageX - r.left), o.setAttribute("data-hold", Date.now()), o.setAttribute("data-scale", d), o.setAttribute("data-x", u), o.setAttribute("data-y", s);var l = { top: s + "px", left: u + "px" };o.className = o.className + " waves-notransition", o.setAttribute("style", i(l)), o.className = o.className.replace("waves-notransition", ""), l["-webkit-transform"] = d, l["-moz-transform"] = d, l["-ms-transform"] = d, l["-o-transform"] = d, l.transform = d, l.opacity = "1", l["-webkit-transition-duration"] = c.duration + "ms", l["-moz-transition-duration"] = c.duration + "ms", l["-o-transition-duration"] = c.duration + "ms", l["transition-duration"] = c.duration + "ms", l["-webkit-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["-moz-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["-o-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", l["transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)", o.setAttribute("style", i(l));
-    }, hide: function hide(t) {
-      d.touchup(t);var e = this,
-          n = (1.4 * e.clientWidth, null),
-          a = e.getElementsByClassName("waves-ripple");if (!(a.length > 0)) return !1;n = a[a.length - 1];var o = n.getAttribute("data-x"),
-          r = n.getAttribute("data-y"),
-          s = n.getAttribute("data-scale"),
-          u = Date.now() - Number(n.getAttribute("data-hold")),
-          l = 350 - u;0 > l && (l = 0), setTimeout(function () {
-        var t = { top: r + "px", left: o + "px", opacity: "0", "-webkit-transition-duration": c.duration + "ms", "-moz-transition-duration": c.duration + "ms", "-o-transition-duration": c.duration + "ms", "transition-duration": c.duration + "ms", "-webkit-transform": s, "-moz-transform": s, "-ms-transform": s, "-o-transform": s, transform: s };n.setAttribute("style", i(t)), setTimeout(function () {
-          try {
-            e.removeChild(n);
-          } catch (t) {
-            return !1;
-          }
-        }, c.duration);
-      }, l);
-    }, wrapInput: function wrapInput(t) {
-      for (var e = 0; e < t.length; e++) {
-        var n = t[e];if ("input" === n.tagName.toLowerCase()) {
-          var a = n.parentNode;if ("i" === a.tagName.toLowerCase() && -1 !== a.className.indexOf("waves-effect")) continue;var i = document.createElement("i");i.className = n.className + " waves-input-wrapper";var o = n.getAttribute("style");o || (o = ""), i.setAttribute("style", o), n.className = "waves-button-input", n.removeAttribute("style"), a.replaceChild(i, n), i.appendChild(n);
-        }
-      }
-    } },
-      d = { touches: 0, allowEvent: function allowEvent(t) {
-      var e = !0;return "touchstart" === t.type ? d.touches += 1 : "touchend" === t.type || "touchcancel" === t.type ? setTimeout(function () {
-        d.touches > 0 && (d.touches -= 1);
-      }, 500) : "mousedown" === t.type && d.touches > 0 && (e = !1), e;
-    }, touchup: function touchup(t) {
-      d.allowEvent(t);
-    } };s.displayEffect = function (e) {
-    e = e || {}, "duration" in e && (c.duration = e.duration), c.wrapInput(u(".waves-effect")), "ontouchstart" in t && document.body.addEventListener("touchstart", r, !1), document.body.addEventListener("mousedown", r, !1);
-  }, s.attach = function (e) {
-    "input" === e.tagName.toLowerCase() && (c.wrapInput([e]), e = e.parentElement), "ontouchstart" in t && e.addEventListener("touchstart", r, !1), e.addEventListener("mousedown", r, !1);
-  }, t.Waves = s, document.addEventListener("DOMContentLoaded", function () {
-    s.displayEffect();
-  }, !1);
-}(window);
 
 /***/ })
 

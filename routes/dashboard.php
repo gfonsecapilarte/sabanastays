@@ -14,6 +14,8 @@ Route::get('/dashboard/apartment/edit', 'Back\ApartmentController@editApartment'
 
 //users
 Route::get('/dashboard/users', 'Back\UserController@index')->name('dashboard.users');
+Route::get('/dashboard/user/create', 'Back\UserController@createUser')->name('dashboard.user.create');
+Route::get('/dashboard/user/edit', 'Back\UserController@editUser')->name('dashboard.user.edit');
 
 //web
 Route::get('/dashboard/web', 'Back\WebController@index')->name('dashboard.web');

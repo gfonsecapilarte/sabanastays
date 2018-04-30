@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller{
     public function __construct(Request $request){
-        $this->checkSession($request);
+//        $this->checkSession($request);
     }
 
     /*
@@ -61,5 +61,70 @@ class UserController extends Controller{
             
             return response()->json($user);
         }
+    }
+
+    /**
+     * List users
+     */
+    public function listUsers(Request $request)
+    {
+        $users = array();
+        if ($request->has('term')) {
+            $users = User::where('id_user', '=', $request->input('term'))
+                ->orWhere('email', 'like', $request->input('term'))->paginate($request->input('items_per_page', 15));
+        } else {
+            $users = User::paginate($request->input('items_per_page', 15));
+        }
+        return response()->json(array(
+            'success' => true,
+            'users' => $users
+        ));
+    }
+
+    public function saveUser(Request $request)
+    {
+        $id_user = $request->input('id_user');
+        $response = false;
+        $data = $request->all();
+
+        $data['information'] = json_decode($data['information']);
+
+        if (empty($id_user)) {
+            $response = $this->createUser($data);
+        } else {
+            $response = $this->updateUser(User::find($id_user)->first(), $data);
+        }
+
+        return response()->json(array(
+            'success' => (bool)$response,
+            'id_user' => $response
+        ));
+    }
+
+    private function createUser($data)
+    {
+        return $this->updateUser(new User, $data);
+    }
+
+
+    /**
+     * Save user from BO
+     */
+    private function updateUser($user, $data)
+    {
+        $user->firstname    = $data['information']->firstname;
+        $user->lastname     = $data['information']->lastname;
+        $user->birthdate    = $data['information']->birthdate;
+        $user->gender       = $data['information']->gender;
+        $user->phone        = $data['information']->phone;
+        if (property_exists($data['information'], 'email') && !empty($data['information']->email)) {
+            $user->email        = $data['information']->email;
+        }
+        if (property_exists($data['information'], 'password') && !empty($data['information']->password)) {
+            $user->password = bcrypt($data['information']->password);
+        }
+        $user->save();
+
+        return $user->id_user;
     }
 }
