@@ -20,6 +20,11 @@ class UserController extends CoreController
         return $this->display('backoffice/user/list', $data);
     }
 
+    public function createUser()
+    {
+        return $this->loadUserForm();
+    }
+
     public function editUser(Request $request)
     {
         return $this->loadUserForm($request->input('id_user'));

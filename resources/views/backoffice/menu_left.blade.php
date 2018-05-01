@@ -45,7 +45,7 @@
                     <span class="hide-menu">Web admin</span>
                 </a>
             </li>
-            <li>
+            <li class="hidden">
                 <a href="{{ route('dashboard.roles') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Roles</span>
                 </a>
