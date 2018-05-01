@@ -11,15 +11,12 @@ class Apartment extends ModelCore
 
     public function type()
     {
-        return $this->hasOne(\App\Models\ApartmentType::class, 'id_apartment_type')->with('lang.language');
+        return $this->belongsTo(\App\Models\ApartmentType::class, 'id_apartment_type')->with('lang.language');
     }
 
     public function amenities()
     {
-        return $this->hasMany(\App\Models\ApartmentAmenity::class, 'id_apartment')->with(array('lang.language', 'icon'));
-        // $result = $this->hasMany('App\Models\ApartmentAmenity', 'id_apartment')->get();
-        // $amenities = json_decode($result);
-        // return $amenities;
+        return $this->hasMany(\App\Models\ApartmentAmenity::class, 'id_apartment')->with(array('lang', 'icon'));
     }
 
     public function currency()
@@ -34,7 +31,7 @@ class Apartment extends ModelCore
 
     public function rate()
     {
-        return $this->belongsTo(\App\Models\Rate::class, 'id_apartment');
+        return $this->hasOne(\App\Models\Rate::class, 'id_apartment');
     }
 
     public function feature()

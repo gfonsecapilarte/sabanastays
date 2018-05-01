@@ -12,10 +12,7 @@ class ApartmentAmenity extends Model
 
     public function lang()
     {
-//        $table = str_replace('_', ' ', $this->table);
-//        $table = ucwords($table);
-//        $table = str_replace(' ', '', $table);
-        return $this->belongsTo(\App\Models\Lang\Amenity::class, 'id_amenity');
+        return $this->hasOne(\App\Models\Lang\Amenity::class, 'id_amenity')->with('language');
     }
 
     public function icon()
