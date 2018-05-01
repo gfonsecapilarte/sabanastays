@@ -16073,6 +16073,9 @@ var ApartmentForm = {
             success: function success(response) {
                 if (response.success) {
                     $('#txt-id_apartment').val(response.id_apartment);
+                    $.growl.notice({ title: "Success", message: "Apartment has saved successful" });
+                } else {
+                    $.growl.error({ title: "Error", message: "An error while try save the apartment" });
                 }
             }
         });
