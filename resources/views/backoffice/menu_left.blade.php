@@ -3,7 +3,10 @@
         <div class="user-profile">
             <div class="dropdown user-pro-body">
                 <div><img src="{{ asset('images/backoffice/logo-min.png') }}" alt="user-img" class="img"></div>
-                <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Steave Gection <span class="caret"></span></a>
+                Steave Gection
+                <a href="#" class="dropdown-toggle u-dropdown hidden" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Steave Gection <span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu animated flipInY">
                     <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                     <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
