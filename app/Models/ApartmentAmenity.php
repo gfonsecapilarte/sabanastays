@@ -15,12 +15,12 @@ class ApartmentAmenity extends Model
 //        $table = str_replace('_', ' ', $this->table);
 //        $table = ucwords($table);
 //        $table = str_replace(' ', '', $table);
-        return $this->hasOne(\App\Models\Lang\Amenity::class, 'id_amenity');
+        return $this->belongsTo(\App\Models\Lang\Amenity::class, 'id_amenity');
     }
 
     public function icon()
     {
-        return $this->hasOne(\App\Models\Amenity::class, 'id_amenity');
+        return $this->belongsTo(\App\Models\Amenity::class, 'id_amenity');
     }
 
     public static function updateApartmentAmenity($id_apartment, $id_amenity, $checked)
