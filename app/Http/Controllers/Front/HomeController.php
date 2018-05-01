@@ -39,8 +39,11 @@ class HomeController{
             array_push($types,$lang[''.strtoupper($locale).'']);
         }
 
+        $header_module = app('App\Http\Controllers\Module\HeaderController')->getModule();
+        $header_module = $header_module->getData();
+
         /** Get header and logo images **/
-        $header['media_logo'] = $header_home->media;
+        $header['media_logo'] = $header_module->media_logo;
 
         return view('front/home/index',[
             'locale'        => $locale ,

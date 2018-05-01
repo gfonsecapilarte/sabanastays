@@ -28,8 +28,8 @@ class ContactController extends Controller
         } else {
             $module = new ContactModel();
         }
-        $module->lat = $data['lat'];
-        $module->lng = $data['lng'];
+        $module->lat = json_decode($data['lat']);
+        $module->lng = json_decode($data['lng']);
         $module->save();
         //lang
         $data_information = json_decode($data['information']);

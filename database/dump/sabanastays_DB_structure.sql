@@ -195,7 +195,7 @@ CREATE TABLE `apartment` (
   `id_apartment_type` int(11) NOT NULL,
   `id_currency` int(11) NOT NULL,
   `floor` int(11) NOT NULL,
-  `number` varchar(45) NOT NULL,
+  `number` varchar(45) DEFAULT NULL,
   `price` float NOT NULL,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
