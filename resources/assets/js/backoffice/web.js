@@ -80,6 +80,7 @@ var Web = {
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
+                        Web.Header.remove_media = [];
                         $('#row-header-module').data('id-header-module', response.id_header_module);
                         $.growl.notice({ title: "Success", message: "Header module has saved successful" });
                     } else {
@@ -151,6 +152,7 @@ var Web = {
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
+                        Web.Home.remove_media = [];
                         $('#row-home-module').data('id-home-module', response.id_home_module);
                         $.growl.notice({ title: "Success", message: "Home module has saved successful" });
                     } else {
@@ -330,6 +332,7 @@ var Web = {
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
+                        Web.About.remove_media = [];
                         $('#row-about-module').data('id-about-module', response.id_about_module);
                         $.growl.notice({ title: "Success", message: "About module has saved successful" });
                     } else {
@@ -411,6 +414,7 @@ var Web = {
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
+                        Web.Testimonial.remove_media = [];
                         $.growl.notice({ title: "Success", message: "Testimonial module has saved successful" });
                     } else {
                         $.growl.error({ title: "Error", message: "An error while try save the module" });
