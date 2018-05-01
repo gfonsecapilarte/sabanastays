@@ -48,7 +48,7 @@ class ApartmentController extends Controller
         if (empty($id_apartment)) {
             $response = $this->createApartment($data);
         } else {
-            $response = $this->updateApartment(ApartmentModel::find($id_apartment)->first(), $data);
+            $response = $this->updateApartment(ApartmentModel::find($id_apartment), $data);
         }
 
         return response()->json(array(

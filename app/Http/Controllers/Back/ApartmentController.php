@@ -40,7 +40,8 @@ class ApartmentController extends CoreController
         );
         if (!is_null($id_apartment)) {
             $data['apartment'] = json_decode(ApartmentModel::with(array('amenities', 'lang', 'rate', 'feature'))
-                ->where('id_apartment', '=', $id_apartment)->first());
+                ->where('id_apartment', '=', $id_apartment)->get());
+            $data['apartment'] = $data['apartment'][0];
             ApartmentModel::parseLang($data['apartment']);
             $apartment_amenities = array();
             foreach ($data['apartment']->amenities as $amenity) {
