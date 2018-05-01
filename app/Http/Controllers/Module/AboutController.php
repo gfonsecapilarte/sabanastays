@@ -69,9 +69,11 @@ class AboutController extends Controller
             if (is_array($data_remove_media) && !empty($data_remove_media)) {
                 foreach ($data_remove_media as $remove_file) {
                     $remove_media = MediaModel::find($remove_file->id_media);
-                    $remove_filename = str_replace('/storage/', '', $remove_media->path);
-                    Storage::disk('public')->delete($remove_filename);
-                    $remove_media->delete();
+                    if (!empty($remove_media)) {
+                        $remove_filename = str_replace('/storage/', '', $remove_media->path);
+                        Storage::disk('public')->delete($remove_filename);
+                        $remove_media->delete();
+                    }
                 }
             }
         }
