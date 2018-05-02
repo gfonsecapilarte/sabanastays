@@ -12,8 +12,8 @@
     @stop
 
     <script>
-        var profile_link    = '{{ route("profile") }}';
-        var googleClientId  = '{{ env('GOOGLE_CLIENT_ID') }}';
+        var myBookingsLink    = '{{ route("bookings") }}';
+        var googleClientId    = '{{ env('GOOGLE_CLIENT_ID') }}';
     </script>
 
     <div class="mg-page">

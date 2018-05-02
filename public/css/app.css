@@ -7601,25 +7601,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   color: #ffffff;
 }
 
-.sa-date {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 20px;
-}
-
-.sa-date span {
-  width: 70%;
-}
-
-.sa-date span.day {
-  text-align: center;
-  color: #16262e;
-  font-size: 30px;
-  font-weight: 600;
-  width: 30%;
-}
-
 .lang-selector {
   text-transform: uppercase;
 }
@@ -7789,17 +7770,28 @@ body.login .register-form > .row input[type='submit'] {
  * Bookig page styles
  */
 
-.mg-available-rooms .mg-avl-room-title span {
+body.booking .mg-available-rooms .mg-avl-room-title span {
   float: none !important;
 }
 
-.mg-available-rooms .mg-avl-room-title > span {
+body.booking .mg-available-rooms .mg-avl-room-title > span {
   float: right !important;
 }
 
-.mg-available-rooms .mg-room-fecilities ul li {
-  float: left;
-  width: 50%;
+body.my-bookings .sa-date {
+  margin-top: 20px;
+}
+
+body.my-bookings .sa-date span {
+  width: 70%;
+}
+
+body.my-bookings .sa-date span.day {
+  text-align: center;
+  color: #16262e;
+  font-size: 30px;
+  font-weight: 600;
+  width: 30%;
 }
 
 /*

@@ -41,7 +41,7 @@ $(document).ready(function() {
                     localStorage.setItem('api_token',reply.api_token);
                     localStorage.setItem('id_user',reply.id_user);
                     localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
-                    location.href = profile_link;
+                    location.href = myBookingsLink;
                 }
             }
         });

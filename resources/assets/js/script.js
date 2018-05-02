@@ -9,21 +9,6 @@
 	} );
 
 	/*
-	 * Click to show details of a booking
-	 */
-	$(".booking-detail .btn-main").click(function(){
-		var button = $(this);
-		button.parent("div").siblings(".mg-features").slideToggle("400", function() {
-			if($(this).is(":visible")){
-				button.text("Close Details");
-			}
-			else{
-				button.text("View Details");
-			}
-		});
-	});
-
-	/*
 	 * On Parallax for .parallax class
 	 */
 	$('.parallax').parallax("50%", 0.2);

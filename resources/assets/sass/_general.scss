@@ -122,21 +122,41 @@ body{
 /*
  * Bookig page styles
  */
-.mg-available-rooms{
-    .mg-avl-room-title{
-        span{
-            float: none !important;
+body.booking{
+    .mg-available-rooms{
+        .mg-avl-room-title{
+            span{
+                float: none !important;
+            }
+            & > span{
+                float: right !important;
+            }
         }
-        & > span{
-            float: right !important;
+
+        .mg-room-fecilities{
+            // ul{
+            //     li{
+            //         float: left;
+            //         width: 50%;
+            //     }
+            // }
         }
     }
+}
 
-    .mg-room-fecilities{
-        ul{
-            li{
-                float: left;
-                width: 50%;
+body.my-bookings{
+    .sa-date{
+        // display: flex;
+        margin-top: 20px;
+        span{
+            width: 70%;
+
+            &.day{
+                text-align: center;
+                color: #16262e;
+                font-size: 30px;
+                font-weight: 600;
+                width: 30%;
             }
         }
     }

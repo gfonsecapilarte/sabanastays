@@ -17,3 +17,10 @@ export function calculateNights(date_a,date_b){
 
     return date.subtract(date_b,date_a).toDays();
 }
+
+export function getHumanDay(_date){
+    var _date = _date.split('-'),
+        _date = new Date(_date[0],_date[1]-1,_date[2]);
+
+    return date.format(_date, 'dddd');
+}

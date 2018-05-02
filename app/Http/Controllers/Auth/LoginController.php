@@ -220,7 +220,7 @@ class LoginController extends Controller
             return Session::all();
         }
 
-        if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password'), 'account_type' => 'NULL'))) {
+        if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password'), 'account_type' => 'NORMAL'))) {
             $this->updateToken();
             Session::put('id_user', Auth::user()->id_user);
             Session::put('email', Auth::user()->email);

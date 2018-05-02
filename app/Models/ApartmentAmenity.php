@@ -12,7 +12,7 @@ class ApartmentAmenity extends Model
 
     public function lang()
     {
-        return $this->hasOne(\App\Models\Lang\Amenity::class, 'id_amenity', 'id_amenity')->with('language');
+        return $this->hasMany(\App\Models\Lang\Amenity::class, 'id_amenity', 'id_amenity')->with('language');
     }
 
     public function icon()

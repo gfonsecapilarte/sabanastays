@@ -85,6 +85,7 @@ class RegisterController extends Controller
             'role' => $request->has('role') ? $data['role'] : 'USER',//$data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'account_type'  => 'NORMAL',
         ));
 
         if ($create && Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')))) {

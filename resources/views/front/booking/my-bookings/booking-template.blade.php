@@ -5,7 +5,7 @@
         </div>
         <div class="col-sm-7">
             <h3 class="mg-avl-room-title sa-building-name"><a href="#">Torre Rohrmoser</a></h3>
-            <div class="row mg-room-fecilities">
+            <div class="row">
                 <div class="col-sm-6">
                     <ul>
                         <li class="sa-booking-reference">
@@ -24,16 +24,20 @@
                     <div class="row">
                         <div class="col-sm-6">
                             @lang('general.checkIn')
-                            <div class="sa-date">
-                                <span class="day">2</span>
-                                <span>Mar 18 Monday</span>
+                            <div class="sa-date start">
+                                <span class="day">6</span>
+                                <span class="month">Mar</span>
+                                <span class="year">18</span>
+                                <span class="day_b">Monday</span>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             @lang('general.checkOut')
-                            <div class="sa-date">
+                            <div class="sa-date end">
                                 <span class="day">6</span>
-                                <span>Mar 18 Monday</span>
+                                <span class="month">Mar</span>
+                                <span class="year">18</span>
+                                <span class="day_b">Monday</span>
                             </div>
                         </div>
                     </div>
@@ -52,29 +56,6 @@
                             <li><i class="fa fa-bed"></i> Extra Beds (Upon request)</li>
                             <li><i class="fp-ht-bed29"></i> Bed Linens And Towels</li>
                         </ul>
-                    </div>
-                    <div class="col-xs-4 mg-room-fecilities">
-                        <ul>
-                            <li><i class="fa fa-paw"></i> Pet Friendly</li>
-                            <li><i class="fa fa-wifi"></i> Internet</li>
-                            <li><i class="sa-icon-firstdraft"></i> Hardwood Floor</li>
-                            <li><i class="sa-icon-city"></i> City View</li>
-                            <li><i class="sa-icon-air"></i> Air Conditioning</li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-4 mg-room-fecilities">
-                        <ul>
-                            <li><i class="fp-ht-nosmoking"></i> Non Smoking</li>
-                            <li><i class="sa-icon-clean"></i> Housekeeping</li>
-                            <li><i class="fp-ht-bed29"></i> Extra Linens (Upon request)</li>
-                            <li><i class="fa fa-bed"></i> Baby Crib (Upon request)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt20">
-                    <h2 class="mg-sec-left-title">@lang('general.bookingConditions')</h2>
-                    <div>
-                        <p>Non Refundable</p>
                     </div>
                 </div>
             </div>

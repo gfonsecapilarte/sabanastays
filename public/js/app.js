@@ -13992,6 +13992,7 @@ else { delete window.Modernizr; }
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["b"] = converDate;
 /* harmony export (immutable) */ __webpack_exports__["a"] = calculateNights;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getHumanDay;
 var date = __webpack_require__(1);
 date.locale(locale.toLowerCase());
 
@@ -14010,6 +14011,13 @@ function calculateNights(date_a, date_b) {
         date_b = new Date(date_b[0], date_b[1] - 1, date_b[2]);
 
     return date.subtract(date_b, date_a).toDays();
+}
+
+function getHumanDay(_date) {
+    var _date = _date.split('-'),
+        _date = new Date(_date[0], _date[1] - 1, _date[2]);
+
+    return date.format(_date, 'dddd');
 }
 
 /***/ }),
@@ -15796,7 +15804,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -18861,20 +18868,6 @@ http://www.gnu.org/licenses/gpl.html
 	});
 
 	/*
-  * Click to show details of a booking
-  */
-	$(".booking-detail .btn-main").click(function () {
-		var button = $(this);
-		button.parent("div").siblings(".mg-features").slideToggle("400", function () {
-			if ($(this).is(":visible")) {
-				button.text("Close Details");
-			} else {
-				button.text("View Details");
-			}
-		});
-	});
-
-	/*
   * On Parallax for .parallax class
   */
 	$('.parallax').parallax("50%", 0.2);
@@ -19495,7 +19488,7 @@ $(document).ready(function () {
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
                     localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
-                    location.href = profile_link;
+                    location.href = myBookingsLink;
                 }
             }
         });
@@ -19524,7 +19517,7 @@ $(document).ready(function () {
                                 localStorage.setItem('api_token', reply.api_token);
                                 localStorage.setItem('id_user', reply.id_user);
                                 localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
-                                //location.href = profile_link;
+                                location.href = myBookingsLink;
                             }
                         }
                     });
@@ -19563,7 +19556,7 @@ $(document).ready(function () {
                                 localStorage.setItem('api_token', reply.api_token);
                                 localStorage.setItem('id_user', reply.id_user);
                                 localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
-                                location.href = profile_link;
+                                location.href = myBookingsLink;
                             }
                         }
                     });
@@ -20534,7 +20527,7 @@ $(document).ready(function () {
                     localStorage.setItem('api_token', reply.api_token);
                     localStorage.setItem('id_user', reply.id_user);
                     localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
-                    location.href = profile_link;
+                    location.href = myBookingsLink;
                 }
             }
         });
@@ -22474,9 +22467,16 @@ return $;
 
 /***/ }),
 /* 91 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dates_dates_js__ = __webpack_require__(21);
+/**
+ * Module to convert dates to human format
+ */
+
+
+$(document).ready(function () {
 
     if ($('#booking-template').length) {
         getBookingsList('paid');
@@ -22495,20 +22495,9 @@ return $;
                 status: status
             },
             success: function success(reply) {
-                //console.log(reply.bookings);
-                drawBookings(reply.bookings);
-                //console.log(reply);
-                //$('#'+status).html('<pre>'+reply+'</pre>');
-                // if(reply.success != null){
-                //     address.first.id = reply.address.id_address;
-                //     if(address.second.different){
-                //         address.second.register();
-                //     }
-                //     else{
-                //         address.second.id = reply.address.id_address;
-                //         payment.pay();
-                //     }
-                // }
+                if (reply.success != null && reply.success) {
+                    drawBookings(reply.bookings);
+                }
             }
         });
     }
@@ -22519,12 +22508,15 @@ return $;
     function drawBookings(bookings) {
         var template = $('#booking-template');
         $(bookings).each(function (index, booking) {
+
+            /** Draw apartment name **/
             booking.apartment.building.lang.map(function (b) {
                 if (b.language.iso == locale) {
                     $('#booking-template .sa-building-name').text(b.name);
                 }
             });
 
+            /** Draw category apartment name **/
             booking.apartment.type.lang.map(function (type) {
                 if (type.language.iso == locale) {
                     $('#booking-template .sa-apartment-type').text(type.name);
@@ -22534,13 +22526,49 @@ return $;
             $('#booking-template .sa-booking-reference span').text(booking.reference);
             $('#booking-template .sa-booking-price').text(booking.payment.amount);
 
-            //console.log(building);
-        });
+            /** Draw dates **/
+            var dateStart = Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["b" /* converDate */])(booking.booking_date_start).split(' ');
+            var dateEnd = Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["b" /* converDate */])(booking.booking_date_end).split(' ');
 
-        $('#upcoming .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
+            $('#booking-template .sa-date.start .day').text(dateStart[1]);
+            $('#booking-template .sa-date.start .month').text(dateStart[0]);
+            $('#booking-template .sa-date.start .year').text(dateStart[2]);
+            $('#booking-template .sa-date.start .day_b').text(Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["c" /* getHumanDay */])(booking.booking_date_start));
+            $('#booking-template .sa-date.end .day').text(dateEnd[1]);
+            $('#booking-template .sa-date.end .month').text(dateEnd[0]);
+            $('#booking-template .sa-date.end .year').text(dateEnd[2]);
+            $('#booking-template .sa-date.end .day_b').text(Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["c" /* getHumanDay */])(booking.booking_date_end));
+
+            /** Draw amenities **/
+            var amenities = '';
+            $(booking.apartment.amenities).each(function (i, amenity) {
+                amenity.lang.map(function (amen) {
+                    if (amen.language.iso == locale) {
+                        amenities += '<li><i class="' + amenity.icon.icon + '"></i>' + amen.name + '</li>';
+                    }
+                });
+            });
+
+            $('#booking-template .mg-room-fecilities ul').html(amenities);
+            $('#upcoming .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
+        });
     }
+
+    /*
+    * Click to show details of a booking
+    */
+    $('.tab-content').on('click', '.booking-detail .btn-main', function () {
+        var button = $(this);
+        button.parent("div").siblings(".mg-features").slideToggle("400", function () {
+            if ($(this).is(":visible")) {
+                button.text("Close Details");
+            } else {
+                button.text("View Details");
+            }
+        });
+    });
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
 /* 92 */
