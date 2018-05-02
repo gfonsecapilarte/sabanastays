@@ -18247,7 +18247,7 @@ var Apartment = {
     getAmenitiesList: function getAmenitiesList(amenities) {
         var $amenities = [];
         $.each(amenities, function (i, amenity) {
-            $amenities.push($('<div/>').append($('<i/>').addClass('fa ' + amenity.icon.icon), ' ', $('<span/>').text(amenity.lang.name)));
+            $amenities.push($('<div/>').append($('<i/>').addClass('fa ' + amenity.icon.icon), ' ', $('<span/>').text(amenity.lang[0].name)));
         });
         return $amenities;
     },

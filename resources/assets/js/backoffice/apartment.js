@@ -146,7 +146,7 @@ var Apartment = {
         $.each(amenities, function(i, amenity) {
             $amenities.push($('<div/>').append(
                 $('<i/>').addClass('fa '+amenity.icon.icon), ' ',
-                $('<span/>').text(amenity.lang.name)
+                $('<span/>').text(amenity.lang[0].name)
             ));
         });
         return $amenities;
