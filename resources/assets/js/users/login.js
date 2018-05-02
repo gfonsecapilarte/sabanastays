@@ -12,7 +12,7 @@ import {
 
 /** Setup Facebook **/
 const Facebook = FBSDK({
-    appId: '155464328481769',
+    appId: '380347702447842',
     status: true,
     version: 'v2.8'
 });
@@ -76,7 +76,7 @@ $(document).ready(function() {
                                 localStorage.setItem('api_token',reply.api_token);
                                 localStorage.setItem('id_user',reply.id_user);
                                 localStorage.setItem('user_name',reply.firstname+' '+reply.lastname);
-                                location.href = profile_link;
+                                //location.href = profile_link;
                             }
                         }
                     });

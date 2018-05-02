@@ -102,5 +102,9 @@ return [
     'signOut'                   => 'Salir',
     'incompleted'               => 'incompleto',
     'reserved'                  => 'reservado',
-    'unavailable'               => 'No disponible'
+    'unavailable'               => 'No disponible',
+    'myAccount'                 => 'Mi Cuenta',
+    'googleNotice'              => 'Este correo electrónico ya existe pero con una de Google. Inicie sesión con esta cuenta por favor',
+    'socialMediaError'          => 'Este correo electrónico ya existe pero con una cuenta diferente a Facebook y Google. Inicie sesión igresando un password',
+    'facebookNotice'            => 'Este correo electrónico ya existe pero con una de Facebook. Inicie sesión con esta cuenta por favor'
 ];

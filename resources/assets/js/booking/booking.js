@@ -396,9 +396,10 @@ $(document).ready(function() {
             $('a',this).tab('show');
             if(user.token){
                 $('.mg-book-form-personal > div').hide();
-                /** Draw values in sidebar **/
-                showSidebarData();
             }
+
+            /** Draw values in sidebar **/
+            showSidebarData();
         }
         else{
             errorMessage($('.mg-booking-form'),apartmentWarning);
@@ -468,7 +469,12 @@ $(document).ready(function() {
         var goTo = $(this).attr('href');
         if(goTo == '#personal-info-form'){
             apartment.id = $(this).attr('id').split('_')[1];
-            saNextStep($(this));
+            if(user.done || user.token){
+                saNextStep($('a[href="#address-form"]'));
+            }
+            else{
+                saNextStep($(this));
+            }
         }
         else if(goTo == '#address-form'){
             $('#sa-register-two').submit();

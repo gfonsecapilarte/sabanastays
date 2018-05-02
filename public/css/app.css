@@ -7682,8 +7682,24 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 #mega-slider .mg-book-now {
   background-color: transparent;
   position: absolute;
-  bottom: 50px;
+  bottom: 70px;
   width: 100%;
+}
+
+#mega-slider .mg-book-now::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  opacity: 0.6;
+  background-color: #16262E;
+}
+
+#mega-slider .mg-book-now > .container {
+  position: relative;
+  z-index: 10;
 }
 
 /*
@@ -7779,6 +7795,11 @@ body.login .register-form > .row input[type='submit'] {
 
 .mg-available-rooms .mg-avl-room-title > span {
   float: right !important;
+}
+
+.mg-available-rooms .mg-room-fecilities ul li {
+  float: left;
+  width: 50%;
 }
 
 /*

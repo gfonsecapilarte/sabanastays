@@ -16,7 +16,7 @@
 
                     <li id="user-menu-item" class="dropdown hidden">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="name"></span>
+                            <span class="name">@lang('general.myAccount')</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">

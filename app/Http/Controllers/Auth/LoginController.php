@@ -77,10 +77,11 @@ class LoginController extends Controller
             $user = User::where('email', '=', $request->input('email'))->first();
             if(empty($user)){
                 $create = User::create(array(
-                    'firstname' => $request->input('name'),
-                    'role'      => 'USER',
-                    'email'     => $request->input('email'),
-                    'password'  => bcrypt('123456')
+                    'firstname'     => $request->input('name'),
+                    'role'          => 'USER',
+                    'account_type'  => 'FACEBOOK',
+                    'email'         => $request->input('email'),
+                    'password'      => bcrypt('123456')
                 ));
 
                 if ($create && Auth::attempt(array('email' => $request->input('email'), 'password' => '123456'))){
@@ -104,18 +105,33 @@ class LoginController extends Controller
                 }
             }
             else{
-                if (Auth::attempt(array('email' => $request->input('email'), 'password' => '123456'))) {
-                    $this->updateToken();
-                    Session::put('id_user', Auth::user()->id_user);
-                    Session::put('email', Auth::user()->email);
-                    Session::put('role', Auth::user()->role);
-                    Session::put('firstname', Auth::user()->firstname);
-                    Session::put('lastname', Auth::user()->lastname);
-                    Session::put('session_id', Session::getId());
-                    Session::save();
+                if($user->account_type == 'FACEBOOK'){
+                    if (Auth::attempt(array('email' => $request->input('email'), 'password' => '123456'))) {
+                        $this->updateToken();
+                        Session::put('id_user', Auth::user()->id_user);
+                        Session::put('email', Auth::user()->email);
+                        Session::put('role', Auth::user()->role);
+                        Session::put('firstname', Auth::user()->firstname);
+                        Session::put('lastname', Auth::user()->lastname);
+                        Session::put('session_id', Session::getId());
+                        Session::save();
 
-                    return Session::all();
+                        return Session::all();
+                    }
                 }
+
+                if($user->account_type == 'GOOGLE'){
+                    return array(
+                        'success' => false,
+                        'message' => __('general.googleNotice')
+                    );
+                }
+
+                return array(
+                    'success' => false,
+                    'message' => __('general.socialMediaError')
+                );
+
             }
         }
     }
@@ -133,10 +149,11 @@ class LoginController extends Controller
             $user = User::where('email', '=', $email)->first();
             if(empty($user)){
                 $create = User::create(array(
-                    'firstname' => $name,
-                    'role'      => 'USER',
-                    'email'     => $email,
-                    'password'  => bcrypt('123456')
+                    'firstname'     => $name,
+                    'role'          => 'USER',
+                    'account_type'  => 'GOOGLE',
+                    'email'         => $email,
+                    'password'      => bcrypt('123456')
                 ));
 
                 if ($create && Auth::attempt(array('email' => $email, 'password' => '123456'))){
@@ -160,17 +177,26 @@ class LoginController extends Controller
                 }
             }
             else{
-                if (Auth::attempt(array('email' => $email, 'password' => '123456'))) {
-                    $this->updateToken();
-                    Session::put('id_user', Auth::user()->id_user);
-                    Session::put('email', Auth::user()->email);
-                    Session::put('role', Auth::user()->role);
-                    Session::put('firstname', Auth::user()->firstname);
-                    Session::put('lastname', Auth::user()->lastname);
-                    Session::put('session_id', Session::getId());
-                    Session::save();
+                if($user->account_type == 'GOOGLE'){
+                    if (Auth::attempt(array('email' => $email, 'password' => '123456'))) {
+                        $this->updateToken();
+                        Session::put('id_user', Auth::user()->id_user);
+                        Session::put('email', Auth::user()->email);
+                        Session::put('role', Auth::user()->role);
+                        Session::put('firstname', Auth::user()->firstname);
+                        Session::put('lastname', Auth::user()->lastname);
+                        Session::put('session_id', Session::getId());
+                        Session::save();
 
-                    return Session::all();
+                        return Session::all();
+                    }
+                }
+
+                if($user->account_type == 'FACEBOOK'){
+                    return array(
+                        'success' => false,
+                        'message' => __('general.facebookNotice')
+                    );
                 }
             }
         }
@@ -194,7 +220,7 @@ class LoginController extends Controller
             return Session::all();
         }
 
-        if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')))) {
+        if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password'), 'account_type' => 'NULL'))) {
             $this->updateToken();
             Session::put('id_user', Auth::user()->id_user);
             Session::put('email', Auth::user()->email);

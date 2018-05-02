@@ -78,7 +78,7 @@
                                     <input type="text" class="form-control" name="lastname" placeholder="@lang('general.lastName')" required data-msg="@lang('validations.required')" tabindex="2">
                                 </div>
                                 <div class="mg-contact-form-input">
-                                    <input type="text" class="form-control" name="telephone" placeholder="@lang('general.telephone')" required data-msg="@lang('validations.required')"tabindex="4">
+                                    <input type="text" class="form-control" name="phone" placeholder="@lang('general.telephone')" required data-msg="@lang('validations.required')"tabindex="4">
                                 </div>
                                 <div class="mg-contact-form-input">
                                     <input type="password" class="form-control" name="password_confirm" placeholder="@lang('general.retypePassword')" required data-msg="@lang('validations.required')" data-msg-equalto="@lang('validations.equaltopassword')" tabindex="6">

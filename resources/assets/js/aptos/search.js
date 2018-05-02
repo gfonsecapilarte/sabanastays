@@ -107,7 +107,9 @@ $(document).ready(function(){
             var lang = el.lang[''+locale+''];
 
             if(lang != undefined){
-                $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                if(el.thumbnail != null){
+                    $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                }
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);
                 $('#apto-template .sa-apto-price .price').text(el.price);
@@ -121,8 +123,10 @@ $(document).ready(function(){
 
                 /* Amenities */
                 var amenHtml = '<ul>';
-                el.amenities.forEach(function(amenity){
-                    amenHtml += '<li><i class="'+amenity.icon+'"></i>'+amenity.lang[''+locale+''].name+'</li>';
+                el.amenities.forEach(function(amenity,index){
+                    if(index < 6){
+                        amenHtml += '<li><i class="'+amenity.icon+'"></i>'+amenity.lang[''+locale+''].name+'</li>';
+                    }
                 });
                 amenHtml += '</ul>';
 

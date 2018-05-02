@@ -102,5 +102,9 @@ return [
     'signOut'                   => 'Sign Out',
     'incompleted'               => 'incompleted',
     'reserved'                  => 'reserved',
-    'unavailable'               => 'unavailable'
+    'unavailable'               => 'unavailable',
+    'myAccount'                 => 'My Account',
+    'googleNotice'              => 'This email already exists but with one of Google. Login with this account please',
+    'socialMediaError'          => 'This email already exists but with a different account to Facebook and Google. Log in with a password',
+    'facebookNotice'            => 'This email already exists but with one of Facebook. Login with this account please'
 ];

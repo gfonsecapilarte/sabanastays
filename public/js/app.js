@@ -19278,7 +19278,9 @@ $(document).ready(function () {
             var lang = el.lang['' + locale + ''];
 
             if (lang != undefined) {
-                $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                if (el.thumbnail != null) {
+                    $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                }
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);
                 $('#apto-template .sa-apto-price .price').text(el.price);
@@ -19291,8 +19293,10 @@ $(document).ready(function () {
 
                 /* Amenities */
                 var amenHtml = '<ul>';
-                el.amenities.forEach(function (amenity) {
-                    amenHtml += '<li><i class="' + amenity.icon + '"></i>' + amenity.lang['' + locale + ''].name + '</li>';
+                el.amenities.forEach(function (amenity, index) {
+                    if (index < 6) {
+                        amenHtml += '<li><i class="' + amenity.icon + '"></i>' + amenity.lang['' + locale + ''].name + '</li>';
+                    }
                 });
                 amenHtml += '</ul>';
 
@@ -19458,7 +19462,7 @@ var validate = __webpack_require__(2);
 
 /** Setup Facebook **/
 var Facebook = __WEBPACK_IMPORTED_MODULE_0_fb_sdk___default()({
-    appId: '155464328481769',
+    appId: '380347702447842',
     status: true,
     version: 'v2.8'
 });
@@ -19520,7 +19524,7 @@ $(document).ready(function () {
                                 localStorage.setItem('api_token', reply.api_token);
                                 localStorage.setItem('id_user', reply.id_user);
                                 localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
-                                location.href = profile_link;
+                                //location.href = profile_link;
                             }
                         }
                     });
@@ -20623,7 +20627,6 @@ $(document).ready(function () {
     if (localStorage.getItem('api_token')) {
         $('#login-menu-item').hide();
         $('#user-menu-item').removeClass('hidden');
-        $('#user-menu-item .name').text(localStorage.getItem('user_name'));
     }
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -21023,9 +21026,10 @@ $(document).ready(function () {
             $('a', this).tab('show');
             if (user.token) {
                 $('.mg-book-form-personal > div').hide();
-                /** Draw values in sidebar **/
-                showSidebarData();
             }
+
+            /** Draw values in sidebar **/
+            showSidebarData();
         } else {
             Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), apartmentWarning);
         }
@@ -21087,7 +21091,11 @@ $(document).ready(function () {
         var goTo = $(this).attr('href');
         if (goTo == '#personal-info-form') {
             apartment.id = $(this).attr('id').split('_')[1];
-            Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["e" /* saNextStep */])($(this));
+            if (user.done || user.token) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["e" /* saNextStep */])($('a[href="#address-form"]'));
+            } else {
+                Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["e" /* saNextStep */])($(this));
+            }
         } else if (goTo == '#address-form') {
             $('#sa-register-two').submit();
             if (user.done || user.token) {
