@@ -14,6 +14,10 @@
 </head>
 
 <body>
+    <script>
+        var loginLink = '{{ route("adminlogin") }}';
+    </script>
+
     <!-- Preloader -->
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>

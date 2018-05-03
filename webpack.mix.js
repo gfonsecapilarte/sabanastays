@@ -15,6 +15,7 @@ const webpack = require('webpack');
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
     .js('resources/assets/js/backoffice.js', 'public/js/backoffice.js')
+    .js('resources/assets/js/backoffice/login.js', 'public/js/adminlogin.js')
     .sass('resources/assets/sass/backoffice/main.scss', 'public/css/backoffice/backoffice.css')
     .sass('resources/assets/sass/app.scss', 'public/css/app.css');
 

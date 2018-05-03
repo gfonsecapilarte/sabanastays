@@ -208,6 +208,39 @@ class LoginController extends Controller
         }
     }
 
+    /*
+     * Login for Administrators
+     */
+    public function adminLogin(Request $request){
+        if(Auth::check()){
+            return Session::all();
+        }
+
+        $data = array(
+            'email'         => $request->input('email'),
+            'password'      => $request->input('password'),
+            'account_type'  => 'NORMAL',
+            'role'          => 'ADMIN'
+        );
+
+        if (Auth::attempt($data)){
+            $this->updateToken();
+            Session::put('id_user', Auth::user()->id_user);
+            Session::put('email', Auth::user()->email);
+            Session::put('role', Auth::user()->role);
+            Session::put('firstname', Auth::user()->firstname);
+            Session::put('lastname', Auth::user()->lastname);
+            Session::put('session_id', Session::getId());
+            Session::save();
+
+            return Session::all();
+        }
+
+        return array(
+            'success' => false,
+            'message' => 'Credentials failed'
+        );
+    }
     /**
      * Get the needed authorization credentials from the request.
      *
@@ -238,5 +271,25 @@ class LoginController extends Controller
             'message' => 'Credentials failed'
         );
 
+    }
+
+    /**
+     * Check if session is for administrators
+     */
+    public function checkAdminSession(Request $request){
+        $user = User::where('id_user', $request->input('id_user'))
+            ->where('api_token',$request->input('api_token'))
+            ->where('role','ADMIN')
+            ->first();
+
+        if($user){
+            return array(
+                'success' => true,
+            );
+        }
+
+        return array(
+            'success' => false,
+        );
     }
 }

@@ -28,6 +28,8 @@ Route::post('/user/facebook/login', 'Auth\LoginController@facebookLogin');//Logi
 Route::post('/user/google/login', 'Auth\LoginController@googleLogin');//Login with Google
 Route::get('/user', 'UserController@user');
 Route::put('/user', 'UserController@update');
+Route::post('/admin/login', 'Auth\LoginController@adminLogin');//Login
+Route::get('/admin/session/check', 'Auth\LoginController@checkAdminSession');
 
 //address
 Route::get('/addresses', 'AddressController@getAddresses');

@@ -16,6 +16,7 @@ import "./backoffice/libraries/jQuery.style.switcher.js";
 import "./backoffice/libraries/jquery.growl.js";
 window.Dropzone = require('./backoffice/libraries/dropzone.js');
 
+import "./backoffice/session.js";
 import "./backoffice/booking.js";
 import "./backoffice/apartment.js";
 import "./backoffice/apartment-form.js";
