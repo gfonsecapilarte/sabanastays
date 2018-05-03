@@ -108,7 +108,7 @@ $(document).ready(function(){
 
             if(lang != undefined){
                 if(el.thumbnail != null){
-                    $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                    $('#apto-template .sa-thumbnail').attr('src',mainUrl+'/'+el.thumbnail.path);
                 }
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);

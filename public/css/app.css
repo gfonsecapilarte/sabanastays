@@ -7705,16 +7705,6 @@ body.apartment-detail #mg-map {
   height: 500px;
 }
 
-.booking-detail .btn-main {
-  position: absolute;
-  top: -40px;
-  right: 0px;
-}
-
-.booking-detail .mg-features {
-  display: none;
-}
-
 /*
  * Login style
  */
@@ -7778,6 +7768,11 @@ body.booking .mg-available-rooms .mg-avl-room-title > span {
   float: right !important;
 }
 
+body.booking .mg-available-rooms .mg-room-fecilities ul li {
+  float: left;
+  width: 50%;
+}
+
 body.my-bookings .sa-date {
   margin-top: 20px;
 }
@@ -7792,6 +7787,22 @@ body.my-bookings .sa-date span.day {
   font-size: 30px;
   font-weight: 600;
   width: 30%;
+}
+
+body.my-bookings .booking-detail .btn-main {
+  position: absolute;
+  top: -40px;
+  right: 0px;
+}
+
+body.my-bookings .booking-detail .mg-features {
+  display: none;
+  padding-top: 20px;
+}
+
+body.my-bookings .booking-detail .mg-room-fecilities ul li {
+  float: left;
+  width: 25%;
 }
 
 /*

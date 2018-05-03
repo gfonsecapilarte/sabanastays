@@ -14,6 +14,7 @@ use App\User as UserModel;
 use App\Models\City as CityModel;
 use App\Models\State as StateModel;
 use App\Models\Country as CountryModel;
+use App\Models\Media as MediaModel;
 
 class BookingController extends Controller
 {
@@ -40,14 +41,30 @@ class BookingController extends Controller
 
     /*
      * Get list of bookings by a gave Status
+     * - upcoming
      */
     public function getBookinsByStatus(Request $request){
         $this->checkSession($request);
         if ($request->has('status')){
-            $bookings = BookingModel::where('status', $request->input('status'))
+            $date = now()->format('Y-m-d');
+
+            $bookings = BookingModel::where('status', 'PAID')
                 ->where('id_user',$request->input('id_user'))
-                ->with(array('payment','apartment'))
-                ->get();
+                ->with(array('payment','apartment'));
+
+            if($request->input('status') == 'upcoming'){
+                $bookings->where('booking_date_start','>=',$date);
+            }
+
+            if($request->input('status') == 'completed'){
+                $bookings->where('booking_date_start','<',$date);
+            }
+
+            $bookings = $bookings->get();
+
+            foreach ($bookings as $booking) {
+                $booking->apartment->thumbnail = MediaModel::getFirstMediaByType($booking->apartment->id_apartment, 'apartment');
+            }
 
             return response()->json(array(
                 'success' => true,

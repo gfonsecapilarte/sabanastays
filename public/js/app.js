@@ -19272,7 +19272,7 @@ $(document).ready(function () {
 
             if (lang != undefined) {
                 if (el.thumbnail != null) {
-                    $('#apto-template .sa-thumbnail').text(el.thumbnail.path);
+                    $('#apto-template .sa-thumbnail').attr('src', mainUrl + '/' + el.thumbnail.path);
                 }
                 $('#apto-template .mg-avl-room-title a').text(lang.name);
                 $('#apto-template .sa-apto-description').text(lang.short_description);
@@ -22479,13 +22479,21 @@ return $;
 $(document).ready(function () {
 
     if ($('#booking-template').length) {
-        getBookingsList('paid');
+        getBookingsList('upcoming');
     }
+
+    /*
+     * Get completed Bookings list
+     */
+    $('a[href="#completed"]').click(function (e) {
+        getBookingsList('completed');
+    });
 
     /*
      * Get a list of payment acording a gave status like parameter
      */
     function getBookingsList(status) {
+        console.log(status);
         $.ajax({
             url: '/api/bookings',
             type: 'GET',
@@ -22496,7 +22504,7 @@ $(document).ready(function () {
             },
             success: function success(reply) {
                 if (reply.success != null && reply.success) {
-                    drawBookings(reply.bookings);
+                    drawBookings(reply.bookings, status);
                 }
             }
         });
@@ -22505,9 +22513,13 @@ $(document).ready(function () {
     /*
      * Function to draw bookings
      */
-    function drawBookings(bookings) {
+    function drawBookings(bookings, status) {
         var template = $('#booking-template');
         $(bookings).each(function (index, booking) {
+
+            if (booking.apartment.thumbnail != null) {
+                $('#booking-template .sa-thumbnail').attr('src', mainUrl + '/' + booking.apartment.thumbnail.path);
+            }
 
             /** Draw apartment name **/
             booking.apartment.building.lang.map(function (b) {
@@ -22550,7 +22562,7 @@ $(document).ready(function () {
             });
 
             $('#booking-template .mg-room-fecilities ul').html(amenities);
-            $('#upcoming .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
+            $('#' + status + ' .mg-avl-rooms').append('<div class="mg-avl-room">' + template.html() + '</div>');
         });
     }
 

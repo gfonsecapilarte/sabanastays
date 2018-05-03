@@ -1,7 +1,7 @@
 <div id="booking-template" class="mg-avl-room hidden">
     <div class="row">
         <div class="col-sm-5">
-            <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive"></a>
+            <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive sa-thumbnail"></a>
         </div>
         <div class="col-sm-7">
             <h3 class="mg-avl-room-title sa-building-name"><a href="#">Torre Rohrmoser</a></h3>
@@ -45,10 +45,10 @@
             </div>
         </div>
         <div class="col-sm-12 booking-detail">
-            <div class="mg-features pt20">
+            <div class="mg-features">
                 <h2 class="mg-sec-left-title">@lang('general.amenities')</h2>
                 <div class="row">
-                    <div class="col-xs-4 mg-room-fecilities">
+                    <div class="col-xs-12 mg-room-fecilities">
                         <ul>
                             <li><i class="fp-ht-tv"></i> TV</li>
                             <li><i class="fp-ht-washingmachine"></i> In-Suite Laundry</li>

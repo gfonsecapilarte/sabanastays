@@ -21,6 +21,7 @@
             <script>
                 var locale     = '{{ strtoupper($locale) }}';
                 var google_key = '{{ env('GOOGLE_KEY') }}';
+                var mainUrl    = '{{ URL::to('/') }}';
             </script>
         @endif
 

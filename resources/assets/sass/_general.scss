@@ -53,18 +53,6 @@
     }
 }
 
-.booking-detail{
-    .btn-main{
-        position: absolute;
-        top: -40px;
-        right: 0px;
-    }
-
-    .mg-features{
-        display: none;
-    }
-}
-
 /*
  * Login style
  */
@@ -134,12 +122,12 @@ body.booking{
         }
 
         .mg-room-fecilities{
-            // ul{
-            //     li{
-            //         float: left;
-            //         width: 50%;
-            //     }
-            // }
+            ul{
+                li{
+                    float: left;
+                    width: 50%;
+                }
+            }
         }
     }
 }
@@ -157,6 +145,28 @@ body.my-bookings{
                 font-size: 30px;
                 font-weight: 600;
                 width: 30%;
+            }
+        }
+    }
+
+    .booking-detail{
+        .btn-main{
+            position: absolute;
+            top: -40px;
+            right: 0px;
+        }
+
+        .mg-features{
+            display: none;
+            padding-top: 20px;
+        }
+
+        .mg-room-fecilities{
+            ul{
+                li{
+                    float: left;
+                    width: 25%;
+                }
             }
         }
     }
