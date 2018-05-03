@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Back\CoreController;
 
-class DashboardController extends Controller
+class DashboardController extends CoreController
 {
     public function index()
     {
-        return view('backoffice/dashboard');
+        return $this->display('backoffice/dashboard');
     }
 }

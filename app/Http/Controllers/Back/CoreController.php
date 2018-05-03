@@ -10,8 +10,9 @@ class CoreController extends Controller
     private $html = '';
     public function __construct(Request $request)
     {
-//        $this->checkSession($request);
-        return true;
+        if($request->ajax()) {
+            $this->checkSession($request);
+        }
     }
 
     protected function display($view, $data = array(), $display_header = true, $display_footer = true)
