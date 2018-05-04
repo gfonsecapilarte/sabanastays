@@ -85,3 +85,5 @@ Route::post('/media/create', 'MediaController@create')->name('dashboard.media.cr
 Route::get('/location/countries', 'LocationController@getCountries');
 Route::get('/location/states', 'LocationController@getStates');
 Route::get('/location/cities', 'LocationController@getCities');
+
+Route::get('/contactus', 'ContactController@sendMessage');

@@ -20636,7 +20636,19 @@ $(document).ready(function () {
     if ($('#sa-contact-form').length > 0) {
         $('#sa-contact-form').validate({
             submitHandler: function submitHandler(form) {
-                alert('Sending...');
+                sendMessage();
+            }
+        });
+    }
+
+    function sendMessage() {
+        $('#loader').show();
+        $.ajax({
+            url: '/api/contactus/',
+            type: 'POST',
+            data: $('#sa-contact-form').serialize(),
+            success: function success(reply) {
+                $('#loader').hide();
             }
         });
     }
