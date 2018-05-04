@@ -18,6 +18,7 @@
         var adrressWarning      = '{{ __('general.adrressWarning') }}';
         var attempt             = '{{ __('general.attempt') }}';
         var _apartments         = [];
+        var myBookingsLink      = '{{ route("bookings") }}';
     </script>
 
     <div class="mg-page">

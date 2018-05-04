@@ -20,6 +20,10 @@ $(document).ready(function() {
         getBookingsList('completed');
     });
 
+    $('a[href="#cancelled"]').click(function(e){
+        getBookingsList('cancelled');
+    });
+
     /*
      * Get a list of payment acording a gave status like parameter
      */
@@ -46,6 +50,7 @@ $(document).ready(function() {
      */
     function drawBookings(bookings,status){
         var template = $('#booking-template');
+        $('#'+status+' .mg-avl-rooms').html('');
         $(bookings).each(function(index, booking){
 
             if(booking.apartment.thumbnail != null){
@@ -67,7 +72,13 @@ $(document).ready(function() {
             });
 
             $('#booking-template .sa-booking-reference span').text(booking.reference);
-            $('#booking-template .sa-booking-price').text(booking.payment.amount);
+
+            if(booking.payment){
+                $('#booking-template .sa-booking-price').text(booking.payment.amount);
+            }
+            else{
+                $('#booking-template .sa-booking-price').text(0);
+            }
 
             /** Draw dates **/
             var dateStart = converDate(booking.booking_date_start).split(' ');
@@ -96,7 +107,6 @@ $(document).ready(function() {
             $('#'+status+' .mg-avl-rooms').append('<div class="mg-avl-room">'+template.html()+'</div>');
         });
     }
-
 
     /*
 	 * Click to show details of a booking

@@ -355,7 +355,7 @@ $(document).ready(function() {
                     else{
                         if(reply.booking.status == 'PAID'){
                             successMessage($('.mg-booking-form'),reply.checkout.responseMsg);
-
+                            location.href = myBookingsLink;
                         }
                     }
                 }
@@ -400,6 +400,7 @@ $(document).ready(function() {
 
             /** Draw values in sidebar **/
             showSidebarData();
+            $('.mg-booking-form .alert-danger').addClass('hidden');
         }
         else{
             errorMessage($('.mg-booking-form'),apartmentWarning);
@@ -417,7 +418,9 @@ $(document).ready(function() {
             $('#sa-register-two').submit();
             if(user.done || user.token){
                 saBookingStepThree();
+                showSidebarData();
                 $('a',this).tab('show');
+                $('.mg-booking-form .alert-danger').addClass('hidden');
             }
             else{
                 errorMessage($('.mg-booking-form'),infoUserWarning);
@@ -442,6 +445,7 @@ $(document).ready(function() {
                 if(address.first.done){
                     saBookingStepFour();
                     $('a',this).tab('show');
+                    $('.mg-booking-form .alert-danger').addClass('hidden');
                 }
                 else{
                     errorMessage($('.mg-booking-form'),adrressWarning);
@@ -522,6 +526,7 @@ $(document).ready(function() {
         var checkOut = localStorage.getItem('checkout');
         var nights   = calculateNights(checkIn,checkOut);
 
+        $('#mg-room-cart .apartment-image').attr('src',mainUrl+'/'+sidebarData.image);
         $('#mg-room-cart .apartment-title').text(sidebarData.title);
         $('#mg-room-cart .apartment-price').text(sidebarData.price);
         $('#mg-room-cart .apartment-checkin').text(converDate(checkIn));

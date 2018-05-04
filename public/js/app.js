@@ -20980,6 +20980,7 @@ $(document).ready(function () {
                         } else {
                             if (reply.booking.status == 'PAID') {
                                 Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["b" /* successMessage */])($('.mg-booking-form'), reply.checkout.responseMsg);
+                                location.href = myBookingsLink;
                             }
                         }
                     }
@@ -21023,6 +21024,7 @@ $(document).ready(function () {
 
             /** Draw values in sidebar **/
             showSidebarData();
+            $('.mg-booking-form .alert-danger').addClass('hidden');
         } else {
             Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), apartmentWarning);
         }
@@ -21038,7 +21040,9 @@ $(document).ready(function () {
             $('#sa-register-two').submit();
             if (user.done || user.token) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["c" /* saBookingStepThree */])();
+                showSidebarData();
                 $('a', this).tab('show');
+                $('.mg-booking-form .alert-danger').addClass('hidden');
             } else {
                 Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), infoUserWarning);
             }
@@ -21060,6 +21064,7 @@ $(document).ready(function () {
                 if (address.first.done) {
                     Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["a" /* saBookingStepFour */])();
                     $('a', this).tab('show');
+                    $('.mg-booking-form .alert-danger').addClass('hidden');
                 } else {
                     Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), adrressWarning);
                 }
@@ -21134,6 +21139,7 @@ $(document).ready(function () {
         var checkOut = localStorage.getItem('checkout');
         var nights = Object(__WEBPACK_IMPORTED_MODULE_3__dates_dates_js__["a" /* calculateNights */])(checkIn, checkOut);
 
+        $('#mg-room-cart .apartment-image').attr('src', mainUrl + '/' + sidebarData.image);
         $('#mg-room-cart .apartment-title').text(sidebarData.title);
         $('#mg-room-cart .apartment-price').text(sidebarData.price);
         $('#mg-room-cart .apartment-checkin').text(Object(__WEBPACK_IMPORTED_MODULE_3__dates_dates_js__["b" /* converDate */])(checkIn));
@@ -22489,6 +22495,10 @@ $(document).ready(function () {
         getBookingsList('completed');
     });
 
+    $('a[href="#cancelled"]').click(function (e) {
+        getBookingsList('cancelled');
+    });
+
     /*
      * Get a list of payment acording a gave status like parameter
      */
@@ -22515,6 +22525,7 @@ $(document).ready(function () {
      */
     function drawBookings(bookings, status) {
         var template = $('#booking-template');
+        $('#' + status + ' .mg-avl-rooms').html('');
         $(bookings).each(function (index, booking) {
 
             if (booking.apartment.thumbnail != null) {
@@ -22536,7 +22547,12 @@ $(document).ready(function () {
             });
 
             $('#booking-template .sa-booking-reference span').text(booking.reference);
-            $('#booking-template .sa-booking-price').text(booking.payment.amount);
+
+            if (booking.payment) {
+                $('#booking-template .sa-booking-price').text(booking.payment.amount);
+            } else {
+                $('#booking-template .sa-booking-price').text(0);
+            }
 
             /** Draw dates **/
             var dateStart = Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["b" /* converDate */])(booking.booking_date_start).split(' ');

@@ -42,22 +42,29 @@ class BookingController extends Controller
     /*
      * Get list of bookings by a gave Status
      * - upcoming
+     * - completed
+     * - cancelled
      */
     public function getBookinsByStatus(Request $request){
         $this->checkSession($request);
         if ($request->has('status')){
             $date = now()->format('Y-m-d');
 
-            $bookings = BookingModel::where('status', 'PAID')
-                ->where('id_user',$request->input('id_user'))
+            $bookings = BookingModel::where('id_user',$request->input('id_user'))
                 ->with(array('payment','apartment'));
 
             if($request->input('status') == 'upcoming'){
+                $bookings->where('status', 'PAID');
                 $bookings->where('booking_date_start','>=',$date);
             }
 
             if($request->input('status') == 'completed'){
+                $bookings->where('status', 'PAID');
                 $bookings->where('booking_date_start','<',$date);
+            }
+
+            if($request->input('status') == 'cancelled'){
+                $bookings->where('status', 'CANCELLED');
             }
 
             $bookings = $bookings->get();
