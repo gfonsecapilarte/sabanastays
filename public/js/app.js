@@ -15801,9 +15801,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_register_js__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_user_js__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__contact_contact_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__newsletter_newsletter_js__ = __webpack_require__(228);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -15872,6 +15872,11 @@ loadGoogleMapsApi({ key: google_key }).then(function (googleMaps) {
  * Module to booking functions
  */
 
+
+
+/*
+ * Module for newsletters
+ */
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -20626,9 +20631,16 @@ $(document).ready(function () {
 
 /***/ }),
 /* 86 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {var validate = __webpack_require__(2);
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messages_messages_js__ = __webpack_require__(3);
+var validate = __webpack_require__(2);
+
+/**
+ * Modules to show error and success messages
+ */
+
 
 $(document).ready(function () {
 
@@ -20645,15 +20657,18 @@ $(document).ready(function () {
         $('#loader').show();
         $.ajax({
             url: '/api/contactus/',
-            type: 'POST',
+            type: 'GET',
             data: $('#sa-contact-form').serialize(),
             success: function success(reply) {
                 $('#loader').hide();
+                if (reply.success == true) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__messages_messages_js__["b" /* successMessage */])($('#sa-contact-form'), reply.message);
+                }
             }
         });
     }
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
 /* 87 */
@@ -22621,6 +22636,183 @@ $(document).ready(function () {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messages_messages_js__ = __webpack_require__(3);
+var validate = __webpack_require__(2);
+
+/**
+ * Modules to show error and success messages
+ */
+
+
+$(document).ready(function () {
+
+    /** Validate forms **/
+    if ($('#sa-newsletter-form').length > 0) {
+        $('#sa-newsletter-form').validate({
+            submitHandler: function submitHandler(form) {
+                sendMessage();
+            }
+        });
+    }
+
+    function sendMessage() {
+        $('#loader').show();
+        $.ajax({
+            url: '/api/newsletter/',
+            type: 'GET',
+            data: $('#sa-newsletter-form').serialize(),
+            success: function success(reply) {
+                $('#loader').hide();
+                if (reply.success == true) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__messages_messages_js__["b" /* successMessage */])($('#sa-newsletter-form'), reply.message);
+                } else {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__messages_messages_js__["a" /* errorMessage */])($('#sa-newsletter-form'), reply.message);
+                }
+            }
+        });
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);

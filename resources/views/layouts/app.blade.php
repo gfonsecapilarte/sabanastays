@@ -62,9 +62,11 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="widget">
                                 <h2 class="mg-widget-title">@lang('general.newsletters')</h2>
-                                <form>
+                                <form id="sa-newsletter-form">
+                                    @include('messages/success')
+                                    @include('messages/error')
                                     <p>
-                                        <input type="email" class="form-control" placeholder="@lang('general.yourEmail')">
+                                        <input type="email" class="form-control" name="email" placeholder="@lang('general.yourEmail')" required data-msg="@lang('validations.required')" data-msg-email="@lang('validations.email')">
                                     </p>
                                     <input type="submit" class="btn btn-main" value="@lang('general.subscribe')">
                                 </form>

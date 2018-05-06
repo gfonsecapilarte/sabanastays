@@ -252,6 +252,7 @@ CREATE TABLE `users` (
   `phone` varchar(45) DEFAULT NULL,
   `gender` enum('MALE','FEMALE') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
+  `account_type` enum('NORMAL','GOOGLE','FACEBOOK') DEFAULT NULL,
   `since` timestamp DEFAULT CURRENT_TIMESTAMP,
   `remember_token` varchar(100) DEFAULT NULL,
   `remember_token_time` timestamp NULL DEFAULT NULL,
@@ -516,7 +517,7 @@ CREATE TABLE `media_lang` (
 DROP TABLE IF EXISTS `newsletter`;
 
 CREATE TABLE `newsletter` (
-  `id_newsletter` int(11) NOT NULL,
+  `id_newsletter` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(45) DEFAULT NULL,
   `active` tinyint(1) default 1,
   PRIMARY KEY (`id_newsletter`)

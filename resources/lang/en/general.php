@@ -106,5 +106,8 @@ return [
     'myAccount'                 => 'My Account',
     'googleNotice'              => 'This email already exists but with one of Google. Login with this account please',
     'socialMediaError'          => 'This email already exists but with a different account to Facebook and Google. Log in with a password',
-    'facebookNotice'            => 'This email already exists but with one of Facebook. Login with this account please'
+    'facebookNotice'            => 'This email already exists but with one of Facebook. Login with this account please',
+    'sentMessage'               => 'The message has been sent',
+    'newsletterError'           => 'This email already has been registered before',
+    'newsletterSuccess'         => 'The email has been registered'
 ];

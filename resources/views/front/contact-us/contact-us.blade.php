@@ -34,6 +34,9 @@
                 <div class="col-md-5">
                     <h2 class="mg-sec-left-title">@lang('general.eMailUs')</h2>
                     <form id="sa-contact-form" class="clearfix">
+
+                        @include('messages/success')
+
                         <div class="mg-contact-form-input">
                             <label for="full-name">@lang('general.fullName')</label>
                             <input type="text" class="form-control" name="name" required data-msg="@lang('validations.required')">

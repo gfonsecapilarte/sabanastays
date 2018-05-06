@@ -86,4 +86,8 @@ Route::get('/location/countries', 'LocationController@getCountries');
 Route::get('/location/states', 'LocationController@getStates');
 Route::get('/location/cities', 'LocationController@getCities');
 
+/* Contact Us */
 Route::get('/contactus', 'ContactController@sendMessage');
+
+/* Newsletters */
+Route::get('/newsletter', 'NewsletterController@saveEmail');

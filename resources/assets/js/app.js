@@ -67,3 +67,8 @@ import "./contact/contact.js";
  */
 import "./booking/booking.js";
 import "./booking/my-bookings-list.js";
+
+/*
+ * Module for newsletters
+ */
+import "./newsletter/newsletter.js";

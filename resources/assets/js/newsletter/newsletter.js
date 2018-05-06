@@ -12,8 +12,8 @@ import {
 $(document).ready(function() {
 
     /** Validate forms **/
-    if($('#sa-contact-form').length > 0){
-        $('#sa-contact-form').validate({
+    if($('#sa-newsletter-form').length > 0){
+        $('#sa-newsletter-form').validate({
             submitHandler: function(form) {
                 sendMessage();
             }
@@ -23,13 +23,16 @@ $(document).ready(function() {
     function sendMessage(){
         $('#loader').show();
         $.ajax({
-            url: '/api/contactus/',
+            url: '/api/newsletter/',
             type: 'GET',
-            data: $('#sa-contact-form').serialize(),
+            data: $('#sa-newsletter-form').serialize(),
             success: function(reply){
                 $('#loader').hide();
                 if(reply.success == true){
-                    successMessage($('#sa-contact-form'),reply.message);
+                    successMessage($('#sa-newsletter-form'),reply.message);
+                }
+                else{
+                    errorMessage($('#sa-newsletter-form'),reply.message);
                 }
             }
         });
