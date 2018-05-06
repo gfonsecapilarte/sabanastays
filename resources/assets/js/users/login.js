@@ -34,11 +34,13 @@ $(document).ready(function() {
      * Function to login
      */
     function login(){
+        $('#loader').show();
         $.ajax({
             url: '/api/user/login',
             type: 'POST',
             data: $('#sa-login').serialize(),
             success: function(reply){
+                $('#loader').hide();
                 if(reply.success != null && reply.success == false){
                     errorMessage($('#sa-login'),reply.message);
                 }

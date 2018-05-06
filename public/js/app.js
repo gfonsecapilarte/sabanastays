@@ -15762,8 +15762,8 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(55);
-__webpack_require__(92);
-module.exports = __webpack_require__(93);
+__webpack_require__(93);
+module.exports = __webpack_require__(94);
 
 
 /***/ }),
@@ -15803,7 +15803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__contact_contact_js__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__booking_booking_js__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_my_bookings_list_js__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__newsletter_newsletter_js__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__newsletter_newsletter_js__ = __webpack_require__(92);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -19482,11 +19482,13 @@ $(document).ready(function () {
      * Function to login
      */
     function login() {
+        $('#loader').show();
         $.ajax({
             url: '/api/user/login',
             type: 'POST',
             data: $('#sa-login').serialize(),
             success: function success(reply) {
+                $('#loader').hide();
                 if (reply.success != null && reply.success == false) {
                     Object(__WEBPACK_IMPORTED_MODULE_1__messages_messages_js__["a" /* errorMessage */])($('#sa-login'), reply.message);
                 } else {
@@ -20521,11 +20523,13 @@ $(document).ready(function () {
 
     /** Function to register **/
     function register() {
+        $('#loader').show();
         $.ajax({
             url: '/api/user',
             type: 'POST',
             data: $('#sa-register').serialize(),
             success: function success(reply) {
+                $('#loader').hide();
                 if (reply.success != null && reply.success == false) {
                     Object(__WEBPACK_IMPORTED_MODULE_0__messages_messages_js__["a" /* errorMessage */])($('#sa-login'), reply.message);
                 } else {
@@ -20626,6 +20630,31 @@ $(document).ready(function () {
         $('#login-menu-item').hide();
         $('#user-menu-item').removeClass('hidden');
     }
+
+    /*
+     * logout
+     */
+    $('#logout').click(function (e) {
+        e.preventDefault();
+        $('#loader').show();
+        $.ajax({
+            url: '/api/logout/',
+            type: 'GET',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token')
+            },
+            success: function success(reply) {
+                $('#loader').hide();
+                if (reply.success != null && reply.success == true) {
+                    localStorage.removeItem('id_user');
+                    localStorage.removeItem('api_token');
+                    localStorage.removeItem('user_name');
+                    location.href = mainUrl;
+                }
+            }
+        });
+    });
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -22627,152 +22656,6 @@ $(document).ready(function () {
 
 /***/ }),
 /* 92 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22813,6 +22696,18 @@ $(document).ready(function () {
     }
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

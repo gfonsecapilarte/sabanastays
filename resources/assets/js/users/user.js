@@ -82,4 +82,30 @@ $(document).ready(function() {
         $('#login-menu-item').hide();
         $('#user-menu-item').removeClass('hidden');
     }
+
+    /*
+     * logout
+     */
+    $('#logout').click(function(e){
+        e.preventDefault();
+        $('#loader').show();
+        $.ajax({
+            url: '/api/logout/',
+            type: 'GET',
+            data: {
+                id_user: localStorage.getItem('id_user'),
+                api_token: localStorage.getItem('api_token')
+            },
+            success: function(reply){
+                $('#loader').hide();
+                if(reply.success != null && reply.success == true){
+                    localStorage.removeItem('id_user');
+                    localStorage.removeItem('api_token');
+                    localStorage.removeItem('user_name');
+                    location.href = mainUrl;
+                }
+            }
+        });
+    });
+
 });

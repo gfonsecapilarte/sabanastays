@@ -29,11 +29,13 @@ $(document).ready(function() {
 
     /** Function to register **/
     function register(){
+        $('#loader').show();
         $.ajax({
             url: '/api/user',
             type: 'POST',
             data: $('#sa-register').serialize(),
             success: function(reply){
+                $('#loader').hide();
                 if(reply.success != null && reply.success == false){
                     errorMessage($('#sa-login'),reply.message);
                 }

@@ -292,4 +292,21 @@ class LoginController extends Controller
             'success' => false,
         );
     }
+
+    /**
+     * Logout
+     */
+    public function logout(Request $request){
+        if($this->checkSession($request) == true){
+            $user = User::find($request->input('id_user'));
+            $user->api_token = '';
+            $user->save();
+        }
+
+        return response()->json(
+            array(
+                'success' => true,
+            )
+        );
+    }
 }

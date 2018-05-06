@@ -30,6 +30,7 @@ Route::get('/user', 'UserController@user');
 Route::put('/user', 'UserController@update');
 Route::post('/admin/login', 'Auth\LoginController@adminLogin');//Login
 Route::get('/admin/session/check', 'Auth\LoginController@checkAdminSession');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 //address
 Route::get('/addresses', 'AddressController@getAddresses');
