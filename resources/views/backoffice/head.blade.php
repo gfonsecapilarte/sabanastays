@@ -18,6 +18,11 @@
         var loginLink = '{{ route("adminlogin") }}';
     </script>
 
+    <!-- Loadinf gor Ajax call -->
+    <div id="loader">
+        <div></div>
+    </div>
+
     <!-- Preloader -->
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>

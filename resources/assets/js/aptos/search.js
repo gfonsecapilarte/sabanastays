@@ -145,6 +145,15 @@ $(document).ready(function(){
         });
 
         drawPaginator(data.pagination.pages);
+
+        /**
+         * Select apartment automatically
+         */
+        if(apartmentId){
+            if($('#apto_1').length){
+                $('#apto_'+apartmentId).trigger('click');
+            }
+        }
     }
 
     /*

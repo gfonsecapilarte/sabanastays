@@ -9,7 +9,7 @@ class BookingController{
     /*
      * Method to load the booking page
      */
-    public function loadBookingPage(){
+    public function loadBookingPage($id = null){
         /** Get header and logo images **/
         $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
         $header = $header->getData();
@@ -22,7 +22,8 @@ class BookingController{
 			'locale' 	    => LaravelLocalization::getCurrentLocale(),
 			'languages'  	=> Language::all(),
             'header'        => $header,
-            'countries'     => $countries
+            'countries'     => $countries,
+            'id_apartment'  => $id
 		]);
     }
 

@@ -2,8 +2,8 @@
     <h2 class="mg-widget-title">@lang('general.yourBookingDetails')</h2>
     <div class="mg-widget-cart">
         <div class="mg-cart-room">
-            <img src="../images/room-1.png" alt="Delux Room" class="img-responsive apartment-image">
-            <h3 class="apartment-title">Junior Suite</h3>
+            <img src="" alt="Delux Room" class="img-responsive apartment-image">
+            <h3 class="apartment-title"></h3>
         </div>
         <div class="mg-widget-cart-row">
             <strong><span class="currency-sign"></span><span class="apartment-price"></span> /@lang('general.night')</strong>

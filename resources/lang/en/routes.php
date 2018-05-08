@@ -2,7 +2,7 @@
 return [
 	'about' 			=> 'about-us',
 	'apartmentDetail'	=> 'apartment/{id?}',
-	'booking'			=> 'booking',
+	'booking'			=> 'booking/{id?}',
 	'contactUs'			=> 'contact-us',
 	'login'				=> 'login',
 	'myProfile'			=> 'my-profile',

@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row" >
-                <a href="#" class="btn btn-main pull-right">@lang('general.bookApartment')</a>
+                <a href="{{ route('booking') }}/{{ $apartment->lang->id_apartment }}" class="btn btn-main pull-right">@lang('general.bookApartment')</a>
                 <a href="{{ route('booking') }}" class="btn btn-main pull-right mr10">@lang('general.comeBack')</a>
             </div>
         </div>

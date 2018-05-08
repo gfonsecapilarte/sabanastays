@@ -527,7 +527,7 @@ $(document).ready(function() {
         var nights   = calculateNights(checkIn,checkOut);
 
         $('#mg-room-cart .apartment-image').attr('src',mainUrl+'/'+sidebarData.image);
-        $('#mg-room-cart .apartment-title').text(sidebarData.title);
+        $('#mg-room-cart .apartment-title').text(sidebarData.name);
         $('#mg-room-cart .apartment-price').text(sidebarData.price);
         $('#mg-room-cart .apartment-checkin').text(converDate(checkIn));
         $('#mg-room-cart .apartment-checkout').text(converDate(checkOut));

@@ -61,6 +61,7 @@ $(document).ready(function() {
         event.preventDefault();
         var data = {};
         Facebook.login(function(response) {
+            $('#loader').show();
             if(response.status == 'connected'){
                 data.fb_exchange_token = response.authResponse.accessToken;
                 Facebook.api('/me?fields=name,email', function(response) {
@@ -71,6 +72,7 @@ $(document).ready(function() {
                         type: 'POST',
                         data: data,
                         success: function(reply){
+                            $('#loader').hide();
                             if(reply.success != null && reply.success == false){
                                 errorMessage($('#sa-login'),reply.message);
                             }
@@ -104,6 +106,7 @@ $(document).ready(function() {
 
         function attachSignin(element) {
             auth2.attachClickHandler(element,{},function(googleUser){
+                $('#loader').show();
                 $.ajax({
                     url: '/api/user/google/login',
                     type: 'POST',
@@ -111,6 +114,7 @@ $(document).ready(function() {
                         token:googleUser.getAuthResponse().id_token
                     },
                     success: function(reply){
+                        $('#loader').hide();
                         if(reply.success != null && reply.success == false){
                             errorMessage($('#sa-login'),reply.message);
                         }

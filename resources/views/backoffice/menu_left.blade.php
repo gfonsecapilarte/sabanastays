@@ -55,7 +55,7 @@
             </li>
 
 
-            <li><a href="login.html" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+            <li><a id="logout" href="login.html" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
         </ul>
     </div>
 </div>

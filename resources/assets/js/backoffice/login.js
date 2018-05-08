@@ -1,5 +1,14 @@
 let validate = require('jquery-validation');
 
+/**
+ * Modules to show error and success messages
+ */
+import {
+    errorMessage,
+    successMessage
+} from "../messages/messages.js";
+
+
 $(document).ready(function() {
 
     /*
@@ -17,13 +26,15 @@ $(document).ready(function() {
      * Function to login
      */
     function login(){
+        $('#loader').show();
         $.ajax({
             url: '/api/admin/login',
             type: 'POST',
             data: $('#loginform').serialize(),
             success: function(reply){
+                $('#loader').hide();
                 if(reply.success != null && reply.success == false){
-                    alert(reply.message);
+                    errorMessage($('#loginform'),reply.message);
                 }
                 else{
                     localStorage.setItem('api_token',reply.api_token);

@@ -2,7 +2,7 @@
 return [
 	'about' 			=> 'acerca-de-nosotros',
 	'apartmentDetail'	=> 'apartamento/{id?}',
-	'booking'			=> 'reservacion',
+	'booking'			=> 'reservacion/{id?}',
 	'contactUs'			=> 'contactenos',
 	'login'				=> 'iniciar-sesion',
 	'myProfile'			=> 'mi-perfil',

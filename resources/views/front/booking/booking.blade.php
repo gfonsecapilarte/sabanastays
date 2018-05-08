@@ -19,6 +19,7 @@
         var attempt             = '{{ __('general.attempt') }}';
         var _apartments         = [];
         var myBookingsLink      = '{{ route("bookings") }}';
+        var apartmentId         = '{{ $id_apartment }}';
     </script>
 
     <div class="mg-page">
