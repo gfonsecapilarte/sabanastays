@@ -29,22 +29,27 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="{{ route('dashboard.bookings') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                <a href="{{ route('dashboard.summary') }}" class="waves-effect"><i class="icon-chart fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">Summary</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('dashboard.bookings') }}" class="waves-effect"><i class="icon-calender fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Bookings</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard.apartments') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                <a href="{{ route('dashboard.apartments') }}" class="waves-effect"><i class="icon-home fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Apartments</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard.users') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                <a href="{{ route('dashboard.users') }}" class="waves-effect"><i class="icon-user fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Users</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard.web') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                <a href="{{ route('dashboard.web') }}" class="waves-effect"><i class="icon-settings fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Web admin</span>
                 </a>
             </li>

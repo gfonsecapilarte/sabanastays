@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 
 Route::get('/dashboard', 'Back\DashboardController@index')->name('dashboard');
 
+//summary
+Route::get('/dashboard/summary', 'Back\DashboardController@index')->name('dashboard.summary');
+
 //bookings
 Route::get('/dashboard/bookings', 'Back\BookingController@index')->name('dashboard.bookings');
 
