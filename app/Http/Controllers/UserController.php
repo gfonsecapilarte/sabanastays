@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class UserController extends Controller{
     public function __construct(Request $request){
@@ -103,7 +104,9 @@ class UserController extends Controller{
 
     private function createUser($data)
     {
-        return $this->updateUser(new User, $data);
+        $user = new User();
+        $user->account_type = 'NORMAL';
+        return $this->updateUser($user, $data);
     }
 
 
@@ -123,7 +126,12 @@ class UserController extends Controller{
         if (property_exists($data['information'], 'password') && !empty($data['information']->password)) {
             $user->password = bcrypt($data['information']->password);
         }
-        $user->save();
+
+        try {
+            $user->save();
+        } catch (QueryException $ex) {
+            return false;
+        }
 
         return $user->id_user;
     }

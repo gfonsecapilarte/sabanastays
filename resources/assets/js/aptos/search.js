@@ -150,7 +150,7 @@ $(document).ready(function(){
          * Select apartment automatically
          */
         if(apartmentId){
-            if($('#apto_1').length){
+            if($('#apto_'+apartmentId).length){
                 $('#apto_'+apartmentId).trigger('click');
             }
         }
