@@ -19048,7 +19048,9 @@ var UserForm = {
             phone: $('.form-information').find('.txt-phone').val(),
             birthdate: $('.form-information').find('.txt-birthdate').val(),
             gender: $('.form-information').find('.lst-gender').val(),
-            role: $('.form-information').find('.lst-role').val()
+            role: $('.form-information').find('.lst-role').val(),
+            email: $('.form-information').find('.txt-email').val(),
+            password: $('.form-information').find('.txt-password').val()
         };
     },
 
