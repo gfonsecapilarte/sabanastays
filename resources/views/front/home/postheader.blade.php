@@ -28,26 +28,26 @@
     <div class="mg-book-now">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-sm-3 col-md-3">
                     <h2 class="mg-bn-title">@lang('general.search')<span class="mg-bn-big">@lang('general.checkAvailability')</span></h2>
                 </div>
-                <div class="col-md-9">
+                <div class="col-sm-9 col-md-9">
                     <div class="mg-bn-forms">
-                        <form ide="form-search-aptos">
+                        <form id="form-search-aptos">
                             <div class="row">
-                                <div class="col-md-3 col-xs-6">
+                                <div class="col-xs-12 col-sm-3 col-md-3">
                                     <div class="input-group date mg-check-in">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input type="text" class="form-control" name="checkin" placeholder="@lang('general.checkIn')">
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-xs-6">
+                                <div class="col-xs-12 col-sm-3 col-md-3">
                                     <div class="input-group date mg-check-out">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input type="text" class="form-control" name="checkout" placeholder="@lang('general.checkOut')">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-xs-12 col-sm-3 col-md-3">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <select name="type" class="cs-select cs-skin-elastic">
@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-xs-12 col-sm-3 col-md-3">
                                     <button type="submit" id="btn-search-aptos" class="btn btn-main btn-block">@lang('general.search')</button>
                                 </div>
                             </div>

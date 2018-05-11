@@ -17,7 +17,7 @@ $(document).ready(function(){
      * - Search aptos from home header form
      * - Redirect to booking page
      */
-    $('#btn-search-aptos').click(function(e){
+    $('body').on('click','#btn-search-aptos',function(e){
         e.preventDefault();
         var checkIn     = $('input[name="checkin"]'),
             checkOut    = $('input[name="checkout"]'),

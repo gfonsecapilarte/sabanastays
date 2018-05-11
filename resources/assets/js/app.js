@@ -40,6 +40,8 @@ loadGoogleMapsApi({key: google_key}).then(function (googleMaps) {
     console.error(error)
 })
 
+import "./responsive.js";
+
 /*
  * Load currency information
  */

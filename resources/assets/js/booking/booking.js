@@ -208,6 +208,8 @@ $(document).ready(function() {
                         user.done = true;
                         saNextStep($('a[href="#address-form"]'));
                         $('.mg-book-form-personal > div').hide();
+                        $('#login-menu-item').hide();
+                        $('#user-menu-item').removeClass('hidden');
                     }
                     else if(reply.success == false){
                         errorMessage($('.mg-booking-form'),reply.message);
