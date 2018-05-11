@@ -8,9 +8,17 @@
                         <img src="{{ asset($header->media_logo[0]->path) }}" alt="LOGO SABANA STAYS" height="78">
                     </a>
                 @endif
+
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
 
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="main-menu">
                 <ul class="nav navbar-nav navbar-right">
 
                     <li id="login-menu-item"><a href="{{ route('login') }}">@lang('general.login')</a></li>
