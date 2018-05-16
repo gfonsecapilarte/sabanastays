@@ -50,12 +50,12 @@
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Building</label>
+                                        <label class="col-sm-4 control-label">City</label>
                                         <div class="col-sm-8">
                                             <select class="form-control" id="lst-city" name="lst-city">
-                                                <option value="0" @if (!isset($bulding)) selected @endif> - Choose city - </option>
+                                                <option value="0" @if (!isset($building)) selected @endif> - Choose city - </option>
                                                 @foreach ($cities as $city)
-                                                <option value="{{ $city->id_city }}" @if (isset($city) && isset($bulding) && $city->id_city == $building->id_city) selected @endif >{{ $city->name }}</option>
+                                                <option value="{{ $city->id_city }}" @if (isset($building) && $city->id_city == $building->id_city) selected @endif >{{ $city->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
