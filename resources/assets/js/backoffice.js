@@ -20,6 +20,8 @@ import "./backoffice/session.js";
 import "./backoffice/booking.js";
 import "./backoffice/apartment.js";
 import "./backoffice/apartment-form.js";
+import "./backoffice/building.js";
+import "./backoffice/building-form.js";
 import "./backoffice/web.js";
 import "./backoffice/user.js";
 import "./backoffice/user-form.js";

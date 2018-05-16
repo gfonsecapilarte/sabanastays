@@ -39,6 +39,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('dashboard.buildings') }}" class="waves-effect"><i class="icon-layers fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">Buildings</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('dashboard.apartments') }}" class="waves-effect"><i class="icon-home fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Apartments</span>
                 </a>

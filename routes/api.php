@@ -48,6 +48,12 @@ Route::get('/apartment/types', 'ApartmentController@getTypes');
 Route::get('/apartment/list', 'ApartmentController@listApartments');
 Route::post('/apartment/save', 'ApartmentController@saveApartment');
 
+//buildings
+Route::get('/buildings', 'BuildingController@getBuildings');
+Route::get('/building', 'BuildingController@getBuilding');
+Route::get('/building/list', 'BuildingController@listBuildings');
+Route::post('/building/save', 'BuildingController@saveBuilding');
+
 //users
 //Route::get('/users', 'ApartmentController@getUsers');
 //Route::get('/user', 'ApartmentController@getUser');

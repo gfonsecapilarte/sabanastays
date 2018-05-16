@@ -15,6 +15,11 @@ Route::get('/dashboard/apartments', 'Back\ApartmentController@index')->name('das
 Route::get('/dashboard/apartment/create', 'Back\ApartmentController@createApartment')->name('dashboard.apartment.create');
 Route::get('/dashboard/apartment/edit', 'Back\ApartmentController@editApartment')->name('dashboard.apartment.edit');
 
+//building
+Route::get('/dashboard/buildings', 'Back\BuildingController@index')->name('dashboard.buildings');
+Route::get('/dashboard/building/create', 'Back\BuildingController@createBuilding')->name('dashboard.building.create');
+Route::get('/dashboard/building/edit', 'Back\BuildingController@editBuilding')->name('dashboard.building.edit');
+
 //users
 Route::get('/dashboard/users', 'Back\UserController@index')->name('dashboard.users');
 Route::get('/dashboard/user/create', 'Back\UserController@createUser')->name('dashboard.user.create');
