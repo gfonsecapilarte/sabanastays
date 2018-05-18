@@ -12,7 +12,7 @@ import {
 
 /** Setup Facebook **/
 const Facebook = FBSDK({
-    appId: '380347702447842',
+    appId: faceboo_app_id,
     status: true,
     version: 'v2.8'
 });

@@ -19,9 +19,10 @@
 
         @if (!empty($locale))
             <script>
-                var locale     = '{{ strtoupper($locale) }}';
-                var google_key = '{{ env('GOOGLE_KEY') }}';
-                var mainUrl    = '{{ URL::to('/') }}';
+                var locale          = '{{ strtoupper($locale) }}';
+                var google_key      = '{{ env('GOOGLE_KEY') }}';
+                var faceboo_app_id  = '{{ env('FB_CLIENT_ID') }}';
+                var mainUrl         = '{{ URL::to('/') }}';
             </script>
         @endif
 

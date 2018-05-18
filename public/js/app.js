@@ -19505,7 +19505,7 @@ var validate = __webpack_require__(2);
 
 /** Setup Facebook **/
 var Facebook = __WEBPACK_IMPORTED_MODULE_0_fb_sdk___default()({
-    appId: '380347702447842',
+    appId: faceboo_app_id,
     status: true,
     version: 'v2.8'
 });
