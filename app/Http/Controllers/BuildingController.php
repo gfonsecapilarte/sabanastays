@@ -85,10 +85,10 @@ class BuildingController extends Controller
     {
         //settings
         $building->address = $data['settings']->address;
-        $building->postal_code = $data['settings']->postal_code;
-        $building->id_city = $data['settings']->id_city;
-        $building->lat = null;//$data['settings']->lat;
-        $building->lng = null;//$data['settings']->lng;
+//        $building->postal_code = $data['settings']->postal_code;
+//        $building->id_city = $data['settings']->id_city;
+        $building->lat = $data['settings']->lat;
+        $building->lng = $data['settings']->lng;
         $building->save();
         //lang
         foreach ($data['information'] as $id_language => $information) {

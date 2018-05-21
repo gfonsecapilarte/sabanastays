@@ -167,7 +167,7 @@ CREATE TABLE `building` (
   `postal_code` varchar(20) DEFAULT NULL,
   `lat` varchar(255) DEFAULT NULL,
   `lng` varchar(255) DEFAULT NULL,
-  `id_city` int(11) unsigned NOT NULL,
+  `id_city` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_building`),
   KEY `fk_building_cities1_idx` (`id_city`),
   CONSTRAINT `fk_building_cities1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`) ON DELETE NO ACTION ON UPDATE NO ACTION

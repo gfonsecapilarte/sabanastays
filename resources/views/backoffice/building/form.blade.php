@@ -41,15 +41,15 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Configuration</div>
+            <div class="panel-heading">Location</div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-12 col-md-4">
+                    <div class="col-xs-12 col-md-4 hidden">
                         <div class="panel panel-info">
                             <div class="panel-heading">Location</div>
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal">
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="col-sm-4 control-label">City</label>
                                         <div class="col-sm-8">
                                             <select class="form-control" id="lst-city" name="lst-city">
@@ -63,10 +63,21 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Address</label>
                                         <div class="col-sm-8">
-                                            <input id="txt-address" type="text" class="form-control" placeholder="" value="@isset($building){{ $building->address }}@endisset">
+
+                                            <div class="input-group">
+                                                <!--<input type="text" class="form-control" placeholder="Type a direction">-->
+                                                <input id="txt-address" autocomplete="off" type="text" class="form-control" placeholder="Buscar direcci&oacute;n (Calle Nro, Ciudad)" value="@isset($building){{ $building->address }}@endisset" style="width: 80%;margin-top: 7px;">
+                                                <!--<input id="txt-address" type="text" value="@isset($building){{ $building->address }}@endisset" style="">-->
+                                                <span class="input-group-btn">
+                                                    <button id="btn-search-map" class="btn btn-default" type="button">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="col-sm-4 control-label">Postal code</label>
                                         <div class="col-sm-8">
                                             <input id="txt-postal_code" type="text" class="form-control" placeholder="" value="@isset($building){{ $building->postal_code }}@endisset">
@@ -76,13 +87,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-8">
+                    <!--<div class="col-xs-12 col-md-8">-->
+                    <div class="col-xs-12">
                         <div class="panel panel-info">
-                            <div class="panel-heading">Map</div>
                             <div class="panel-body">
-                                <div>
-                                    MAP
-                                </div>
+                                <div id="building-map" style="height: 500px;" data-lat="@isset($building){{ $building->lat }}@endisset" data-lng="@isset($building){{ $building->lng }}@endisset"></div>
+                                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLrZNPoERUwcKDTN-LXZKi46LVwikrQbA&libraries=places"></script>
                             </div>
                         </div>
                     </div>

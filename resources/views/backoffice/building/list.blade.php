@@ -11,8 +11,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Building</th>
-                            <th>Postal Code</th>
-                            <th>City</th>
+                            <th>Address</th>
                             <th class="text-center">
                                 <a class="btn btn-default" href="{{ route('dashboard.building.create') }}">
                                     <i class="fa fa-plus-square"></i>

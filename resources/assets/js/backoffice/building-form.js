@@ -5,12 +5,67 @@ var BuildingForm = {
         }
         BuildingForm.clear();
         BuildingForm.createEvents();
+        setTimeout(BuildingForm.initMap, 1000);
+//        BuildingForm.initMap();
     },
     createEvents: function() {
         $('.save-building').on('click', BuildingForm.onSaveBuilding);
     },
     clear: function() {
         $('#lst-city').val($('#lst-city option[selected]').val());
+    },
+    initMap: function() {
+        var lat = $('#building-map').data('lat');
+        var lng = $('#building-map').data('lng');
+        var zoom = 17;
+        if (lat === '' || lat === null) {
+            lat = 9.926304;
+            zoom = 12;
+        }
+        if (lng === '' || lng === null) {
+            lng = -84.1833856;
+            zoom = 12;
+        }
+        BuildingForm.map = new google.maps.Map(document.getElementById('building-map'), {
+            zoom: zoom,
+            center: {lat: lat,lng: lng}
+        });
+        BuildingForm.marker = new google.maps.Marker({
+            map: BuildingForm.map
+        });
+        BuildingForm.marker.setPosition(BuildingForm.map.getCenter());
+
+        var input = document.getElementById('txt-address');
+        var searchBox = new google.maps.places.SearchBox(input);
+        BuildingForm.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        BuildingForm.map.addListener('bounds_changed', function() {
+          searchBox.setBounds(BuildingForm.map.getBounds());
+        });
+
+        BuildingForm.map.addListener('center_changed', function() {
+            BuildingForm.marker.setPosition(BuildingForm.map.getCenter());
+        });
+
+        searchBox.addListener('places_changed',function () {
+            var places = searchBox.getPlaces();
+            if (places.length == 0){
+                return;
+            }
+
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function (place){
+                if (!place.geometry){
+                    return;
+                }
+                if (place.geometry.viewport){
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            BuildingForm.map.fitBounds(bounds);
+        });
     },
     getInformation() {
         var information = [];
@@ -25,11 +80,11 @@ var BuildingForm = {
     },
     getSettings: function() {
         return {
-            id_city: $('#lst-city').val(),
+//            id_city: $('#lst-city').val(),
             address: $('#txt-address').val(),
-            postal_code: $('#txt-postal_code').val(),
-            lat: $('#txt-lat').val(),
-            lng: $('#txt-lng').val()
+//            postal_code: $('#txt-postal_code').val(),
+            lat: BuildingForm.marker.getPosition().lat(),
+            lng: BuildingForm.marker.getPosition().lng()
         };
     },
     onSaveBuilding: function(event) {

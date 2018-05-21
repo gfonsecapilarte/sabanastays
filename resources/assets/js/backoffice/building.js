@@ -51,8 +51,7 @@ var Building = {
             $('<span/>').addClass('btn btn-link').text('#'+building.id_building).on('click', {building:building}, Building.onView)
         );
         $('<td/>').text(building.lang[0].name).appendTo($row);
-        $('<td/>').text(building.postal_code).appendTo($row);
-        $('<td/>').text(building.city.name).appendTo($row);
+        $('<td/>').text(building.address).appendTo($row);
         $('<td/>').appendTo($row).addClass('text-center').append(
             $('<div/>').addClass('btn-group').attr('role','group').append(
                 $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/building/edit?id_building='+building.id_building).append(
