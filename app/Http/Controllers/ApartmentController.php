@@ -210,7 +210,8 @@ class ApartmentController extends Controller
             //rate variant
             $rate = RateModel::getRateByApartment($apartment->id_apartment);
             if (!empty($rate)) {
-                $apartment->price += ($apartment->price * ($rate->variant / 100));
+//                $apartment->price += ($apartment->price * ($rate->variant / 100));
+                $apartment->price *= (float)$rate->variant;
             }
         }
 
@@ -254,7 +255,8 @@ class ApartmentController extends Controller
         //rate variant
         $rate = RateModel::getRateByApartment($apartment->id_apartment);
         if (!empty($rate)) {
-            $apartment->price += ($apartment->price * ($rate->variant / 100));
+//            $apartment->price += ($apartment->price * ($rate->variant / 100));
+            $apartment->price *= (float)$rate->variant;
         }
 
         //media
