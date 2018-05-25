@@ -26,7 +26,7 @@ loadGoogleMapsApi({key: google_key}).then(function (googleMaps) {
                 lat: saLatitude,
                 lng: saLongitude
             },
-            zoom: 12,
+            zoom: 17,
             zoomControl: false
         });
 

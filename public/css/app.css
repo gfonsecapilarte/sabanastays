@@ -7934,6 +7934,18 @@ body.my-bookings .mg-avl-room .col-sm-7 {
   width: 33.3%;
 }
 
+@media (max-width: 970px) {
+  .apartment-detail .mg-room-fecilities ul li {
+    width: 50%;
+  }
+}
+
+@media (max-width: 680px) {
+  .apartment-detail .mg-room-fecilities ul li {
+    width: 100%;
+  }
+}
+
 /*
  * Modifye some default effects
  */

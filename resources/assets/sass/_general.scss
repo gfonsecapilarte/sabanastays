@@ -285,6 +285,14 @@ body.my-bookings{
             li{
                 float: left;
                 width: 33.3%;
+
+                @media (max-width: 970px) {
+                    width: 50%;
+                }
+
+                @media (max-width: 680px) {
+                    width: 100%;
+                }
             }
         }
     }
