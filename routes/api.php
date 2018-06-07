@@ -66,6 +66,10 @@ Route::post('/booking/cancel', 'BookingController@cancelBooking');
 Route::get('/booking/list', 'BookingController@getBookings');
 Route::get('/bookings', 'BookingController@getBookinsByStatus');
 
+//token
+Route::post('/booking/request', 'BookingController@generateToken');
+
+
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');
 

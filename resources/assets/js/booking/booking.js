@@ -296,14 +296,30 @@ $(document).ready(function() {
         },
         checkout:{
             args: {
-                sellerId: sellerId,
-                publishableKey: publishableKey,
+//                sellerId: sellerId,
+//                publishableKey: publishableKey,
                 ccNo: null,
                 cvv: null,
                 expMonth: null,
                 expYear: null
             },
             token:function(){
+                /*get token*/
+                $.ajax({
+                    url: '/api/booking/request',
+                    type: 'POST',
+                    data: {
+                        data: window.btoa(JSON.stringify(payment.checkout.args))
+                    },
+                    success: function(reply){
+
+                    }
+                });
+
+
+
+                console.log('args', payment.checkout.args);
+                alert('sad');
                 TCO.requestToken(function(response) {
                     payment.token = response.response.token.token;
                     if(user.id == null){

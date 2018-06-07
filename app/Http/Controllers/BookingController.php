@@ -200,8 +200,169 @@ class BookingController extends Controller
 
     }
 
+    public function generateToken(Request $request)
+    {
+        require_once app_path('Lib/paymentwall/lib/paymentwall.php');
+        
+        $json = base64_decode($request->input('data'));
+        $data = json_decode($json);
+
+        echo "<pre>";
+//        print_r($json);
+        print_r($data);
+        echo "</pre>";
+//        die();
+
+        $tokenModel = new \Paymentwall_OneTimeToken();
+        $token =  $tokenModel->create(array(
+            'public_key' => env('PWALL_PROJECT_KEY'),
+            'card[number]' => $data->ccNo,
+            'card[exp_month]' => $data->expMonth,
+            'card[exp_year]' => $data->expYear,
+            'card[cvv]' => $data->cvv
+        ));
+
+        echo env('PWALL_PROJECT_KEY').">TOKEN::<pre>";
+//        echo 'edf2a38e72964ce8c6d1fa9422967810'.">TOKEN::<pre>";
+print_r($token);
+print_r($token->getToken());
+print_r($token->getProperties());
+print_r($token->getPublicData());
+echo "</pre>";
+die();
+
+        return response()->json(array(
+            'success' => true,
+            'token' => $token->getToken()
+        ));
+
+
+    }
+
+    /**
+     * Proccess payment
+     * @param Request $request
+     * @param BookingModel $booking
+     * @return type
+     */
     private function makeCheckout(Request $request, BookingModel $booking)
     {
+        require_once app_path('Lib/paymentwall/lib/paymentwall.php');
+
+        \Paymentwall_Config::getInstance()->set(array(
+            'api_type' => \Paymentwall_Config::API_GOODS,
+            'public_key' => env('PWALL_PROJECT_KEY'),
+            'private_key' => env('PWALL_SECRET_KEY')
+        ));
+
+        \Twocheckout::privateKey(env('PWALL_PRIVATE_KEY'));
+        \Twocheckout::sellerId(env('PWALL_SELLER_ID'));
+        if (env('TCO_SANDBOX')) {
+            \Twocheckout::sandbox(true);
+        }
+
+        $user = UserModel::find($booking->id_user);
+        $address_booking = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+
+        $address_booking_data = array(
+            'name'        => $user->firstname.' '.$user->lastname,
+            'addrLine1'   => $address_booking->address,
+            'city'        => $address_booking->city->name,
+            'state'       => $address_booking->state->name,
+            'country'     => $address_booking->country->name,
+            'zipCode'     => $address_booking->postcode,
+            'email'       => $user->email,
+            'phoneNumber' => !empty($user->phone) ? $user->phone : '-'
+        );
+        $address_billing_data = $address_booking_data;
+
+        if ($request->input('id_address_payment') !== $request->input('id_address_booking')) {
+            $address_billing = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+            $address_billing_data = array(
+                'name'        => $user->firstname.' '.$user->lastname,
+                'addrLine1'   => $address_billing->address,
+                'city'        => $address_billing->city->name,
+                'state'       => $address_billing->state->name,
+                'country'     => $address_billing->country->name,
+                'zipCode'     => $address_billing->postcode,
+                'email'       => $user->email,
+                'phoneNumber' => !empty($user->phone) ? $user->phone : '-'
+            );
+        }
+
+        try {
+            $data = array(
+                "sellerId"        => env('TCO_SELLER_ID'),
+                "merchantOrderId" => $booking->id_booking,
+                "token"           => $request->input('tco_token'),
+                "currency"        => $request->input('currency_iso'),
+                "total"           => $booking->total_payment,
+                "billingAddr"     => $address_billing_data,
+                "shippingAddr"     => $address_booking_data
+            );
+
+            $checkout = \Twocheckout_Charge::auth($data);
+            if ($checkout['response']['responseCode'] === 'APPROVED') {
+                //save payment
+                $payment = new PaymentModel();
+                $payment->id_booking = $booking->id_booking;
+                $payment->id_user = $booking->id_user;
+                $payment->transaction_id = $checkout['response']['transactionId'];
+                $payment->amount = $checkout['response']['total'];
+                $payment->id_currency = $request->input('id_currency');
+                $payment->description = 'Booking apartment #'.$booking->id_apartment.' since '.$booking->booking_date_start.' to '.$booking->booking_date_end.'. Message: '.$checkout['response']['responseMsg'];
+                $payment->status = $checkout['response']['responseCode'];
+                $payment->payment_date = date('Y-m-d');
+                $payment->payment_type = PaymentModel::ONETIME;
+                $payment->payment_method = PaymentModel::CREDIT_CARD;
+                $payment->id_address = $request->input('id_address_payment');
+                if ($payment->save()) {
+                    $booking->status = BookingModel::PAID;
+                    if ($request->has('attempt')) {
+                        $booking->attempt = (int)$request->input('attempt');
+                    }
+                    $booking->save();
+                }
+                //return response
+                return response()->json(array(
+                    'booking' => $booking,
+                    'checkout' => $checkout['response']
+                ));
+            }
+        } catch (\Twocheckout_Error $e) {
+            //change attempt
+            if ($request->has('attempt')) {
+                $booking->attempt = (int)$request->input('attempt');
+                if ((int)$request->input('attempt') === 3) {
+                    $booking->status = BookingModel::INCOMPLETED;
+                }
+                $booking->save();
+            }
+            //response
+            return response()->json(array(
+                'success' => false,
+                'message' => $e->getMessage(),
+                'attempt' => $booking->attempt,
+                'id_booking' => $booking->id_booking
+            ));
+        }
+
+        return response()->json(array(
+            'success' => false,
+            'message' => __('general.errorProcessingPayment')
+        ));
+    }
+
+    /**
+     * @deprecated since version 1.2
+     * @param Request $request
+     * @param BookingModel $booking
+     * @return type
+     */
+    private function makeToCheckout(Request $request, BookingModel $booking)
+    {
+        throw new Exception('Deprecated', '403');
+        
         require_once app_path('Lib/2checkout/lib/Twocheckout.php');
 
         \Twocheckout::privateKey(env('TCO_PRIVATE_KEY'));
