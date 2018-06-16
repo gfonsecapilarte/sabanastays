@@ -311,12 +311,16 @@ $(document).ready(function() {
                     data: {
                         data: window.btoa(JSON.stringify(payment.checkout.args))
                     },
-                    success: function(reply){
-
+                    success: function(response){
+                        if (response.success) {
+                            payment.pay(response.token);
+                        } else {
+                            alert(response.message);
+                        }
                     }
                 });
 
-
+                return;
 
                 console.log('args', payment.checkout.args);
                 alert('sad');
@@ -333,7 +337,8 @@ $(document).ready(function() {
                 },payment.checkout.args);
             }
         },
-        pay: function(){
+        pay: function(token) {
+
             var currency = $.parseJSON(localStorage.getItem("currency"));
             var data = {
                 id_user: user.id,
@@ -341,12 +346,13 @@ $(document).ready(function() {
                 id_apartment: apartment.id,
                 checkin: localStorage.getItem('checkin'),
                 checkout: localStorage.getItem('checkout'),
-                tco_token: payment.token,
+//                tco_token: payment.token,
+                token: token,
                 currency_iso: currency.iso_code,
                 id_currency: currency.id_currency,
                 id_address_booking: address.first.id,
                 id_address_payment: address.second.id
-            }
+            };
 
             if(payment.attempt > 0){
                 data.attempt    = payment.attempt + 1;
@@ -372,7 +378,8 @@ $(document).ready(function() {
                     }
                     else{
                         if(reply.booking.status == 'PAID'){
-                            successMessage($('.mg-booking-form'),reply.checkout.responseMsg);
+//                            successMessage($('.mg-booking-form'),reply.checkout.responseMsg);
+                            successMessage($('.mg-booking-form'), 'Successful');
                             location.href = myBookingsLink;
                         }
                     }

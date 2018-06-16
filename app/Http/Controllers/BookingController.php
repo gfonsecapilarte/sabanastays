@@ -207,36 +207,26 @@ class BookingController extends Controller
         $json = base64_decode($request->input('data'));
         $data = json_decode($json);
 
-        echo "<pre>";
-//        print_r($json);
-        print_r($data);
-        echo "</pre>";
-//        die();
-
         $tokenModel = new \Paymentwall_OneTimeToken();
         $token =  $tokenModel->create(array(
-            'public_key' => env('PWALL_PROJECT_KEY'),
+            'public_key' => env('PWALL_PUBLIC_KEY'),
             'card[number]' => $data->ccNo,
             'card[exp_month]' => $data->expMonth,
             'card[exp_year]' => $data->expYear,
             'card[cvv]' => $data->cvv
         ));
 
-        echo env('PWALL_PROJECT_KEY').">TOKEN::<pre>";
-//        echo 'edf2a38e72964ce8c6d1fa9422967810'.">TOKEN::<pre>";
-print_r($token);
-print_r($token->getToken());
-print_r($token->getProperties());
-print_r($token->getPublicData());
-echo "</pre>";
-die();
+        if ($token->type === 'token') {
+            return response()->json(array(
+                'success' => true,
+                'token' => $token->getToken()
+            ));
+        }
 
         return response()->json(array(
-            'success' => true,
-            'token' => $token->getToken()
+            'success' => false,
+            'message' => $token->error
         ));
-
-
     }
 
     /**
@@ -249,20 +239,25 @@ die();
     {
         require_once app_path('Lib/paymentwall/lib/paymentwall.php');
 
+//        \Paymentwall_Config::getInstance()->set(array(
+//            'api_type' => \Paymentwall_Config::API_GOODS,
+//            'public_key' => env('PWALL_PROJECT_KEY'),
+//            'private_key' => env('PWALL_SECRET_KEY')
+//        ));
+//
+//        \Twocheckout::privateKey(env('PWALL_PRIVATE_KEY'));
+//        \Twocheckout::sellerId(env('PWALL_SELLER_ID'));
+//        if (env('TCO_SANDBOX')) {
+//            \Twocheckout::sandbox(true);
+//        }
+
         \Paymentwall_Config::getInstance()->set(array(
-            'api_type' => \Paymentwall_Config::API_GOODS,
-            'public_key' => env('PWALL_PROJECT_KEY'),
-            'private_key' => env('PWALL_SECRET_KEY')
+            'private_key' => env('PWALL_PRIVATE_KEY')
         ));
 
-        \Twocheckout::privateKey(env('PWALL_PRIVATE_KEY'));
-        \Twocheckout::sellerId(env('PWALL_SELLER_ID'));
-        if (env('TCO_SANDBOX')) {
-            \Twocheckout::sandbox(true);
-        }
-
         $user = UserModel::find($booking->id_user);
-        $address_booking = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+//        $address_booking = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+        $address_booking = AddressModel::with(array('city', 'state', 'country'))->find(1);
 
         $address_booking_data = array(
             'name'        => $user->firstname.' '.$user->lastname,
@@ -277,7 +272,8 @@ die();
         $address_billing_data = $address_booking_data;
 
         if ($request->input('id_address_payment') !== $request->input('id_address_booking')) {
-            $address_billing = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_booking'));
+//            $address_billing = AddressModel::with(array('city', 'state', 'country'))->find($request->input('id_address_payment'));
+            $address_billing = AddressModel::with(array('city', 'state', 'country'))->find(1);
             $address_billing_data = array(
                 'name'        => $user->firstname.' '.$user->lastname,
                 'addrLine1'   => $address_billing->address,
@@ -301,17 +297,58 @@ die();
                 "shippingAddr"     => $address_booking_data
             );
 
-            $checkout = \Twocheckout_Charge::auth($data);
-            if ($checkout['response']['responseCode'] === 'APPROVED') {
+//            $checkout = \Twocheckout_Charge::auth($data);
+
+            /**
+             * Payment Wall
+             */
+
+            $chargeInfo = array(
+                'email'                      => $user->email,
+                'history[registration_date]' => time(),
+                'amount'                     => $booking->total_payment,
+                'currency'                   => $request->input('currency_iso'),
+                'token'                      => $request->input('token'),
+                'description'                => 'Order #'.$booking->id_booking
+            );
+
+            $charge = new \Paymentwall_Charge();
+            $charge->create($chargeInfo);
+
+//            $charge->get();
+            $response = $charge->getPublicData();
+
+//            echo "<pre>";
+//            print_r($charge);
+//            echo '********************';
+//            print_r($charge->getPublicData());
+//            print_r($charge->getRawResponseData());
+//            print_r($charge->getId());
+//            print_r($charge->getResponseLogInformation());
+//            echo "</pre>";
+//            die();
+
+            /**
+             * End Payment Wall
+             */
+
+
+//            if ($checkout['response']['responseCode'] === 'APPROVED') {
+//            if ($response->success) {
+            if ($charge->isSuccessful()) {
+                $paymentwall_charge = json_decode($charge->getRawResponseData());
                 //save payment
                 $payment = new PaymentModel();
                 $payment->id_booking = $booking->id_booking;
                 $payment->id_user = $booking->id_user;
-                $payment->transaction_id = $checkout['response']['transactionId'];
-                $payment->amount = $checkout['response']['total'];
+//                $payment->transaction_id = $checkout['response']['transactionId'];
+                $payment->transaction_id = $charge->getId();
+//                $payment->amount = $checkout['response']['total'];
+                $payment->amount = $paymentwall_charge->amount_paid;
                 $payment->id_currency = $request->input('id_currency');
-                $payment->description = 'Booking apartment #'.$booking->id_apartment.' since '.$booking->booking_date_start.' to '.$booking->booking_date_end.'. Message: '.$checkout['response']['responseMsg'];
-                $payment->status = $checkout['response']['responseCode'];
+                $payment->description = 'Booking apartment #'.$booking->id_apartment.' since '.$booking->booking_date_start.' to '.$booking->booking_date_end.'. Message: '.$paymentwall_charge->risk;
+//                $payment->status = $checkout['response']['responseCode'];
+                $payment->status = $paymentwall_charge->risk;
                 $payment->payment_date = date('Y-m-d');
                 $payment->payment_type = PaymentModel::ONETIME;
                 $payment->payment_method = PaymentModel::CREDIT_CARD;
@@ -325,8 +362,15 @@ die();
                 }
                 //return response
                 return response()->json(array(
+                    'success' => true,
                     'booking' => $booking,
-                    'checkout' => $checkout['response']
+//                    'checkout' => $checkout['response']
+                ));
+            } else {
+                $errors = json_decode($response, true);
+                return response()->json(array(
+                    'success' => false,
+                    'message' => $errors['error']['message'] . ' ('.$errors['error']['code'].')'
                 ));
             }
         } catch (\Twocheckout_Error $e) {
