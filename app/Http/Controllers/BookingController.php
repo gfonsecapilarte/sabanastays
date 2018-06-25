@@ -172,18 +172,26 @@ class BookingController extends Controller
         $booking->nights = $nights;
         //total_payment
         $apartment = ApartmentModel::find($request->input('id_apartment'));
-        $total_payment = $nights * $apartment->price;
+        $total_nights = $nights * $apartment->price;
+        $total_nights = round($total_nights, 2);
+        $total_payment = $total_nights;
         $booking->value = $apartment->price;
         $booking->attempt = 1;
         //check rates
         $rate = RateModel::getRateByApartment($request->input('id_apartment'));
         if (!empty($rate)) {
-            $variant = $rate->variant;
-            $variant_value = $total_payment * ($variant / 100);
-            $total_payment += $variant_value;
+//            $variant = $rate->variant;
+//            $variant_value = $total_payment * ($variant / 100);
+//            $total_payment += $variant_value;
+
+            $total_payment = $total_nights * $rate->variant;
+            $total_payment = round($total_payment, 2);
+            $variant_value = $total_payment - $total_nights;
+
+
             //add rate info
             $booking->id_rate = $rate->id_rate;
-            $booking->variant = $variant;
+            $booking->variant = $rate->variant;
             $booking->variant_value = $variant_value;
         }
         $booking->total_payment = $total_payment;

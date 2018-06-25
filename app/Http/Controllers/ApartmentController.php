@@ -213,6 +213,7 @@ class ApartmentController extends Controller
 //                $apartment->price += ($apartment->price * ($rate->variant / 100));
                 $apartment->price *= (float)$rate->variant;
             }
+            $apartment->price = number_format($apartment->price, 2);
         }
 
         return response()->json(array(
@@ -258,6 +259,7 @@ class ApartmentController extends Controller
 //            $apartment->price += ($apartment->price * ($rate->variant / 100));
             $apartment->price *= (float)$rate->variant;
         }
+        $apartment->price = number_format($apartment->price, 2);
 
         //media
         $apartment->sliders = MediaModel::getMediaByType($apartment->id_apartment, 'apartment');

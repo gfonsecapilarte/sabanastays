@@ -12,7 +12,7 @@ class Rate extends Model
 
     public static function getRateByApartment($id_apartment)
     {
-        return self::where('id_apartment', '=', $id_apartment)->orderBy('default')->first();
+        return self::where('id_apartment', '=', $id_apartment)->orderBy('default', 'desc')->first();
     }
 
     public static function updateApartmentRate($id_apartment, $variant)
@@ -21,7 +21,7 @@ class Rate extends Model
         self::disableRateByApartment($id_apartment);
         //check if apartment
         if (self::existsRateApartment($id_apartment, $variant)) {
-            self::disableRateByApartment($id_apartment, $variant);
+            self::enableRateByApartment($id_apartment, $variant);
         } else {
             $rate = new Rate();
             $rate->variant = $variant;

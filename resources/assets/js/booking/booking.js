@@ -564,6 +564,7 @@ $(document).ready(function() {
             $('#mg-room-cart .apartment-nights').removeClass('hidden').children('.nights').text(nights);
         }
 
-        $('#mg-room-cart .apartment-total').text(sidebarData.price * nights);
+        var total = sidebarData.price * nights;
+        $('#mg-room-cart .apartment-total').text(total.toFixed(2));
     }
 });

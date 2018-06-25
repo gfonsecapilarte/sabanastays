@@ -139,7 +139,7 @@ $(document).ready(function(){
                     id: el.id_apartment,
                     name: lang.name,
                     price: el.price,
-                    image: el.thumbnail.path
+                    image: (el.thumbnail !== null) ? el.thumbnail.path : '#'
                 });
             }
         });

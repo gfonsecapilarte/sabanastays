@@ -31,7 +31,7 @@ class Apartment extends ModelCore
 
     public function rate()
     {
-        return $this->hasOne(\App\Models\Rate::class, 'id_apartment');
+        return $this->hasOne(\App\Models\Rate::class, 'id_apartment')->where('default', '=', 1);
     }
 
     public function feature()
