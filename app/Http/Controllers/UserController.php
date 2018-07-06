@@ -120,12 +120,18 @@ class UserController extends Controller{
         $user->birthdate    = $data['information']->birthdate;
         $user->gender       = $data['information']->gender;
         $user->phone        = $data['information']->phone;
+        $user->role         = $data['information']->role;
         if (property_exists($data['information'], 'email') && !empty($data['information']->email)) {
             $user->email        = $data['information']->email;
         }
         if (property_exists($data['information'], 'password') && !empty($data['information']->password)) {
             $user->password = bcrypt($data['information']->password);
         }
+
+        // echo "<pre>";
+        // print_r($user);
+        // echo "</pre>";
+        // die();
 
         try {
             $user->save();
