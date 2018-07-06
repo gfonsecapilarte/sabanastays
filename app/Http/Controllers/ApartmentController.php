@@ -95,13 +95,13 @@ class ApartmentController extends Controller
         //features
         $feature = FeatureModel::getObject($apartment->id_apartment);
         $feature->id_apartment = $apartment->id_apartment;
-        $feature->guests = $data['features']->guests;
-        $feature->bedrooms = $data['features']->bedrooms;
-        $feature->queen_beds = $data['features']->queen_beds;
-        $feature->baths = $data['features']->baths;
-        $feature->king_beds = $data['features']->king_beds;
-        $feature->full_beds = $data['features']->full_beds;
-        $feature->twin_beds = $data['features']->twin_beds;
+        $feature->guests = empty($data['features']->guests) ? 0 : $data['features']->guests;
+        $feature->bedrooms = empty($data['features']->bedrooms) ? 0 : $data['features']->bedrooms;
+        $feature->queen_beds = empty($data['features']->queen_beds) ? 0 : $data['features']->queen_beds;
+        $feature->baths = empty($data['features']->baths) ? 0 : $data['features']->baths;
+        $feature->king_beds = empty($data['features']->king_beds) ? 0 : $data['features']->king_beds;
+        $feature->full_beds = empty($data['features']->full_beds) ? 0 : $data['features']->full_beds;
+        $feature->twin_beds = empty($data['features']->twin_beds) ? 0 : $data['features']->twin_beds;
         $feature->save();
         //rate
         RateModel::updateApartmentRate($apartment->id_apartment, $data['rate']);
