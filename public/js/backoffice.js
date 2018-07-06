@@ -19238,7 +19238,8 @@ var Users = {
         $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + user.id_user).on('click', { user: user }, Users.onView));
         $('<td/>').text(user.firstname + ' ' + user.lastname).appendTo($row);
         $('<td/>').text(user.email).appendTo($row);
-        $('<td/>').text(user.role).appendTo($row);
+        // $('<td/>').text(user.role).appendTo($row);
+        $('<td/>').appendTo($row).append($('<div/>').addClass('label label-table ' + Users.getStatusLabel(user.role)).text(user.role));
         $('<td/>').appendTo($row).addClass('text-center').append($('<div/>').addClass('btn-group').attr('role', 'group').append($('<span/>').addClass('btn btn-default').append($('<i/>').addClass('fa fa-eye')).on('click', { user: user }, Users.onView), $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/user/edit?id_user=' + user.id_user).append($('<i/>').addClass('fa fa-pencil'))));
 
         $row.appendTo($('#table-users tbody'));
@@ -19255,6 +19256,22 @@ var Users = {
         var $modal = $('<div/>');
         $modal.attr('id', id).addClass('modal fade user-modal').attr('role', 'dialog').append($('<div/>').addClass('modal-dialog').attr('role', 'document').append($('<div/>').addClass('modal-content').append($('<div/>').addClass('modal-header').append($('<button/>').attr('type', 'button').addClass('close').attr('data-dismiss', 'modal').attr('aria-label', 'Close').append($('<span/>').attr('aria-hidden', 'true').html('&times;')), $('<h4/>').addClass('modal-title').text('User #' + user.id_user)), $('<div/>').addClass('modal-body').append($('<div/>').addClass('row').append($('<div/>').addClass('col-xs-12').append($('<h2/>').text('Information'), $('<hr/>'), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Name'), $('<span/>').addClass('col-xs-8').text(user.firstname + ' ' + user.lastname)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('E-Mail'), $('<span/>').addClass('col-xs-8').text(user.email)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Since'), $('<span/>').addClass('col-xs-8').text(user.since)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Role'), $('<span/>').addClass('col-xs-8').text(user.role)), $('<div />').addClass('row').append($('<label/>').addClass('col-xs-4').text('Last login'), $('<span/>').addClass('col-xs-8').text(user.last_login))))), $('<div/>').addClass('modal-footer').append($('<button/>').attr('type', 'button').addClass('btn btn-default').attr('data-dismiss', 'modal').text('Close'))))).appendTo($('body'));
         return $modal;
+    },
+    getStatusLabel: function getStatusLabel(status) {
+        var label = 'label-default';
+        switch (status) {
+            case 'ADMIN':
+                label = 'label-info';
+                break;
+            case 'USER':
+                label = 'label-success';
+                break;
+            default:
+                label = 'label-default';
+                break;
+        }
+
+        return label;
     }
 };
 

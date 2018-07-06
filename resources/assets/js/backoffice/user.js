@@ -48,13 +48,16 @@ var Users = {
     },
     printRow: function(i, user) {
         var $row = $('<tr/>');
-
+        
         $('<td/>').appendTo($row).append(
             $('<span/>').addClass('btn btn-link').text('#'+user.id_user).on('click', {user:user}, Users.onView)
         );
         $('<td/>').text(user.firstname+' '+user.lastname).appendTo($row);
         $('<td/>').text(user.email).appendTo($row);
-        $('<td/>').text(user.role).appendTo($row);
+        // $('<td/>').text(user.role).appendTo($row);
+        $('<td/>').appendTo($row).append(
+            $('<div/>').addClass('label label-table '+Users.getStatusLabel(user.role)).text(user.role)
+        );
         $('<td/>').appendTo($row).addClass('text-center').append(
             $('<div/>').addClass('btn-group').attr('role','group').append(
                 $('<span/>').addClass('btn btn-default').append(
@@ -122,7 +125,23 @@ var Users = {
             )
         ).appendTo($('body'));
         return $modal;
-    }
+    },
+    getStatusLabel: function(status) {
+        var label = 'label-default';
+        switch (status) {
+            case 'ADMIN':
+                label = 'label-info';
+                break;
+            case 'USER':
+                label = 'label-success';
+                break;
+            default:
+                label = 'label-default';
+                break;
+        }
+
+        return label;
+    },
 };
 
 $(function() {

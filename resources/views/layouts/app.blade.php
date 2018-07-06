@@ -77,8 +77,6 @@
                 </div>
             </div>
         </footer>
-
-        <script src="{{ asset('js/2co.min.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}?v={{config('app.version')}}"></script>
     </body>
 </html>
