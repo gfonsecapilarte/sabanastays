@@ -19330,6 +19330,25 @@ var UserForm = {
     },
 
     onSaveUser: function onSaveUser(event) {
+
+        var valid = true;
+
+        $('.form-information').each(function (i, form) {
+            $(form).find('input[required],select[required]').each(function (i, input) {
+                console.log($(input), $(input).val());
+                $(input).removeClass('input-required');
+                if ($(input).val() === '' || $(input).val() == '-1' || $(input).val() == '0') {
+                    valid = false;
+                    $(input).addClass('input-required');
+                }
+            });
+        });
+
+        if (!valid) {
+            alert('Algunos campos obligatorios estan vacios.');
+            return;
+        }
+
         $('.save-user').prop('disabled', true);
         var data = {
             id_user: $('#txt-id_user').val(),

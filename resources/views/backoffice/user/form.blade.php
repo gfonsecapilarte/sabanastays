@@ -19,25 +19,25 @@
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal form-information">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Firstname</label>
+                                        <label class="col-sm-3 control-label">Firstname (*)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-firstname" autocomplete="off" placeholder="User firstname" value="@isset($user){{ $user->firstname }}@endisset">
+                                            <input type="text" required class="form-control txt-firstname" autocomplete="off" placeholder="User firstname" value="@isset($user){{ $user->firstname }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Lastname</label>
+                                        <label class="col-sm-3 control-label">Lastname (*)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-lastname" autocomplete="off" placeholder="User lastname" value="@isset($user){{ $user->lastname }}@endisset">
+                                            <input type="text" required class="form-control txt-lastname" autocomplete="off" placeholder="User lastname" value="@isset($user){{ $user->lastname }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Email</label>
+                                        <label class="col-sm-3 control-label">Email (*)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-email" autocomplete="off" placeholder="User lastname" value="@isset($user){{ $user->email }}@endisset">
+                                            <input type="text" required class="form-control txt-email" autocomplete="off" placeholder="User lastname" value="@isset($user){{ $user->email }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Password</label>
+                                        <label class="col-sm-3 control-label">Password (*)</label>
                                         <div class="col-sm-9">
                                             <input type="password" class="form-control txt-password" autocomplete="off" placeholder="" value="">
                                             @isset($user)
@@ -46,9 +46,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Phone</label>
+                                        <label class="col-sm-3 control-label">Phone (*)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-phone" autocomplete="off" placeholder="Phone" value="@isset($user){{ $user->phone }}@endisset">
+                                            <input type="text" required class="form-control txt-phone" autocomplete="off" placeholder="Phone" value="@isset($user){{ $user->phone }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -61,7 +61,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Gender</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control lst-gender">
+                                            <select class="form-control lst-gender" >
                                                 <option value="MALE" @if (isset($user) && $user->gender == 'MALE') selected @endif>Male</option>
                                                 <option value="FEMALE" @if (isset($user) && $user->gender == 'FEMALE') selected @endif>Female</option>
                                             </select>

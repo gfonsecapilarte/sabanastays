@@ -93,7 +93,7 @@ class UserController extends Controller{
         if (empty($id_user)) {
             $response = $this->createUser($data);
         } else {
-            $response = $this->updateUser(User::find($id_user)->first(), $data);
+            $response = $this->updateUser(User::find($id_user), $data);
         }
 
         return response()->json(array(
@@ -117,10 +117,12 @@ class UserController extends Controller{
     {
         $user->firstname    = $data['information']->firstname;
         $user->lastname     = $data['information']->lastname;
-        $user->birthdate    = $data['information']->birthdate;
         $user->gender       = $data['information']->gender;
         $user->phone        = $data['information']->phone;
         $user->role         = $data['information']->role;
+
+        $user->birthdate    = (empty($data['information']->birthdate))?'1990-01-01':$data['information']->birthdate;
+
         if (property_exists($data['information'], 'email') && !empty($data['information']->email)) {
             $user->email        = $data['information']->email;
         }
@@ -129,7 +131,7 @@ class UserController extends Controller{
         }
 
         // echo "<pre>";
-        // print_r($user);
+        // print_r($user->toArray());
         // echo "</pre>";
         // die();
 
