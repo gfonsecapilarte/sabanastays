@@ -47,6 +47,9 @@ function(){
 	/** Load Terms of Service  page **/
 	Route::get(LaravelLocalization::transRoute('routes.termsService'),'Front\TermsServiceController@loadPage')->name('termsService');
 
+	/** Pingback **/
+	Route::get('/pingback','PingbackController@index')->name('pingback');
+
 	/** Load dashboard page **/
 //	Route::get(LaravelLocalization::transRoute('routes.dashboard'),function(){
 //		return view('backoffice/dashboard');

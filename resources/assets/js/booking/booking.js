@@ -245,7 +245,7 @@ $(document).ready(function() {
      */
     var payment = {};
     if($('#sa-address').length > 0){
-        TCO.loadPubKey('sandbox');
+        // TCO.loadPubKey('sandbox');
         payment = {
         token: null,
         done: false,
@@ -322,19 +322,19 @@ $(document).ready(function() {
 
                 return;
 
-                console.log('args', payment.checkout.args);
-                alert('sad');
-                TCO.requestToken(function(response) {
-                    payment.token = response.response.token.token;
-                    if(user.id == null){
-                        user.register();
-                    }
-                    else{
-                        address.first.register();
-                    }
-                },function(error) {
-                    console.log('ERROR', error);
-                },payment.checkout.args);
+                // console.log('args', payment.checkout.args);
+                // alert('sad');
+                // TCO.requestToken(function(response) {
+                //     payment.token = response.response.token.token;
+                //     if(user.id == null){
+                //         user.register();
+                //     }
+                //     else{
+                //         address.first.register();
+                //     }
+                // },function(error) {
+                //     console.log('ERROR', error);
+                // },payment.checkout.args);
             }
         },
         pay: function(token) {
