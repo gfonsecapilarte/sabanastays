@@ -39,6 +39,27 @@
     <div class="container mt50">
         <div class="row">
             <div class="col-md-12 mg-room-fecilities">
+                <h2 class="mg-sec-left-title">@lang('general.features')</h2>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->guests }}</b> @lang('general.guests')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->bedrooms }}</b> @lang('general.bedrooms')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->queen_beds }}</b> @lang('general.queenbeds')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->baths }}</b> @lang('general.baths')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->king_beds }}</b> @lang('general.kingbeds')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->full_beds }}</b> @lang('general.fullbeds')</li>                            
+                            <li><i class=""></i> <b>{{ $apartment->feature->twin_beds }}</b> @lang('general.twinbeds')</li>                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt50">
+        <div class="row">
+            <div class="col-md-12 mg-room-fecilities">
                 <h2 class="mg-sec-left-title">@lang('general.amenities')</h2>
                 <div class="row">
                     <div class="col-xs-12">

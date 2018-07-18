@@ -109,5 +109,13 @@ return [
     'facebookNotice'            => 'Este correo electrónico ya existe pero con una de Facebook. Inicie sesión con esta cuenta por favor',
     'sentMessage'               => 'El mensaje ha sido enviado',
     'newsletterError'           => 'Este correo electrónico ya ha sido registrado antes',
-    'newsletterSuccess'         => 'El correo electrónico ha sido registrado'
+    'newsletterSuccess'         => 'El correo electrónico ha sido registrado',
+    'features'                  => 'Caracteristicas',
+    'guests'                    => 'Huespedes',
+    'bedrooms'                  => 'Habitaciones',
+    'queenbeds'                 => 'Cama Queen',
+    'baths'                     => 'Baños',
+    'kingbeds'                  => 'Cama King',    
+    'fullbeds'                  => 'Cama sencilla',    
+    'twinbeds'                  => 'Cama semidoble'    
 ];

@@ -264,6 +264,9 @@ class ApartmentController extends Controller
         //media
         $apartment->sliders = MediaModel::getMediaByType($apartment->id_apartment, 'apartment');
 
+        // feature
+        $apartment->feature = FeatureModel::getObject($apartment->id_apartment);
+
         return response()->json($apartment);
     }
 }

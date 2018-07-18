@@ -109,5 +109,13 @@ return [
     'facebookNotice'            => 'This email already exists but with one of Facebook. Login with this account please',
     'sentMessage'               => 'The message has been sent',
     'newsletterError'           => 'This email already has been registered before',
-    'newsletterSuccess'         => 'The email has been registered'
+    'newsletterSuccess'         => 'The email has been registered',
+    'features'                  => 'Features',
+    'guests'                    => 'Guests',
+    'bedrooms'                  => 'Bedrooms',
+    'queenbeds'                 => 'Queen beds',
+    'baths'                     => 'Baths',
+    'kingbeds'                  => 'King beds',    
+    'fullbeds'                  => 'Full beds',    
+    'twinbeds'                  => 'Twin beds'    
 ];
