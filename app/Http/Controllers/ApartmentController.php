@@ -104,7 +104,7 @@ class ApartmentController extends Controller
         $feature->twin_beds = empty($data['features']->twin_beds) ? 0 : $data['features']->twin_beds;
         $feature->save();
         //rate
-        RateModel::updateApartmentRate($apartment->id_apartment, $data['rate']);
+        RateModel::updateApartmentRate($apartment->id_apartment, ($data['rate']==-1)?"1.00":$data['rate']);
         //amenities
         foreach ($data['amenities'] as $row_amenity) {
             ApartmentAmenityModel::updateApartmentAmenity($apartment->id_apartment, $row_amenity->id_amenity, (bool)$row_amenity->checked);

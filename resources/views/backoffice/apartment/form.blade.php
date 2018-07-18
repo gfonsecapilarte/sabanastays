@@ -26,9 +26,9 @@
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal form-information" data-id_language="{{ $language->id_lang }}">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Name</label>
+                                        <label class="col-sm-3 control-label">Name (*)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control txt-name" placeholder="Apartment name" value="@isset($apartment){{ $apartment->lang[$language->iso]->name }}@endisset">
+                                            <input type="text"  required class="form-control txt-name" placeholder="Apartment name" value="@isset($apartment){{ $apartment->lang[$language->iso]->name }}@endisset">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -141,7 +141,7 @@
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Building</label>
+                                        <label class="col-sm-4 control-label">Building (*)</label>
                                         <div class="col-sm-8">
 <!--                                            @foreach ($buildings as $building)
                                             <div class="radio">
@@ -151,7 +151,7 @@
                                                 </label>
                                             </div>
                                             @endforeach-->
-                                            <select class="form-control" id="lst-building" name="lst-building">
+                                            <select class="form-control" id="lst-building" name="lst-building" required>
                                                 <option value="0"> - Choose building - </option>
                                                 @foreach ($buildings as $building)
                                                 <option value="{{ $building->id_building }}" @if (isset($apartment) && $apartment->id_building == $building->id_building) selected @endif >{{ $building->lang[0]->name }}</option>
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Apartment type</label>
+                                        <label class="col-sm-4 control-label">Apartment type (*)</label>
                                         <div class="col-sm-8">
 <!--                                            @foreach ($apartment_types as $apartment_type)
                                             <div class="radio">
@@ -170,7 +170,7 @@
                                                 </label>
                                             </div>
                                             @endforeach-->
-                                            <select class="form-control" id="lst-apartment_type" name="lst-apartment_type">
+                                            <select class="form-control" id="lst-apartment_type" name="lst-apartment_type" required>
                                                 <option value="0"> - Choose type - </option>
                                                 @foreach ($apartment_types as $apartment_type)
                                                 <option value="{{ $apartment_type->id_apartment_type }}" @if (isset($apartment) && $apartment->id_apartment_type == $apartment_type->id_apartment_type) selected @endif >{{ $apartment_type->lang[0]->name }}</option>
@@ -179,9 +179,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Rate type</label>
+                                        <label class="col-sm-4 control-label">Rate type (*)</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" id="lst-rate" name="lst-rate">
+                                            <select class="form-control" id="lst-rate" name="lst-rate" required>
                                                 <option value="-1" > - Choose type - </option>
                                                 <option value="0.85" @if (isset($apartment) && $apartment->rate->variant == 0.85) selected @endif >Low Season (0.85)</option>
                                                 <option value="1.15" @if (isset($apartment) && $apartment->rate->variant == 1.15) selected @endif >High Season (1.15)</option>
@@ -245,11 +245,11 @@
                             <div class="panel-body">
                                 <div role="form" class="form-horizontal form-pricing" data-id_currency="{{ $currency->id_currency }}">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Price</label>
+                                        <label class="col-sm-4 control-label">Price (*)</label>
                                         <div class="col-sm-8">
                                             <div class="input-group">
                                                 <span class="input-group-addon">{{ $currency->iso_code }}{{ $currency->sign }}</span>
-                                                <input type="text" class="form-control txt-price" data-id_currency="{{ $currency->id_currency }}" value="@isset($apartment){{ $apartment->price }}@endisset">
+                                                <input type="text" required class="form-control txt-price" data-id_currency="{{ $currency->id_currency }}" value="@isset($apartment){{ $apartment->price }}@endisset">
                                             </div>
                                         </div>
                                     </div>
