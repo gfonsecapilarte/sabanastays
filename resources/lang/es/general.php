@@ -113,9 +113,9 @@ return [
     'features'                  => 'Caracteristicas',
     'guests'                    => 'Huespedes',
     'bedrooms'                  => 'Habitaciones',
-    'queenbeds'                 => 'Cama Queen',
+    'queenbeds'                 => 'Queen beds',
     'baths'                     => 'Baños',
-    'kingbeds'                  => 'Cama King',    
-    'fullbeds'                  => 'Cama sencilla',    
-    'twinbeds'                  => 'Cama semidoble'    
+    'kingbeds'                  => 'King beds',    
+    'fullbeds'                  => 'Full beds',    
+    'twinbeds'                  => 'Twin beds'
 ];
