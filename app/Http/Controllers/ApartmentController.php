@@ -191,9 +191,9 @@ class ApartmentController extends Controller
             ApartmentModel::parseLang($apartment);
             //building
             $apartment->building = BuildingModel::find($apartment->id_building);
-            $apartment->building->city = CityModel::find($apartment->building->id_city);
-            $apartment->building->state = StateModel::find($apartment->building->city->id_state);
-            $apartment->building->country = CountryModel::find($apartment->building->state->id_country);
+            //$apartment->building->city = CityModel::find($apartment->building->id_city);
+            //$apartment->building->state = StateModel::find($apartment->building->city->id_state);
+            //$apartment->building->country = CountryModel::find($apartment->building->state->id_country);
             //amenities
             foreach ($apartment->amenities as &$amenity) {
                 $amenity_result = AmenityModel::where('id_amenity', $amenity->id_amenity)->with('lang')->first();
