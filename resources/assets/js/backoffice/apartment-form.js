@@ -104,7 +104,7 @@ var ApartmentForm = {
             $(form).find('input[required],select[required]').each(function(i, input) {
                 console.log($(input),$(input).val());
                 $(input).removeClass('input-required');
-                if ($(input).val() === '' || $(input).val() == '-1' || $(input).val() == '0') {
+                if ($(input).val() === '' || $(input).val() == '-1' || $(input).val() == '0' || !$(input).val()) {
                     valid = false;
                     $(input).addClass('input-required');
                 }
