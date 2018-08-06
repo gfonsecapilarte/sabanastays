@@ -15,9 +15,21 @@ class PrivacyPolicyController{
         $header = app('App\Http\Controllers\Module\HeaderController')->getModule();
         $header = $header->getData();
 
-        return view('front/privacy-policy/privacy-policy',[
-            'locale'    => $locale,
-            'header'    => $header,
-        ]);
+
+        
+
+        if ($locale=='en') {
+            return view('front/privacy-policy/privacy-policy',[
+                'locale'    => $locale,
+                'header'    => $header,
+            ]);    
+        } else {
+            return view('front/privacy-policy/es-privacy-policy',[
+                'locale'    => $locale,
+                'header'    => $header,
+            ]);    
+        }
+
+        
     }
 }

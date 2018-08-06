@@ -31,7 +31,7 @@
                         <!-- .col -->
                         <div class="col-md-6 col-sm-12">
                             <div class="white-box text-center bg-megna">
-                                <h1 class="text-white counter">165</h1>
+                                <h1 class="text-white counter">0</h1>
                                 <p class="text-white">New items</p>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                         <!-- .col -->
                         <div class="col-md-6 col-sm-12">
                             <div class="white-box text-center bg-inverse">
-                                <h1 class="text-white counter">2065</h1>
+                                <h1 class="text-white counter">0</h1>
                                 <p class="text-white">Feeds</p>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                         <!-- .col -->
                         <div class="col-md-6 col-sm-12">
                             <div class="white-box text-center bg-info">
-                                <h1 class="counter text-white">465</h1>
+                                <h1 class="counter text-white">0</h1>
                                 <p class="text-white">Reviews</p>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         <!-- .col -->
                         <div class="col-md-6 col-sm-12">
                             <div class="white-box text-center bg-danger">
-                                <h1 class="text-white counter">6555</h1>
+                                <h1 class="text-white counter">0</h1>
                                 <p class="text-white">Customers</p>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 <h3 class="box-title">Revenue of the site</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-folder-alt text-danger"></i></li>
-                                    <li class="text-right"><span class="counter">36411</span></li>
+                                    <li class="text-right"><span class="counter">0</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -81,9 +81,9 @@
                         <h3 class="box-title">Tax Deduction</h3>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6  m-t-30">
-                                <h1 class="text-info">$647</h1>
+                                <h1 class="text-info">$0</h1>
                                 <p class="text-muted">APRIL 2016</p>
-                                <b>(150 Sales)</b>
+                                <b>(0 Sales)</b>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="sparkline2dash" class="text-center"></div>
@@ -96,9 +96,9 @@
                         <h3 class="box-title">Shipment</h3>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6  m-t-30">
-                                <h1 class="text-megna">$347</h1>
+                                <h1 class="text-megna">$0</h1>
                                 <p class="text-muted">APRIL 2016</p>
-                                <b class="">(150 Sales)</b>
+                                <b class="">(0 Sales)</b>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="sales1" class="text-center"></div>
@@ -111,9 +111,9 @@
                         <h3 class="box-title">Revenue Generate</h3>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6  m-t-30">
-                                <h1 class="text-danger">$647</h1>
+                                <h1 class="text-danger">$0</h1>
                                 <p class="text-muted">APRIL 2016</p>
-                                <b>(150 Sales)</b>
+                                <b>(0 Sales)</b>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="sparkline2dash2" class="text-center"></div>
@@ -126,9 +126,9 @@
                         <h3 class=" box-title">Order Got</h3>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6  m-t-30">
-                                <h1 class="">$347</h1>
+                                <h1 class="">$0</h1>
                                 <p class="text-muted">APRIL 2016</p>
-                                <b class="">(150 Sales)</b>
+                                <b class="">(0 Sales)</b>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="sales12" class="text-center"></div>
