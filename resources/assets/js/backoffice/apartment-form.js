@@ -102,7 +102,7 @@ var ApartmentForm = {
 
         $('#container-form-apartment').each(function(i, form) {
             $(form).find('input[required],select[required]').each(function(i, input) {
-                console.log($(input),$(input).val());
+                //console.log($(input),$(input).val());
                 $(input).removeClass('input-required');
                 if ($(input).val() === '' || $(input).val() == '-1' || $(input).val() == '0' || !$(input).val()) {
                     valid = false;
@@ -134,6 +134,10 @@ var ApartmentForm = {
         ApartmentForm.saveApartment(data);
     },
     saveApartment(data) {
+
+
+        var list_apartments = $('#container-form-apartment').data("link");
+
         var form_data = new FormData();
         form_data.append('id_apartment', data.id_apartment);
         form_data.append('information', JSON.stringify(data.information));
@@ -161,6 +165,12 @@ var ApartmentForm = {
                 if (response.success) {
                     $('#txt-id_apartment').val(response.id_apartment);
                     $.growl.notice({ title: "Success", message: "Apartment has saved successful" });
+
+                    var timer = setTimeout(function(){ 
+                        window.location.href = list_apartments;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);                    
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the apartment" });
                 }

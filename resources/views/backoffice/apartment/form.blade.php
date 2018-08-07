@@ -1,7 +1,7 @@
 <input type="hidden" id="txt-id_apartment" value="@isset($apartment){{ $apartment->id_apartment }}@endisset" />
 @isset($apartment)
 <script>
-    window.apartment_media = {!! json_encode($apartment->media) !!};
+    window.apartment_media = {!! json_encode($apartment->media) !!};    
 </script>
 @endisset
 <div class="row">
@@ -13,7 +13,7 @@
     </div>
 </div>
 <br />
-<div class="row" id="container-form-apartment">
+<div class="row" id="container-form-apartment" data-link="{{ route('dashboard.apartments') }}">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">Information</div>

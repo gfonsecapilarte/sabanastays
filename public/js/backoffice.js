@@ -18459,7 +18459,7 @@ var ApartmentForm = {
 
         $('#container-form-apartment').each(function (i, form) {
             $(form).find('input[required],select[required]').each(function (i, input) {
-                console.log($(input), $(input).val());
+                //console.log($(input),$(input).val());
                 $(input).removeClass('input-required');
                 if ($(input).val() === '' || $(input).val() == '-1' || $(input).val() == '0' || !$(input).val()) {
                     valid = false;
@@ -18489,6 +18489,9 @@ var ApartmentForm = {
         ApartmentForm.saveApartment(data);
     },
     saveApartment: function saveApartment(data) {
+
+        var list_apartments = $('#container-form-apartment').data("link");
+
         var form_data = new FormData();
         form_data.append('id_apartment', data.id_apartment);
         form_data.append('information', JSON.stringify(data.information));
@@ -18516,6 +18519,12 @@ var ApartmentForm = {
                 if (response.success) {
                     $('#txt-id_apartment').val(response.id_apartment);
                     $.growl.notice({ title: "Success", message: "Apartment has saved successful" });
+
+                    var timer = setTimeout(function () {
+                        window.location.href = list_apartments;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the apartment" });
                 }
@@ -18730,6 +18739,9 @@ var BuildingForm = {
         BuildingForm.saveBuilding(data);
     },
     saveBuilding: function saveBuilding(data) {
+
+        var list_buildings = $('#container-form-building').data("link");
+
         var form_data = new FormData();
         form_data.append('id_building', data.id_building);
         form_data.append('information', JSON.stringify(data.information));
@@ -18747,6 +18759,11 @@ var BuildingForm = {
                 if (response.success) {
                     $('#txt-id_building').val(response.id_building);
                     $.growl.notice({ title: "Success", message: "Building has saved successful" });
+                    var timer = setTimeout(function () {
+                        window.location.href = list_buildings;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the building" });
                 }
@@ -19357,6 +19374,8 @@ var UserForm = {
         UserForm.saveUser(data);
     },
     saveUser: function saveUser(data) {
+
+        var list_users = $('#container-form-user').data("link");
         var form_data = new FormData();
         form_data.append('id_user', data.id_user);
         form_data.append('information', JSON.stringify(data.information));
@@ -19373,6 +19392,11 @@ var UserForm = {
                 if (response.success) {
                     $('#txt-id_user').val(response.id_user);
                     $.growl.notice({ title: "Success", message: "User has saved successful" });
+                    var timer = setTimeout(function () {
+                        window.location.href = list_users;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the user" });
                 }

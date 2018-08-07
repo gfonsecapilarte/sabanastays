@@ -8,7 +8,7 @@
     </div>
 </div>
 <br />
-<div class="row" id="container-form-building">
+<div class="row" id="container-form-building"  data-link="{{ route('dashboard.buildings') }}">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">Information</div>

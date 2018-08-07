@@ -48,6 +48,8 @@ var UserForm = {
         UserForm.saveUser(data);
     },
     saveUser(data) {
+
+        var list_users = $('#container-form-user').data("link");
         var form_data = new FormData();
         form_data.append('id_user', data.id_user);
         form_data.append('information', JSON.stringify(data.information));
@@ -64,6 +66,11 @@ var UserForm = {
                 if (response.success) {
                     $('#txt-id_user').val(response.id_user);
                     $.growl.notice({ title: "Success", message: "User has saved successful" });
+                    var timer = setTimeout(function(){ 
+                        window.location.href = list_users;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900); 
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the user" });
                 }

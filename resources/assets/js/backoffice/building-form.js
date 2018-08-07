@@ -97,6 +97,9 @@ var BuildingForm = {
         BuildingForm.saveBuilding(data);
     },
     saveBuilding(data) {
+
+        var list_buildings = $('#container-form-building').data("link");
+
         var form_data = new FormData();
         form_data.append('id_building', data.id_building);
         form_data.append('information', JSON.stringify(data.information));
@@ -114,6 +117,11 @@ var BuildingForm = {
                 if (response.success) {
                     $('#txt-id_building').val(response.id_building);
                     $.growl.notice({ title: "Success", message: "Building has saved successful" });
+                    var timer = setTimeout(function(){ 
+                        window.location.href = list_buildings;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);  
                 } else {
                     $.growl.error({ title: "Error", message: "An error while try save the building" });
                 }
