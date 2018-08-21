@@ -41,7 +41,7 @@ class ApartmentController extends Controller
         $data['features'] = json_decode($data['features']);
         $data['amenities'] = json_decode($data['amenities']);
         $data['settings'] = json_decode($data['settings']);
-        $data['rate'] = json_decode($data['rate']);
+        // $data['rate'] = json_decode($data['rate']);
         $data['pricing'] = json_decode($data['pricing']);
         $data['remove_media'] = json_decode($data['remove_media']);
 
@@ -104,7 +104,7 @@ class ApartmentController extends Controller
         $feature->twin_beds = empty($data['features']->twin_beds) ? 0 : $data['features']->twin_beds;
         $feature->save();
         //rate
-        RateModel::updateApartmentRate($apartment->id_apartment, ($data['rate']==-1)?"1.00":$data['rate']);
+        //RateModel::updateApartmentRate($apartment->id_apartment, ($data['rate']==-1)?"1.00":$data['rate']);
         //amenities
         foreach ($data['amenities'] as $row_amenity) {
             ApartmentAmenityModel::updateApartmentAmenity($apartment->id_apartment, $row_amenity->id_amenity, (bool)$row_amenity->checked);
@@ -208,10 +208,14 @@ class ApartmentController extends Controller
             //thumbnail
             $apartment->thumbnail = MediaModel::getFirstMediaByType($apartment->id_apartment, 'apartment');
             //rate variant
-            $rate = RateModel::getRateByApartment($apartment->id_apartment);
-            if (!empty($rate)) {
-//                $apartment->price += ($apartment->price * ($rate->variant / 100));
-                $apartment->price *= (float)$rate->variant;
+            $rate = RateModel::getRateByNights($filter['nights']);
+            if (!empty($rate)) {                 
+               $apartment->price -= (float)($apartment->price * ($rate->variant / 100));
+                // $apartment->price *= (float)$rate->variant;
+                // echo "<pre>";
+                // print_r($rate->toArray());
+                // print_r($apartment->price);
+                // die();
             }
             $apartment->price = number_format($apartment->price, 2);
         }
@@ -254,11 +258,11 @@ class ApartmentController extends Controller
         ApartmentTypeModel::parseLang($apartment->type);
 
         //rate variant
-        $rate = RateModel::getRateByApartment($apartment->id_apartment);
-        if (!empty($rate)) {
-//            $apartment->price += ($apartment->price * ($rate->variant / 100));
-            $apartment->price *= (float)$rate->variant;
-        }
+//         $rate = RateModel::getRateByApartment($apartment->id_apartment);
+//         if (!empty($rate)) {
+// //            $apartment->price += ($apartment->price * ($rate->variant / 100));
+//             $apartment->price *= (float)$rate->variant;
+//         }
         $apartment->price = number_format($apartment->price, 2);
 
         //media

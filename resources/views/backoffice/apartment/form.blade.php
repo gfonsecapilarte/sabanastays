@@ -162,14 +162,6 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Apartment type (*)</label>
                                         <div class="col-sm-8">
-<!--                                            @foreach ($apartment_types as $apartment_type)
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="opt-apartment_type" value="{{ $apartment_type->id_apartment_type }}">
-                                                    {{ $apartment_type->lang[0]->name }}
-                                                </label>
-                                            </div>
-                                            @endforeach-->
                                             <select class="form-control" id="lst-apartment_type" name="lst-apartment_type" required>
                                                 <option value="0"> - Choose type - </option>
                                                 @foreach ($apartment_types as $apartment_type)
@@ -178,43 +170,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Rate type (*)</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" id="lst-rate" name="lst-rate" required>
-                                                <option value="-1" > - Choose type - </option>
-                                                <option value="0.85" @if (isset($apartment) && $apartment->rate->variant == 0.85) selected @endif >Low Season (0.85)</option>
-                                                <option value="1.15" @if (isset($apartment) && $apartment->rate->variant == 1.15) selected @endif >High Season (1.15)</option>
-                                                <option value="1.00" @if (isset($apartment) && $apartment->rate->variant == 1.00) selected @endif >Default (1.00)</option>
-                                                <option value="1.05" @if (isset($apartment) && $apartment->rate->variant == 1.05) selected @endif >Referral (1.05)</option>
-
-                                            </select>
-<!--                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="opt-rate" value="0.85">
-                                                    Low Season (0.85)
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="opt-rate" value="1.15">
-                                                    High Season (1.15)
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="opt-rate" value="1.00">
-                                                    Default (1.00)
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="opt-rate" value="1.05">
-                                                    Referral (1.05)
-                                                </label>
-                                            </div>-->
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Floor</label>
                                         <div class="col-sm-8">

@@ -48,6 +48,11 @@ import "./responsive.js";
 import "./currency/currency.js";
 
 /*
+ * Load rates information
+ */
+import "./rate/rate.js";
+
+/*
  * Modules to work with aptos
  */
 import "./aptos/search.js";

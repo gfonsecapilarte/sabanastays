@@ -73,6 +73,11 @@ Route::post('/booking/request', 'BookingController@generateToken');
 //amenities
 Route::get('/amenities', 'AmenityController@getAmenities');
 
+//rates
+Route::get('/rates', 'RateController@getRates');
+Route::get('/rate/list', 'RateController@listRates');
+Route::post('/rate/save', 'RateController@saveRate');
+
 //modules
 Route::get('/module/home', 'Module\HomeController@getModule');
 Route::post('/module/home/save', 'Module\HomeController@saveModule');

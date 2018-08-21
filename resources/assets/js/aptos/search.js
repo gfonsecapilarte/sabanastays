@@ -24,7 +24,8 @@ $(document).ready(function(){
             type        = $('select[name="type"]'),
             checkInVal  = checkIn.val(),
             checkOutVal = checkOut.val(),
-            typeVal     = type.val();
+            typeVal     = type.val(),
+            nights      = calculateNights(checkInVal,checkOutVal);
 
         if(checkInVal.length == 0){
             checkIn.addClass('error');
@@ -53,6 +54,7 @@ $(document).ready(function(){
             localStorage.setItem('checkin',checkInVal);
             localStorage.setItem('checkout',checkOutVal);
             localStorage.setItem('atpoType',typeVal);
+            localStorage.setItem('nights',nights);
 
             if(locale == 'EN'){
                 location.href = '/en/booking';
@@ -68,7 +70,8 @@ $(document).ready(function(){
      */
     var checkIn  = localStorage.getItem('checkin'),
         checkOut = localStorage.getItem('checkout'),
-        atpoType = localStorage.getItem('atpoType');
+        atpoType = localStorage.getItem('atpoType'),
+        nights  = localStorage.getItem('nights');
 
     if($("#list-found-aptos").length > 0){
         getAptos();
@@ -82,7 +85,7 @@ $(document).ready(function(){
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: {checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 5}
+            data: {checkin: checkIn, checkout: checkOut, type: atpoType, nights : nights, page: currentPage, items_per_page: 5}
         }).done(function(data){
             $('#loader').hide();
             $('#list-found-aptos').html('');

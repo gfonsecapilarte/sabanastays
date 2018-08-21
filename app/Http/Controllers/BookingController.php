@@ -117,6 +117,7 @@ class BookingController extends Controller
 
     public function create(Request $request)
     {
+
         //check if payment is of before booking
         if ($request->has('id_booking')) {
             $booking = BookingModel::find($request->input('id_booking'));
@@ -177,16 +178,35 @@ class BookingController extends Controller
         $total_payment = $total_nights;
         $booking->value = $apartment->price;
         $booking->attempt = 1;
-        //check rates
-        $rate = RateModel::getRateByApartment($request->input('id_apartment'));
-        if (!empty($rate)) {
-//            $variant = $rate->variant;
-//            $variant_value = $total_payment * ($variant / 100);
-//            $total_payment += $variant_value;
 
-            $total_payment = $total_nights * $rate->variant;
-            $total_payment = round($total_payment, 2);
-            $variant_value = $total_payment - $total_nights;
+        //check rates
+        $rate = RateModel::getRateByNights($request->input('nights'));
+        // echo "<pre>";
+        // print_r( $rate->toArray());
+        // echo "<pre> total_nights=";
+        // print_r( $total_nights);
+        // echo "<pre> total_payment=";
+        // print_r( $total_payment);
+        // echo "<pre>";
+        // print_r( $booking->toArray());
+        
+        if (!empty($rate)) {
+           $variant = $rate->variant;
+           $variant_value = $total_payment * ($variant / 100);
+           $total_payment -= $variant_value;
+           $total_payment = round($total_payment, 2);
+
+        //    echo "<pre> variant=";
+        //    print_r( $variant);
+        //    echo "<pre> variant_value=";
+        //    print_r( $variant_value);
+        //    echo "<pre> total_payment=";
+        //    print_r( $total_payment);
+        //    die();
+
+            // $total_payment = $total_nights * $rate->variant;
+            // $total_payment = round($total_payment, 2);
+            // $variant_value = $total_payment - $total_nights;
 
 
             //add rate info
@@ -295,15 +315,17 @@ class BookingController extends Controller
         }
 
         try {
-            $data = array(
-                "sellerId"        => env('TCO_SELLER_ID'),
-                "merchantOrderId" => $booking->id_booking,
-                "token"           => $request->input('tco_token'),
-                "currency"        => $request->input('currency_iso'),
-                "total"           => $booking->total_payment,
-                "billingAddr"     => $address_billing_data,
-                "shippingAddr"     => $address_booking_data
-            );
+            // $data = array(
+            //     "sellerId"        => env('TCO_SELLER_ID'),
+            //     "merchantOrderId" => $booking->id_booking,
+            //     "token"           => $request->input('tco_token'),
+            //     "currency"        => $request->input('currency_iso'),
+            //     "total"           => $booking->total_payment,
+            //     "billingAddr"     => $address_billing_data,
+            //     "shippingAddr"     => $address_booking_data
+            // );
+
+            
 
 //            $checkout = \Twocheckout_Charge::auth($data);
 

@@ -25,3 +25,5 @@ import "./backoffice/building-form.js";
 import "./backoffice/web.js";
 import "./backoffice/user.js";
 import "./backoffice/user-form.js";
+import "./backoffice/rate-form.js";
+import "./backoffice/rate.js";

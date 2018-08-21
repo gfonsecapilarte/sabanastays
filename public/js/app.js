@@ -15798,14 +15798,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__responsive_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__responsive_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__currency_currency_js__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__currency_currency_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__currency_currency_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__aptos_search_js__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__users_login_js__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_register_js__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__users_user_js__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__contact_contact_js__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__booking_booking_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__booking_my_bookings_list_js__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__newsletter_newsletter_js__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__rate_rate_js__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__rate_rate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__rate_rate_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__aptos_search_js__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_login_js__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__users_register_js__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__users_user_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__contact_contact_js__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__booking_booking_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__booking_my_bookings_list_js__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__newsletter_newsletter_js__ = __webpack_require__(93);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -15852,6 +15854,11 @@ loadGoogleMapsApi({ key: google_key }).then(function (googleMaps) {
 
 /*
  * Load currency information
+ */
+
+
+/*
+ * Load rates information
  */
 
 
@@ -19192,7 +19199,7 @@ $(window).load(function () {
         url: '/api/currencies',
         type: 'GET',
         success: function success(currencies) {
-            console.log(currencies[0]);
+            // console.log(currencies[0]);
             localStorage.setItem("currency", JSON.stringify(currencies[0]));
             if ($('.currency-sign').length > 0) {
                 $('.currency-sign').text(currencies[0].sign);
@@ -19231,7 +19238,8 @@ $(document).ready(function () {
             type = $('select[name="type"]'),
             checkInVal = checkIn.val(),
             checkOutVal = checkOut.val(),
-            typeVal = type.val();
+            typeVal = type.val(),
+            nights = Object(__WEBPACK_IMPORTED_MODULE_0__dates_dates_js__["a" /* calculateNights */])(checkInVal, checkOutVal);
 
         if (checkInVal.length == 0) {
             checkIn.addClass('error');
@@ -19259,6 +19267,7 @@ $(document).ready(function () {
             localStorage.setItem('checkin', checkInVal);
             localStorage.setItem('checkout', checkOutVal);
             localStorage.setItem('atpoType', typeVal);
+            localStorage.setItem('nights', nights);
 
             if (locale == 'EN') {
                 location.href = '/en/booking';
@@ -19273,7 +19282,8 @@ $(document).ready(function () {
      */
     var checkIn = localStorage.getItem('checkin'),
         checkOut = localStorage.getItem('checkout'),
-        atpoType = localStorage.getItem('atpoType');
+        atpoType = localStorage.getItem('atpoType'),
+        nights = localStorage.getItem('nights');
 
     if ($("#list-found-aptos").length > 0) {
         getAptos();
@@ -19287,7 +19297,7 @@ $(document).ready(function () {
         var ajax = $.ajax({
             url: '/api/apartments',
             type: 'GET',
-            data: { checkin: checkIn, checkout: checkOut, type: atpoType, page: currentPage, items_per_page: 5 }
+            data: { checkin: checkIn, checkout: checkOut, type: atpoType, nights: nights, page: currentPage, items_per_page: 5 }
         }).done(function (data) {
             $('#loader').hide();
             $('#list-found-aptos').html('');
@@ -20830,7 +20840,8 @@ $(document).ready(function () {
                                 address.second.register();
                             } else {
                                 address.second.id = reply.address.id_address;
-                                payment.pay();
+                                // payment.pay();
+                                payment.checkout.token();
                             }
                         }
                     }
@@ -20880,7 +20891,8 @@ $(document).ready(function () {
                     success: function success(reply) {
                         if (reply.success != null) {
                             address.second.id = reply.address.id_address;
-                            payment.pay();
+                            // payment.pay();
+                            payment.checkout.token();
                         }
                     }
                 });
@@ -20889,15 +20901,16 @@ $(document).ready(function () {
             /**
              * User object
              */
+
         } };var user = {
         id: localStorage.getItem('id_user'),
         token: localStorage.getItem('api_token'),
         done: false,
         checkSession: function checkSession() {
             if (user.token != null) {
-                return false;
-            } else {
                 return true;
+            } else {
+                return false;
             }
         },
         forms: {
@@ -21009,6 +21022,7 @@ $(document).ready(function () {
                             }
                         },
                         submitHandler: function submitHandler(form) {
+
                             $('#loader').show();
                             payment.checkout.args.ccNo = $('input[name="creditCard"]').val();
                             payment.checkout.args.cvv = $('input[name="cvv"]').val();
@@ -21016,12 +21030,19 @@ $(document).ready(function () {
                             payment.checkout.args.expYear = $('input[name="year"]').val();
                             payment.done = true;
 
-                            if (payment.done) {
-                                if (payment.attempt == 0) {
-                                    payment.checkout.token();
-                                } else {
-                                    payment.pay();
+                            if (user.checkSession()) {
+                                console.log('Login');
+                                // If Login
+                                if (payment.done) {
+                                    if (payment.attempt == 0) {
+                                        payment.checkout.token();
+                                    } else {
+                                        payment.pay();
+                                    }
                                 }
+                            } else {
+                                console.log('NO LOGIN');
+                                user.register();
                             }
                         }
                     });
@@ -21079,6 +21100,7 @@ $(document).ready(function () {
                     id_apartment: apartment.id,
                     checkin: localStorage.getItem('checkin'),
                     checkout: localStorage.getItem('checkout'),
+                    nights: localStorage.getItem('nights'),
                     //                tco_token: payment.token,
                     token: token,
                     currency_iso: currency.iso_code,
@@ -21097,6 +21119,7 @@ $(document).ready(function () {
                     type: 'POST',
                     data: data,
                     success: function success(reply) {
+
                         $('#loader').hide();
 
                         if (reply.success != null && reply.success == false) {
@@ -22784,6 +22807,163 @@ $(document).ready(function () {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+    $.ajax({
+        url: '/api/rates',
+        type: 'GET',
+        success: function success(rates) {
+            console.log(rates);
+            // localStorage.setItem("currency", JSON.stringify(rates[0]));
+            // if($('.currency-sign').length > 0){
+            //     $('.currency-sign').text(rates[0].sign);
+            // }
+        }
+    });
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);

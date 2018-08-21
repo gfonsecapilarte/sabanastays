@@ -11869,6 +11869,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__backoffice_user_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__backoffice_user_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__backoffice_user_form_js__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__backoffice_user_form_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__backoffice_user_form_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__backoffice_rate_form_js__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__backoffice_rate_form_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__backoffice_rate_form_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__backoffice_rate_js__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__backoffice_rate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__backoffice_rate_js__);
 
 
 
@@ -11886,6 +11890,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //import "./backoffice/libraries/dropzone.js";
 
 window.Dropzone = __webpack_require__(110);
+
+
 
 
 
@@ -19407,6 +19413,218 @@ var UserForm = {
 
 $(function () {
     UserForm.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var RateForm = {
+    init: function init() {
+
+        // console.log('Im here rates');
+        if (_typeof($('#container-form-rate')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+
+        RateForm.clear();
+        RateForm.createEvents();
+    },
+    createEvents: function createEvents() {
+        $('.save-rate').on('click', RateForm.onSaveRate);
+    },
+    clear: function clear() {
+        // $('#lst-rate').val($('#lst-rate option[selected]').val(""));
+    },
+    getInformation: function getInformation() {
+        return {
+            name: $('.form-information').find('.txt-name').val(),
+            nights: $('#lst-rate').val(),
+            variant: $('.form-information').find('.txt-discount').val()
+        };
+    },
+
+    onSaveRate: function onSaveRate(event) {
+
+        var valid = true;
+
+        $('#container-form-rate').each(function (i, form) {
+            $(form).find('input[required],select[required]').each(function (i, input) {
+                //console.log($(input),$(input).val());
+                $(input).removeClass('input-required');
+                if ($(input).val() === '' || $(input).val() == '-1' || !$(input).val()) {
+                    valid = false;
+                    $(input).addClass('input-required');
+                }
+            });
+        });
+
+        if (!valid) {
+            alert('Algunos campos obligatorios estan vacios.');
+            return;
+        }
+
+        $('.save-rate').prop('disabled', true);
+        var data = {
+            id_rate: $('#txt-id_rate').val(),
+            information: RateForm.getInformation()
+        };
+
+        RateForm.saveRate(data);
+    },
+    saveRate: function saveRate(data) {
+
+        var list_rates = $('#container-form-rate').data("link");
+
+        var form_data = new FormData();
+        form_data.append('id_rate', data.id_rate);
+        form_data.append('information', JSON.stringify(data.information));
+
+        // console.log('===== Im here save rate ========');
+        // console.log(data.information);
+        // console.log('=============');
+        // return;
+
+        $.ajax({
+            url: '/api/rate/save',
+            type: 'POST',
+            data: form_data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function success(response) {
+                if (response.success) {
+                    $('#txt-id_rate').val(response.id_rate);
+                    $.growl.notice({ title: "Success", message: "Rate has saved successful" });
+
+                    var timer = setTimeout(function () {
+                        window.location.href = list_rates;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 900);
+                } else {
+                    $.growl.error({ title: "Error", message: "An error while try save the rate" });
+                }
+            }
+        });
+    }
+};
+
+$(function () {
+    RateForm.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var Rate = {
+    init: function init() {
+
+        if (_typeof($('#container-rates')[0]) === ( true ? 'undefined' : _typeof(undefined))) {
+            return;
+        }
+
+        console.log("im here getRates");
+        Rate.clear();
+        Rate.createEvents();
+        Rate.getRates();
+    },
+    createEvents: function createEvents() {
+        $('.app-search-list').on('click', 'a', Rate.onSearch);
+        $('.app-search-list').on('keyup', 'input', Rate.onSearch);
+    },
+    clear: function clear() {
+        $('#table-rates tbody').empty();
+    },
+    getRates: function getRates(params) {
+        var data = $.extend(params, { page: 1 });
+
+        console.log("im here getRates");
+        console.log(data);
+        $.ajax({
+            url: '/api/rate/list',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            data: data,
+            success: function success(response) {
+                if (response.success) {
+                    console.log(response);
+                    Rate.showResults(response.rates);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    },
+    onSearch: function onSearch(event) {
+        event.preventDefault();
+        if (event.type === 'click' || event.type === 'keyup' && event.which === 13) {
+            if ($('.app-search-list input').val() === '') {
+                Rate.getRates();
+            } else {
+                Rate.getRates({ term: $('.app-search-list input').val() });
+            }
+        }
+    },
+    showResults: function showResults(response) {
+        Rate.clear();
+        $.each(response.data, Rate.printRow);
+    },
+    printRow: function printRow(i, rate) {
+        var $row = $('<tr/>');
+
+        $('<td/>').appendTo($row).append($('<span/>').addClass('btn btn-link').text('#' + rate.id_rate).on('click', { rate: rate }, rate.onView));
+        $('<td/>').text(rate.name).appendTo($row);
+        $('<td/>').text(rate.from + ' - ' + rate.to).appendTo($row);
+        $('<td/>').text(rate.variant + '%').appendTo($row);
+        $('<td/>').appendTo($row).addClass('text-center').append($('<div/>').addClass('btn-group').attr('role', 'group').append(
+        // $('<span/>').addClass('btn btn-default').append(
+        //     $('<i/>').addClass('fa fa-eye')
+        // ).on('click', {rate:rate}, rate.onView),
+        $('<a/>').addClass('btn btn-default').attr('href', '/dashboard/rates/edit?id_rate=' + rate.id_rate).append($('<i/>').addClass('fa fa-pencil'))));
+
+        $row.appendTo($('#table-rates tbody'));
+    },
+    onDeleteRate: function onDeleteRate(event) {
+        if (!confirm('Sure delete Rate')) {
+            return false;
+        }
+        Rate.deleteRate(event.data.Rate, event.data.$modal);
+    },
+    deleteRate: function deleteRate(Rate, $modal) {
+        $.ajax({
+            url: '/api/Rate/remove',
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            data: {
+                id_Rate: Rate.id_Rate
+            },
+            success: function success(response) {
+                if (response.success) {
+                    $modal.modal('hide');
+                    alert('Rate deleted');
+                    $('body').find('.Rate-modal').remove();
+                    Rate.getRates();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    }
+};
+
+$(function () {
+    Rate.init();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

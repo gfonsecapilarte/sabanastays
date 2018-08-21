@@ -48,6 +48,11 @@
                     <span class="hide-menu">Apartments</span>
                 </a>
             </li>
+            <!-- <li>
+                <a href="{{ route('dashboard.rates') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">Rates</span>
+                </a>
+            </li> -->
             <li>
                 <a href="{{ route('dashboard.users') }}" class="waves-effect"><i class="icon-user fa-fw" data-icon="v"></i>
                     <span class="hide-menu">Users</span>
