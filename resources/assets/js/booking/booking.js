@@ -753,7 +753,7 @@ $(document).ready(function () {
 
 
         }, '#paypal-button-container');
-    }
+    } 
 
 
     var checkout = function (data) {
