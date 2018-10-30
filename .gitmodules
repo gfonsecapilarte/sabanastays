@@ -4,3 +4,6 @@
 [submodule "app/Lib/paymentwall"]
 	path = app/Lib/paymentwall
 	url = git://github.com/paymentwall/paymentwall-php.git
+[submodule "app/Lib/paypal/PayPal-PHP-SDK"]
+	path = app/Lib/paypal/PayPal-PHP-SDK
+	url = https://github.com/paypal/PayPal-PHP-SDK.git
