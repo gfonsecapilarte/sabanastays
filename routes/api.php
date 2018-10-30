@@ -63,8 +63,13 @@ Route::post('/user/save', 'UserController@saveUser');
 //bookings
 Route::post('/booking/create', 'BookingController@create');
 Route::post('/booking/cancel', 'BookingController@cancelBooking');
+Route::post('/booking/incomplete', 'BookingController@incompleteBooking');
 Route::get('/booking/list', 'BookingController@getBookings');
 Route::get('/bookings', 'BookingController@getBookinsByStatus');
+
+//Paypal
+Route::post('/booking/paypal/create', 'BookingController@makeCheckoutPaypal');
+Route::post('/booking/paypal/execute', 'BookingController@executePayment');
 
 //token
 Route::post('/booking/request', 'BookingController@generateToken');

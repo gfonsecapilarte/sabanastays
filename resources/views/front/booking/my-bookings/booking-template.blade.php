@@ -4,7 +4,7 @@
             <a href="#"><img src="{{ asset('images/room-1.png') }}" alt="" class="img-responsive sa-thumbnail"></a>
         </div>
         <div class="col-sm-7">
-            <h3 class="mg-avl-room-title sa-building-name"><a href="#">Torre Rohrmoser</a></h3>
+            <h3 class="mg-avl-room-title sa-building-name"><a href="#">Torre Rohrmoser Hola</a></h3>
             <div class="row">
                 <div class="col-sm-6">
                     <ul>

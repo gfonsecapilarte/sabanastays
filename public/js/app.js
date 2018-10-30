@@ -9573,7 +9573,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
     date.locale = function (code) {
         if (code) {
             if (!locales[code] && "function" === 'function' && global) {
-                __webpack_require__(70)("./" + code);
+                __webpack_require__(71)("./" + code);
             }
             lang = code;
         }
@@ -11491,7 +11491,7 @@ function asap(task) {
 module.exports = asap;
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53), __webpack_require__(80).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53), __webpack_require__(81).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -15762,8 +15762,8 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(55);
-__webpack_require__(94);
-module.exports = __webpack_require__(95);
+__webpack_require__(95);
+module.exports = __webpack_require__(96);
 
 
 /***/ }),
@@ -15798,16 +15798,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__responsive_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__responsive_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__currency_currency_js__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__currency_currency_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__currency_currency_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__rate_rate_js__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__rate_rate_js__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__rate_rate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__rate_rate_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__aptos_search_js__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_login_js__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__users_register_js__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__users_user_js__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__contact_contact_js__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__booking_booking_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__booking_my_bookings_list_js__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__newsletter_newsletter_js__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__aptos_search_js__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__users_login_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__users_register_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__users_user_js__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__contact_contact_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__booking_booking_js__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__booking_my_bookings_list_js__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__newsletter_newsletter_js__ = __webpack_require__(94);
 var loadGoogleMapsApi = __webpack_require__(56);
 
 
@@ -19211,6 +19211,25 @@ $(window).load(function () {
 
 /***/ }),
 /* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+    $.ajax({
+        url: '/api/rates',
+        type: 'GET',
+        success: function success(rates) {
+            console.log(rates);
+            // localStorage.setItem("currency", JSON.stringify(rates[0]));
+            // if($('.currency-sign').length > 0){
+            //     $('.currency-sign').text(rates[0].sign);
+            // }
+        }
+    });
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19414,7 +19433,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -19495,14 +19514,14 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 70;
+webpackContext.id = 71;
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk__ = __webpack_require__(72);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fb_sdk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fb_sdk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__messages_messages_js__ = __webpack_require__(3);
 var validate = __webpack_require__(2);
@@ -19594,7 +19613,7 @@ $(document).ready(function () {
      * Setup and login with Google API
      */
     if ($('#sa-login').length) {
-        __webpack_require__(77)().then(function (gapi) {
+        __webpack_require__(78)().then(function (gapi) {
             var auth2 = null;
             gapi.load('auth2', function () {
                 auth2 = gapi.auth2.init({
@@ -19636,7 +19655,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19646,11 +19665,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _loadFacebookSDK = __webpack_require__(73);
+var _loadFacebookSDK = __webpack_require__(74);
 
 var _loadFacebookSDK2 = _interopRequireDefault(_loadFacebookSDK);
 
-var _FacebookSDK = __webpack_require__(75);
+var _FacebookSDK = __webpack_require__(76);
 
 var _FacebookSDK2 = _interopRequireDefault(_FacebookSDK);
 
@@ -19699,7 +19718,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19709,7 +19728,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _loadScript = __webpack_require__(74);
+var _loadScript = __webpack_require__(75);
 
 var _loadScript2 = _interopRequireDefault(_loadScript);
 
@@ -19739,7 +19758,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 
@@ -19810,7 +19829,7 @@ function ieOnEnd (script, cb) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19820,7 +19839,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _functionNames = __webpack_require__(76);
+var _functionNames = __webpack_require__(77);
 
 var _functionNames2 = _interopRequireDefault(_functionNames);
 
@@ -19854,7 +19873,7 @@ FacebookSDK.promisify = function (fbAPIReady) {
 exports.default = FacebookSDK;
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19869,13 +19888,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ["__globalCallbacks", "api", "AppEvents", "getLoginStatus", "getAuthResponse", "getAccessToken", "getUserID", "login", "logout", "Canvas", "Event", "Frictionless", "init", "ui", "XFBML"];
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** @module google-client-api */
 
-var scriptjs = __webpack_require__( 78 ),
-	promise = __webpack_require__( 79 );
+var scriptjs = __webpack_require__( 79 ),
+	promise = __webpack_require__( 80 );
 
 var callbacks = [];
 
@@ -19939,7 +19958,7 @@ module.exports = function( onComplete ) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -20072,19 +20091,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = __webpack_require__(4)
-__webpack_require__(82)
 __webpack_require__(83)
 __webpack_require__(84)
+__webpack_require__(85)
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -20137,7 +20156,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(81);
+__webpack_require__(82);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -20151,7 +20170,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -20344,7 +20363,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(53)))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20364,7 +20383,7 @@ Promise.prototype.done = function (onFulfilled, onRejected) {
 }
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20479,7 +20498,7 @@ Promise.prototype['catch'] = function (onRejected) {
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20549,7 +20568,7 @@ Promise.prototype.nodeify = function (callback, ctx) {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20604,7 +20623,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20718,7 +20737,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20759,12 +20778,12 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__location_location_js__ = __webpack_require__(90);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs_js__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__location_location_js__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__messages_messages_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dates_dates_js__ = __webpack_require__(19);
 /**
@@ -20791,13 +20810,38 @@ $(document).ready(function () {
  * jquery Module to validate forms
  */
 var validate = __webpack_require__(2);
-__webpack_require__(91);
+__webpack_require__(92);
 
 $(document).ready(function () {
+
     /**
-     * Apartment object
+     * Booking object
      */
-    var apartment = {
+    var booking = {
+        id_booking: null,
+        incompleteBooking: function incompleteBooking(callback) {
+            $.ajax({
+                url: '/api/booking/incomplete',
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                data: {
+                    id_booking: booking.id_booking
+                },
+                success: function success(response) {
+                    if (response.success) {
+                        callback(true);
+                    } else {
+                        callback(false, response.message);
+                    }
+                }
+            });
+        }
+
+        /**
+         * Apartment object
+         */
+    };var apartment = {
         id: null
 
         /**
@@ -20828,7 +20872,7 @@ $(document).ready(function () {
                     }
                 });
             },
-            register: function register() {
+            register: function register(callback) {
                 $.ajax({
                     url: '/api/address/create',
                     type: 'POST',
@@ -20837,12 +20881,19 @@ $(document).ready(function () {
                         if (reply.success != null) {
                             address.first.id = reply.address.id_address;
                             if (address.second.different) {
-                                address.second.register();
+                                address.second.register(callback);
                             } else {
                                 address.second.id = reply.address.id_address;
                                 // payment.pay();
-                                payment.checkout.token();
+                                // payment.checkout.token();
+                                if (callback != undefined) {
+                                    callback(true);
+                                } else {
+                                    payment.checkout.token();
+                                }
                             }
+                        } else {
+                            callback(false);
                         }
                     }
                 });
@@ -20883,7 +20934,7 @@ $(document).ready(function () {
                     address.second.different = true;
                 }
             },
-            register: function register() {
+            register: function register(callback) {
                 $.ajax({
                     url: '/api/address/create',
                     type: 'POST',
@@ -20892,7 +20943,14 @@ $(document).ready(function () {
                         if (reply.success != null) {
                             address.second.id = reply.address.id_address;
                             // payment.pay();
-                            payment.checkout.token();
+                            // payment.checkout.token();
+                            if (callback != undefined) {
+                                callback(true);
+                            } else {
+                                payment.checkout.token();
+                            }
+                        } else {
+                            callback(false);
                         }
                     }
                 });
@@ -20967,7 +21025,7 @@ $(document).ready(function () {
                 }
             });
         },
-        register: function register() {
+        register: function register(callback) {
             $.ajax({
                 url: '/api/user',
                 type: 'POST',
@@ -20979,10 +21037,19 @@ $(document).ready(function () {
                         localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
                         user.id = reply.id_user;
                         user.token = reply.api_token;
-                        address.first.register();
+                        // address.first.register();
+                        if (callback != undefined) {
+                            callback(true);
+                        } else {
+                            address.first.register();
+                        }
                     } else {
                         Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), reply.message);
                         Object(__WEBPACK_IMPORTED_MODULE_0__tabs_js__["e" /* saNextStep */])($('a[href="#personal-info-form"]'));
+
+                        if (callback != undefined) {
+                            callback(false);
+                        }
                     }
                 }
             });
@@ -21308,11 +21375,149 @@ $(document).ready(function () {
         var total = sidebarData.price * nights;
         $('#mg-room-cart .apartment-total').text(total.toFixed(2));
     }
+
+    if ($('#sa-payment-form')) {
+        // Render the PayPal button
+        paypal.Button.render({
+
+            // Set your environment
+
+            env: 'sandbox', // sandbox | production
+
+            // Specify the style of the button
+
+            style: {
+                label: 'buynow',
+                fundingicons: true, // optional
+                branding: true, // optional
+                size: 'small', // small | medium | large | responsive
+                shape: 'rect', // pill | rect
+                color: 'gold' // gold | blue | silver | black
+            },
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+            client: {
+                sandbox: paypalKeySandbox,
+                production: paypalKeyProduction
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // Wait for the PayPal button to be clicked
+
+            payment: function payment(data, actions) {
+
+                return checkout().then(function (msj) {
+                    if (msj) {
+
+                        var currency = $.parseJSON(localStorage.getItem("currency"));
+
+                        var params = {
+                            id_user: user.id,
+                            api_token: user.token,
+                            id_apartment: apartment.id,
+                            checkin: localStorage.getItem('checkin'),
+                            checkout: localStorage.getItem('checkout'),
+                            nights: localStorage.getItem('nights'),
+                            currency_iso: currency.iso_code,
+                            id_currency: currency.id_currency,
+                            id_address_booking: address.first.id,
+                            id_address_payment: address.second.id
+                        };
+
+                        if (booking.id_booking != null) {
+                            params.id_booking = booking.id_booking;
+                        }
+
+                        console.log("=== params pay ===");
+                        console.log(params);
+                        // return actions.request.post('/api/booking/paypal/create').then(function (res) {
+                        return actions.request.post('/api/booking/create', params).then(function (res) {
+                            console.log('====');
+                            console.log(res);
+                            console.log(booking.id_booking);
+
+                            booking.id_booking = res.booking.id_booking;
+                            console.log('====');
+                            console.log(res);
+                            console.log(booking.id_booking);
+                            return res.id;
+                        });
+                    }
+                });
+            },
+
+            // Wait for the payment to be authorized by the customer
+            onAuthorize: function onAuthorize(data, actions) {
+
+                console.log('===onAuthorize =');
+                console.log(booking.id_booking);
+                console.log('===End onAuthorize =');
+                // return;
+
+                var currency = $.parseJSON(localStorage.getItem("currency"));
+
+                return actions.request.post('/api/booking/paypal/execute', {
+                    paymentID: data.paymentID,
+                    payerID: data.payerID,
+                    id_user: user.id,
+                    api_token: user.token,
+                    id_booking: booking.id_booking,
+                    id_currency: currency.id_currency
+                }).then(function (res) {
+                    // 3. Show the buyer a confirmation message.
+                    console.log(res);
+                    if (res.booking.status == 'PAID') {
+                        Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["b" /* successMessage */])($('.mg-booking-form'), 'Successful');
+                        location.href = myBookingsLink;
+                    }
+                });
+            },
+
+            onCancel: function onCancel(data, actions) {
+                // Show a cancel page or return to cart
+                console.log('====');
+                console.log("onCancel");
+
+                Object(__WEBPACK_IMPORTED_MODULE_2__messages_messages_js__["a" /* errorMessage */])($('.mg-booking-form'), "Your booking are incomplete");
+            },
+
+            onError: function onError(err) {
+                // Show an error page here, when an error occurs
+                console.log('====');
+                console.log("onError", err);
+            }
+
+        }, '#paypal-button-container');
+    }
+
+    var checkout = function checkout(data) {
+        return new Promise(function (resolve, reject) {
+            if (user.checkSession()) {
+                if (booking.id_booking != null) {
+                    resolve(true);
+                } else {
+                    address.first.register(function (result) {
+                        resolve(result);
+                    });
+                }
+            } else {
+                user.register(function (response) {
+                    address.first.register(function (result) {
+                        resolve(result);
+                    });
+                });
+            }
+        });
+    };
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21402,7 +21607,7 @@ function saPrevStep(element) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21433,6 +21638,9 @@ function callStates(form) {
     var ajax = $.ajax({
         url: '/api/location/states',
         type: 'GET',
+        data: {
+            id_country: $('select[name="id_country"]', form).val()
+        },
         success: function success(states) {
             var options = '<option value="" disabled selected></opion>';
             $(states).each(function (index, el) {
@@ -21448,6 +21656,9 @@ function callCities(form) {
     var ajax = $.ajax({
         url: '/api/location/cities',
         type: 'GET',
+        data: {
+            id_state: $('select[name="id_state"]', form).val()
+        },
         success: function success(cities) {
             var options = '<option value="" disabled selected></opion>';
             $(cities).each(function (index, el) {
@@ -21461,7 +21672,7 @@ function callCities(form) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22627,7 +22838,7 @@ return $;
 }));
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22669,6 +22880,8 @@ $(document).ready(function () {
             },
             success: function success(reply) {
                 if (reply.success != null && reply.success) {
+                    console.log("==== my bookings ====");
+                    console.log(reply.bookings);
                     drawBookings(reply.bookings, status);
                 }
             }
@@ -22688,11 +22901,22 @@ $(document).ready(function () {
             }
 
             /** Draw apartment name **/
+            var buildingName = "";
             booking.apartment.building.lang.map(function (b) {
                 if (b.language.iso == locale) {
-                    $('#booking-template .sa-building-name').text(b.name);
+                    buildingName = b.name;
+                    //$('#booking-template .sa-building-name').text(b.name);
                 }
             });
+
+            booking.apartment.lang.map(function (b) {
+                if (b.language.iso == locale) {
+                    buildingName += "- " + b.name;
+                    //$('#booking-template .sa-building-name').text(b.name);
+                }
+            });
+
+            $('#booking-template .sa-building-name').text(buildingName);
 
             /** Draw category apartment name **/
             booking.apartment.type.lang.map(function (type) {
@@ -22754,7 +22978,7 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22797,173 +23021,16 @@ $(document).ready(function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 94 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
 /* 95 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 96 */
+/***/ (function(module, exports) {
 
-/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
-    $.ajax({
-        url: '/api/rates',
-        type: 'GET',
-        success: function success(rates) {
-            console.log(rates);
-            // localStorage.setItem("currency", JSON.stringify(rates[0]));
-            // if($('.currency-sign').length > 0){
-            //     $('.currency-sign').text(rates[0].sign);
-            // }
-        }
-    });
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

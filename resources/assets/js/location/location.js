@@ -23,6 +23,9 @@ export function callStates(form){
     var ajax = $.ajax({
         url: '/api/location/states',
         type: 'GET',
+        data: {
+            id_country :$('select[name="id_country"]', form).val()
+        },
         success: function(states){
             var options = '<option value="" disabled selected></opion>';
             $(states).each(function(index, el) {
@@ -38,6 +41,9 @@ export function callCities(form){
     var ajax = $.ajax({
         url: '/api/location/cities',
         type: 'GET',
+        data: {
+            id_state :$('select[name="id_state"]', form).val()
+        },
         success: function(cities){
             var options = '<option value="" disabled selected></opion>';
             $(cities).each(function(index, el) {

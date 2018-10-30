@@ -18,6 +18,7 @@ class Payment extends Model
     const CHECK = 'CHECK';
     const WIRE_TRANSFER = 'WIRE TRANSFER';
     const CASH = 'CASH';
+    const PAYPAL = 'PAYPAL';
 
     /**
      * Associations

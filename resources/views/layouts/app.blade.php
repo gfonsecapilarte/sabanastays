@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sabanastays - @yield('title')</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     </head>
     <body class="@yield('bodyClass')">
 
@@ -77,6 +78,6 @@
                 </div>
             </div>
         </footer>
-        <script src="{{ asset('js/app.js') }}?v={{config('app.version')}}"></script>
+        <script src="{{ asset('js/app.js') }}?v={{config('app.version')}}"></script>        
     </body>
 </html>

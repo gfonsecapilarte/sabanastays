@@ -39,6 +39,8 @@ $(document).ready(function() {
             },
             success: function(reply){
                 if(reply.success != null && reply.success){
+                    console.log("==== my bookings ====");
+                    console.log(reply.bookings);
                     drawBookings(reply.bookings,status);
                 }
             }
@@ -58,11 +60,22 @@ $(document).ready(function() {
             }
 
             /** Draw apartment name **/
+            var buildingName = "";
             booking.apartment.building.lang.map(function(b) {
                 if(b.language.iso == locale){
-                    $('#booking-template .sa-building-name').text(b.name);
+                    buildingName = b.name;
+                    //$('#booking-template .sa-building-name').text(b.name);
                 }
             });
+
+            booking.apartment.lang.map(function(b) {
+                if(b.language.iso == locale){
+                    buildingName += "- " + b.name;
+                    //$('#booking-template .sa-building-name').text(b.name);
+                }
+            });
+
+            $('#booking-template .sa-building-name').text(buildingName);
 
             /** Draw category apartment name **/
             booking.apartment.type.lang.map(function(type) {

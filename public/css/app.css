@@ -4934,8 +4934,7 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   .mg-boxed .header {
     max-width: 100%;
   }
-}
-@charset "UTF-8";
+}@charset "UTF-8";
 
 @font-face {
   font-family: 'Arial';
@@ -7991,5 +7990,14 @@ body.my-bookings .mg-avl-room .col-sm-7 {
   body.contact-us .mg-page .col-md-5 {
     margin-top: 50px;
   }
+}
+
+/*
+ * Paypal button
+ */
+
+#paypal-button-container {
+  float: right;
+  text-align: right;
 }
 

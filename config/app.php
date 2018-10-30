@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'version' => '1.1.0',
+    'version' => '1.3.8',
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

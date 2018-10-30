@@ -41,6 +41,32 @@ let validate = require('jquery-validation');
 require('../../../../node_modules/jquery-validation/dist/additional-methods.js');
 
 $(document).ready(function () {
+
+    /**
+     * Booking object
+     */
+    var booking = {
+        id_booking: null,
+        incompleteBooking: function (callback) {
+            $.ajax({
+                url: '/api/booking/incomplete',
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                data: {
+                    id_booking: booking.id_booking
+                },
+                success: function (response) {
+                    if (response.success) {
+                        callback(true);
+                    } else {
+                        callback(false, response.message);
+                    }
+                }
+            });
+        }
+    }
+
     /**
      * Apartment object
      */
@@ -76,7 +102,7 @@ $(document).ready(function () {
                     }
                 });
             },
-            register: function () {
+            register: function (callback) {
                 $.ajax({
                     url: '/api/address/create',
                     type: 'POST',
@@ -85,13 +111,20 @@ $(document).ready(function () {
                         if (reply.success != null) {
                             address.first.id = reply.address.id_address;
                             if (address.second.different) {
-                                address.second.register();
+                                address.second.register(callback);
                             }
                             else {
                                 address.second.id = reply.address.id_address;
                                 // payment.pay();
-                                payment.checkout.token();
+                                // payment.checkout.token();
+                                if (callback != undefined) {
+                                    callback(true);
+                                } else {
+                                    payment.checkout.token();
+                                }
                             }
+                        } else {
+                            callback(false);
                         }
                     }
                 });
@@ -132,7 +165,7 @@ $(document).ready(function () {
                     address.second.different = true;
                 }
             },
-            register: function () {
+            register: function (callback) {
                 $.ajax({
                     url: '/api/address/create',
                     type: 'POST',
@@ -141,7 +174,14 @@ $(document).ready(function () {
                         if (reply.success != null) {
                             address.second.id = reply.address.id_address;
                             // payment.pay();
-                            payment.checkout.token();
+                            // payment.checkout.token();
+                            if (callback != undefined) {
+                                callback(true);
+                            } else {
+                                payment.checkout.token();
+                            }
+                        } else {
+                            callback(false);
                         }
                     }
                 });
@@ -221,7 +261,7 @@ $(document).ready(function () {
                 }
             });
         },
-        register: function () {
+        register: function (callback) {
             $.ajax({
                 url: '/api/user',
                 type: 'POST',
@@ -233,11 +273,20 @@ $(document).ready(function () {
                         localStorage.setItem('user_name', reply.firstname + ' ' + reply.lastname);
                         user.id = reply.id_user;
                         user.token = reply.api_token;
-                        address.first.register();
+                        // address.first.register();
+                        if (callback != undefined) {
+                            callback(true)
+                        } else {
+                            address.first.register();
+                        }
                     }
                     else {
                         errorMessage($('.mg-booking-form'), reply.message);
                         saNextStep($('a[href="#personal-info-form"]'));
+
+                        if (callback != undefined) {
+                            callback(false);
+                        }
                     }
                 }
             });
@@ -584,4 +633,148 @@ $(document).ready(function () {
         var total = sidebarData.price * nights;
         $('#mg-room-cart .apartment-total').text(total.toFixed(2));
     }
+
+
+    if ($('#sa-payment-form')) {
+        // Render the PayPal button
+        paypal.Button.render({
+
+            // Set your environment
+
+            env: 'sandbox', // sandbox | production
+
+            // Specify the style of the button
+
+            style: {
+                label: 'buynow',
+                fundingicons: true, // optional
+                branding: true, // optional
+                size: 'small', // small | medium | large | responsive
+                shape: 'rect',   // pill | rect
+                color: 'gold'   // gold | blue | silver | black
+            },
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+            client: {
+                sandbox: paypalKeySandbox,
+                production: paypalKeyProduction
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // Wait for the PayPal button to be clicked
+
+            payment: function (data, actions) {
+
+                return checkout().then(function (msj) {
+                    if (msj) {
+
+                        var currency = $.parseJSON(localStorage.getItem("currency"));
+
+                        var params = {
+                            id_user: user.id,
+                            api_token: user.token,
+                            id_apartment: apartment.id,
+                            checkin: localStorage.getItem('checkin'),
+                            checkout: localStorage.getItem('checkout'),
+                            nights: localStorage.getItem('nights'),
+                            currency_iso: currency.iso_code,
+                            id_currency: currency.id_currency,
+                            id_address_booking: address.first.id,
+                            id_address_payment: address.second.id
+                        };
+
+
+                        if (booking.id_booking != null) {
+                            params.id_booking = booking.id_booking
+                        }
+
+                        console.log("=== params pay ===");
+                        console.log(params);
+                        // return actions.request.post('/api/booking/paypal/create').then(function (res) {
+                        return actions.request.post('/api/booking/create', params).then(function (res) {
+                            console.log('====');
+                            console.log(res);
+                            console.log(booking.id_booking);
+
+                            booking.id_booking = res.booking.id_booking;
+                            console.log('====');
+                            console.log(res);
+                            console.log(booking.id_booking);
+                            return res.id;
+                        });
+                    }
+                });
+            },
+
+            // Wait for the payment to be authorized by the customer
+            onAuthorize: function (data, actions) {
+
+                console.log('===onAuthorize =');
+                console.log(booking.id_booking);
+                console.log('===End onAuthorize =');
+                // return;
+
+                var currency = $.parseJSON(localStorage.getItem("currency"));
+
+                return actions.request.post('/api/booking/paypal/execute', {
+                    paymentID: data.paymentID,
+                    payerID: data.payerID,
+                    id_user: user.id,
+                    api_token: user.token,
+                    id_booking: booking.id_booking,
+                    id_currency: currency.id_currency
+                }).then(function (res) {
+                    // 3. Show the buyer a confirmation message.
+                    console.log(res);
+                    if (res.booking.status == 'PAID') {
+                        successMessage($('.mg-booking-form'), 'Successful');
+                        location.href = myBookingsLink;
+                    }
+                });
+            },
+
+            onCancel: function (data, actions) {
+                // Show a cancel page or return to cart
+                console.log('====');
+                console.log("onCancel");
+
+                errorMessage($('.mg-booking-form'), "Your booking are incomplete");
+            },
+
+            onError: function (err) {
+                // Show an error page here, when an error occurs
+                console.log('====');
+                console.log("onError", err);
+            }
+
+
+        }, '#paypal-button-container');
+    }
+
+
+    var checkout = function (data) {
+        return new Promise(
+            function (resolve, reject) {
+                if (user.checkSession()) {
+                    if (booking.id_booking != null) {
+                        resolve(true);
+                    } else {
+                        address.first.register(function (result) {
+                            resolve(result);
+                        });
+                    }
+                } else {
+                    user.register(function (response) {
+                        address.first.register(function (result) {
+                            resolve(result);
+                        });
+                    });
+                }
+            }
+        );
+    };
 });

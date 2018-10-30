@@ -2,11 +2,13 @@
     <div class="col-md-8">
         <div class="mg-book-form-billing">
             <script>
+                var paypalKeySandbox  = '{{ env('PAYPAL_SANDBOX') }}';
+                var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';
+
                 var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
                 var sellerId        = '{{ env('TCO_SELLER_ID') }}';
                 var paymentError    = '{{ __('general.paymentError') }}';
             </script>
-
             <form id='sa-payment-form'>
                 <h2 class="mg-sec-left-title">
                     <input name="second_address" type="checkbox" id="sa-check-diff-address"> @lang('general.isYourBillingAddressDiff')
@@ -42,9 +44,9 @@
                     </div>
                 </div>
 
-                <h2 class="mg-sec-left-title">@lang('general.CreditCardInfo')</h2>
+                <!-- <h2 class="mg-sec-left-title">@lang('general.CreditCardInfo')</h2> -->
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-6">
                         <div class="mg-contact-form-input">
                             <input type="text" class="form-control" name="creditCard" placeholder="@lang('general.creditCard')" required data-msg="@lang('validations.required')" data-msg-creditcard="@lang('validations.creditCard')">
@@ -67,12 +69,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
+                </div> -->
+                <!-- </div> -->
             </form>
 
-            <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a>
+            <!-- <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">@lang('general.book')</a> -->
             <a href="#address-form" class="btn btn-default btn-prev-tab pull-left">@lang('general.back')</a>
+            <div id="paypal-button-container" class="col-md-6"></div>
         </div>
     </div>
     <div class="col-md-4">
