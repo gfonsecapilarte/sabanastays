@@ -268,7 +268,7 @@ class BookingController extends Controller
      */
     public function makeCheckoutPaypal(Request $request, BookingModel $booking)
     {
-        require_once app_path('Lib/PayPal-PHP-SDK//autoload.php');
+        require_once app_path('Lib/PayPal-PHP-SDK/autoload.php');
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
@@ -332,7 +332,7 @@ class BookingController extends Controller
         // print_r($request->input('paymentID'));
         // print_r($request->input('payerID'));
         
-        require_once app_path('Lib/PayPal-PHP-SDK//autoload.php');
+        require_once app_path('Lib/PayPal-PHP-SDK/autoload.php');
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
