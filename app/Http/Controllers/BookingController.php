@@ -272,8 +272,8 @@ class BookingController extends Controller
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'ARC_mkN1mNRAidFWtggVVaTMHtbVFWA8KU5R6LRt0W4WB7C-fCpl45RIML49T1kkAdSDO4_0N2TBIG4o',     // ClientID
-                'EI5qwgf6a7MxrrYH3ILvZuwOZLLzxTzl9OcUlqMA_1JLqKOfuQpyAe-ycD0Vfc0zMnTuUeEBRhfcigD9'      // ClientSecret
+                env('PAYPAL_CLIENT_ID'),     // ClientID
+                env('PAYPAL_SECRET')      // ClientSecret
             )
         );
 
@@ -336,8 +336,8 @@ class BookingController extends Controller
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'ARC_mkN1mNRAidFWtggVVaTMHtbVFWA8KU5R6LRt0W4WB7C-fCpl45RIML49T1kkAdSDO4_0N2TBIG4o',     // ClientID
-                'EI5qwgf6a7MxrrYH3ILvZuwOZLLzxTzl9OcUlqMA_1JLqKOfuQpyAe-ycD0Vfc0zMnTuUeEBRhfcigD9'      // ClientSecret
+                env('PAYPAL_CLIENT_ID'),     // ClientID
+                env('PAYPAL_SECRET')      // ClientSecret
             )
         );
         
