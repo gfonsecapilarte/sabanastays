@@ -11,10 +11,10 @@
         @include('front/postheader')
     @stop
 
-    <script>
+    <!-- <script>
         var paypalKeySandbox  = '{{ env('PAYPAL_SANDBOX') }}';
         var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';
-    </script>
+    </script> -->
     <div class="container">
         <hr class="mb50 mt0">
         <div class="row">

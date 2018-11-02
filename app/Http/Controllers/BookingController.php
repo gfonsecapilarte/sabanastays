@@ -147,7 +147,6 @@ class BookingController extends Controller
 
     public function create(Request $request)
     {
-
         //check if payment is of before booking
         if ($request->has('id_booking')) {
             $booking = BookingModel::find($request->input('id_booking'));
@@ -272,8 +271,8 @@ class BookingController extends Controller
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                env('PAYPAL_CLIENT_ID'),     // ClientID
-                env('PAYPAL_SECRET')      // ClientSecret
+                (env('PAYPAL_TYPE')=="sandbox")?env('PAYPAL_SANDBOX_CLIENT_ID'):env('PAYPAL_PRODUCTION_CLIENT_ID'),     // ClientID
+                (env('PAYPAL_TYPE')=="sandbox")?env('PAYPAL_SANDBOX_SECRET'):env('PAYPAL_PRODUCTION_SECRET')      // ClientSecret
             )
         );
 
@@ -336,8 +335,8 @@ class BookingController extends Controller
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                env('PAYPAL_CLIENT_ID'),     // ClientID
-                env('PAYPAL_SECRET')      // ClientSecret
+                (env('PAYPAL_TYPE')=="sandbox")?env('PAYPAL_SANDBOX_CLIENT_ID'):env('PAYPAL_PRODUCTION_CLIENT_ID'),     // ClientID
+                (env('PAYPAL_TYPE')=="sandbox")?env('PAYPAL_SANDBOX_SECRET'):env('PAYPAL_PRODUCTION_SECRET')      // ClientSecret
             )
         );
         

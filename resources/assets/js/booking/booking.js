@@ -641,7 +641,8 @@ $(document).ready(function () {
 
             // Set your environment
 
-            env: 'sandbox', // sandbox | production
+            //env: 'sandbox', // sandbox | production
+            env: paypalType,
 
             // Specify the style of the button
 

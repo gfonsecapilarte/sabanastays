@@ -2,8 +2,8 @@
     <div class="col-md-8">
         <div class="mg-book-form-billing">
             <script>
-                var paypalKeySandbox  = '{{ env('PAYPAL_SANDBOX') }}';
-                var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';
+                // var paypalKeySandbox  = '{{ env('PAYPAL_SANDBOX') }}';
+                // var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';
 
                 var publishableKey  = '{{ env('TCO_PUBLIC_KEY') }}';
                 var sellerId        = '{{ env('TCO_SELLER_ID') }}';
