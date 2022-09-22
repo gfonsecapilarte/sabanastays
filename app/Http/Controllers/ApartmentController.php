@@ -208,15 +208,17 @@ class ApartmentController extends Controller
             //thumbnail
             $apartment->thumbnail = MediaModel::getFirstMediaByType($apartment->id_apartment, 'apartment');
             //rate variant
-            $rate = RateModel::getRateByNights($filter['nights']);
-            if (!empty($rate)) {                 
+            //$rate = RateModel::getRateByNights($filter['nights']);
+            info(json_encode($apartment));
+            $rate = RateModel::where('apartment_id','=',$apartment->id_apartment);
+            /*if (!empty($rate)) {                 
                $apartment->price -= (float)($apartment->price * ($rate->variant / 100));
                 // $apartment->price *= (float)$rate->variant;
                 // echo "<pre>";
                 // print_r($rate->toArray());
                 // print_r($apartment->price);
                 // die();
-            }
+            }*/
             $apartment->price = number_format($apartment->price, 2);
         }
 

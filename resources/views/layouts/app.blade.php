@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sabanastays - @yield('title')</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+        {{--  <script src="https://www.paypalobjects.com/api/checkout.js"></script>  --}}
     </head>
     <body class="@yield('bodyClass')">
 
@@ -21,13 +21,13 @@
         @if (!empty($locale))
             <script>
                 var locale          = '{{ strtoupper($locale) }}';
-                var google_key      = '{{ env('GOOGLE_KEY') }}';
-                var faceboo_app_id  = '{{ env('FB_CLIENT_ID') }}';
+                /*var google_key      = '{{ env('GOOGLE_KEY') }}';
+                var faceboo_app_id  = '{{ env('FB_CLIENT_ID') }}';*/
                 var mainUrl         = '{{ URL::to('/') }}';
 
-                var paypalType = '{{ env('PAYPAL_TYPE') }}'
+                /*var paypalType = '{{ env('PAYPAL_TYPE') }}'
                 var paypalKeySandbox  = '{{ env('PAYPAL_SANDBOX') }}';
-                var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';
+                var paypalKeyProduction  = '{{ env('PAYPAL_PRODUCTION') }}';*/
             </script>
         @endif
 
