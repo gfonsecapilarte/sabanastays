@@ -1,9 +1,0 @@
-[submodule "app/Lib/2checkout"]
-	path = app/Lib/2checkout
-	url = https://github.com/2Checkout/2checkout-php.git
-[submodule "app/Lib/paymentwall"]
-	path = app/Lib/paymentwall
-	url = git://github.com/paymentwall/paymentwall-php.git
-[submodule "app/Lib/PayPal-PHP-SDK"]
-	path = app/Lib/PayPal-PHP-SDK
-	url = https://github.com/paypal/PayPal-PHP-SDK.git
